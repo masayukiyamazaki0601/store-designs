@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NALU COFFEE | 湘南・茅ヶ崎 サーフサイドカフェ</title>
+  <meta name="description" content="NALU COFFEEは、湘南・茅ヶ崎の海を望むサーフサイドカフェ。一杯のコーヒーと、波の音。ゆるやかに流れる時間を。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       DESIGN TOKENS
+       ============================================ */
+    :root {
+      --clr-bg: #F0F4F4;
+      --clr-surface: #F7FAFA;
+      --clr-sand: #E8E0D2;
+      --clr-white: #FFFFFF;
+      --clr-navy: #1A2F4A;
+      --clr-navy-light: #2C4A6E;
+      --clr-navy-mid: #4A6B8A;
+      --clr-blue: #5C8DB8;
+      --clr-blue-light: #8FBAD6;
+      --clr-blue-pale: #C5D9E8;
+      --clr-teal: #4A8B82;
+      --clr-text: #2A3A4A;
+      --clr-text-secondary: #5A6E82;
+      --clr-text-muted: #8A9AAB;
+      --clr-warm: #C49A6E;
+      --clr-warm-light: #D9B68C;
+      --clr-line: rgba(42,58,74,0.08);
+      --clr-line-mid: rgba(42,58,74,0.15);
+      --clr-overlay: rgba(26,47,74,0.6);
+      --clr-white-soft: rgba(255,255,255,0.85);
+      --clr-white-muted: rgba(255,255,255,0.5);
+
+      --ff-heading: 'Josefin Sans', sans-serif;
+      --ff-body: 'Noto Sans JP', sans-serif;
+      --ff-mono: 'DM Mono', monospace;
+
+      --fw-light: 300;
+      --fw-regular: 400;
+      --fw-medium: 500;
+      --fw-semibold: 600;
+      --fw-bold: 700;
+      --fw-black: 900;
+
+      --fs-h1: clamp(3rem, 8vw, 6rem);
+      --fs-h2: clamp(2rem, 4.8vw, 3.6rem);
+      --fs-h3: clamp(1.3rem, 2.4vw, 1.8rem);
+      --fs-body: clamp(0.9375rem, 1.1vw, 1.0625rem);
+      --fs-small: clamp(0.75rem, 0.9vw, 0.8125rem);
+      --fs-micro: clamp(0.625rem, 0.7vw, 0.6875rem);
+
+      --space-sm: clamp(0.5rem, 1vw, 1rem);
+      --space-md: clamp(1rem, 2vw, 1.5rem);
+      --space-lg: clamp(1.5rem, 3vw, 2.5rem);
+      --space-xl: clamp(2rem, 4vw, 4rem);
+      --space-2xl: clamp(3rem, 6vw, 6rem);
+      --space-3xl: clamp(4rem, 8vw, 8rem);
+
+      --max-w: min(1100px, calc(100% - 3rem));
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-wave: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--ff-body);
+      font-size: var(--fs-body);
+      font-weight: var(--fw-regular);
+      line-height: 1.8;
+      color: var(--clr-text);
+      background-color: var(--clr-bg);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.88 0 0 0 0 0.86 0 0 0 0 0.82 0 0 0 0.025 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+      background-size: 200px;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    .container { width: var(--max-w); margin: 0 auto; }
+
+    /* ============================================
+       WAVE DIVIDER
+       ============================================ */
+    .wave-divider {
+      position: relative;
+      width: 100%;
+      height: 60px;
+      overflow: hidden;
+      margin-top: -1px;
+    }
+    .wave-divider svg {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      fill: var(--clr-surface);
+    }
+
+    /* ============================================
+       SCROLL REVEAL
+       ============================================ */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+    .reveal-left.is-visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+    .reveal-right.is-visible { opacity: 1; transform: translateX(0); }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+    .section-header .label {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-micro);
+      font-weight: var(--fw-semibold);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--clr-blue);
+      display: inline-block;
+    }
+    .section-header .label::before,
+    .section-header .label::after {
+      content: "~";
+      display: inline-block;
+      margin: 0 0.6rem;
+      color: var(--clr-blue-light);
+    }
+    .section-header h2 {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-h2);
+      font-weight: var(--fw-light);
+      letter-spacing: 0.06em;
+      color: var(--clr-navy);
+      line-height: 1.2;
+      margin-top: var(--space-sm);
+    }
+    .section-header h2 strong {
+      font-weight: var(--fw-bold);
+      display: block;
+    }
+    .section-header .desc {
+      font-size: var(--fs-small);
+      color: var(--clr-text-secondary);
+      margin-top: var(--space-md);
+      max-width: 36em;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: var(--space-md) 0;
+      transition: padding 0.4s var(--ease-out), background 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+    }
+    .site-header.is-scrolled {
+      padding: 0.5rem 0;
+      background: rgba(240,244,244,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 var(--clr-line-mid);
+    }
+    .header-inner {
+      width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-logo {
+      font-family: var(--ff-heading);
+      font-size: clamp(1.2rem, 2.6vw, 1.8rem);
+      font-weight: var(--fw-bold);
+      letter-spacing: 0.12em;
+      color: var(--clr-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .site-logo .logo-wave {
+      display: inline-block;
+      font-size: 0.6em;
+      color: var(--clr-blue);
+      animation: logoWave 2s ease-in-out infinite;
+    }
+    @keyframes logoWave {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+    .site-nav a {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-small);
+      font-weight: var(--fw-medium);
+      color: var(--clr-text-secondary);
+      letter-spacing: 0.08em;
+      transition: color 0.25s ease;
+      position: relative;
+    }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      width: 0;
+      height: 1.5px;
+      background: var(--clr-blue);
+      transition: width 0.3s var(--ease-out), left 0.3s var(--ease-out);
+    }
+    .site-nav a:hover { color: var(--clr-navy); }
+    .site-nav a:hover::after { width: 100%; left: 0; }
+    .site-nav .nav-cta {
+      background: var(--clr-navy);
+      color: var(--clr-white);
+      padding: 0.5rem 1.4rem;
+      border-radius: 2rem;
+      font-weight: var(--fw-semibold);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .site-nav .nav-cta:hover {
+      background: var(--clr-blue);
+      color: var(--clr-white);
+      transform: translateY(-2px);
+    }
+    .site-nav .nav-cta::after { display: none; }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 101;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--clr-navy);
+      border-radius: 2px;
+      transition: transform 0.3s var(--ease-out), opacity 0.3s ease;
+    }
+    .nav-toggle.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.is-active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100svh;
+      min-height: 600px;
+      max-height: 920px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--clr-navy);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(26,47,74,0.7) 0%, rgba(26,47,74,0.3) 50%, rgba(26,47,74,0.55) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: var(--max-w);
+      margin: 0 auto;
+    }
+    .hero-content .hero-label {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-small);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--clr-blue-light);
+      margin-bottom: var(--space-md);
+    }
+    .hero-content h1 {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-h1);
+      font-weight: var(--fw-light);
+      color: var(--clr-white);
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+    }
+    .hero-content h1 strong {
+      display: block;
+      font-weight: var(--fw-bold);
+    }
+    .hero-content .hero-desc {
+      color: var(--clr-white-soft);
+      font-size: var(--fs-body);
+      max-width: 38ch;
+      margin-top: var(--space-lg);
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+      flex-wrap: wrap;
+    }
+    .btn {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-small);
+      font-weight: var(--fw-semibold);
+      letter-spacing: 0.06em;
+      padding: 0.8rem 2rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s var(--ease-out), background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary {
+      background: var(--clr-blue);
+      color: var(--clr-white);
+      border-radius: 2rem;
+    }
+    .btn-primary:hover {
+      background: var(--clr-navy-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(92,141,184,0.35);
+    }
+    .btn-outline-light {
+      background: transparent;
+      color: var(--clr-white);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 2rem;
+    }
+    .btn-outline-light:hover {
+      border-color: var(--clr-white);
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-2px);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: var(--space-xl);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--clr-white-muted);
+      font-family: var(--ff-heading);
+      font-size: var(--fs-micro);
+      letter-spacing: 0.25em;
+    }
+    .hero-scroll .scroll-line {
+      width: 1px;
+      height: 24px;
+      background: linear-gradient(to bottom, var(--clr-blue-light), transparent);
+    }
+
+    /* ============================================
+       ABOUT
+       ============================================ */
+    .section-about {
+      padding: var(--space-3xl) 0;
+      background: var(--clr-surface);
+      position: relative;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .about-visual img {
+      width: 100%;
+      height: 460px;
+      object-fit: cover;
+    }
+    .about-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(92,141,184,0.2);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+    .about-visual .floating-icon {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--clr-white);
+      box-shadow: 0 4px 16px rgba(26,47,74,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    .about-text h2 {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-h2);
+      font-weight: var(--fw-light);
+      color: var(--clr-navy);
+      line-height: 1.2;
+    }
+    .about-text h2 strong { font-weight: var(--fw-bold); display: block; }
+    .about-text .about-sub {
+      font-family: var(--ff-heading);
+      font-weight: var(--fw-regular);
+      font-style: italic;
+      font-size: var(--fs-body);
+      color: var(--clr-blue);
+      margin: var(--space-sm) 0 var(--space-md);
+    }
+    .about-text .about-body {
+      color: var(--clr-text-secondary);
+      line-height: 1.8;
+    }
+    .about-icons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--clr-line);
+    }
+    .about-icon-item {
+      text-align: center;
+    }
+    .about-icon-item .ai-icon {
+      font-size: 1.8rem;
+      margin-bottom: var(--space-sm);
+    }
+    .about-icon-item .ai-title {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-small);
+      font-weight: var(--fw-semibold);
+      color: var(--clr-navy);
+    }
+    .about-icon-item .ai-desc {
+      font-size: var(--fs-micro);
+      color: var(--clr-text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ============================================
+       MENU
+       ============================================ */
+    .section-menu {
+      padding: var(--space-3xl) 0;
+      background: var(--clr-bg);
+      position: relative;
+    }
+    .section-menu::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--clr-blue-light), transparent);
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+    .menu-card {
+      background: var(--clr-white);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+    }
+    .menu-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(26,47,74,0.08);
+    }
+    .menu-card-img {
+      height: 200px;
+      overflow: hidden;
+    }
+    .menu-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-wave);
+    }
+    .menu-card:hover .menu-card-img img { transform: scale(1.06); }
+    .menu-card-body {
+      padding: var(--space-lg);
+    }
+    .menu-card-body .card-cat {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-micro);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--clr-blue);
+    }
+    .menu-card-body h3 {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-h3);
+      font-weight: var(--fw-semibold);
+      color: var(--clr-navy);
+      margin: var(--space-sm) 0 var(--space-xs);
+    }
+    .menu-card-body .card-desc {
+      font-size: var(--fs-small);
+      color: var(--clr-text-secondary);
+      line-height: 1.6;
+    }
+    .menu-card-body .card-price {
+      font-family: var(--ff-heading);
+      font-size: calc(var(--fs-h3) * 0.85);
+      font-weight: var(--fw-bold);
+      color: var(--clr-teal);
+      margin-top: var(--space-md);
+    }
+
+    .menu-tagline {
+      text-align: center;
+      margin-top: var(--space-2xl);
+      font-family: var(--ff-heading);
+      font-style: italic;
+      font-size: var(--fs-body);
+      color: var(--clr-text-muted);
+    }
+
+    /* ============================================
+       GALLERY (Horizontal scroll)
+       ============================================ */
+    .section-gallery {
+      padding: var(--space-3xl) 0;
+      background: var(--clr-navy);
+      color: var(--clr-white);
+      overflow: hidden;
+    }
+    .section-gallery .section-header .label {
+      color: var(--clr-blue-light);
+    }
+    .section-gallery .section-header .label::before,
+    .section-gallery .section-header .label::after {
+      color: rgba(143,186,214,0.5);
+    }
+    .section-gallery .section-header h2 { color: var(--clr-white); }
+    .gallery-scroll-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
+    }
+    .gallery-scroll-wrap::-webkit-scrollbar { display: none; }
+    .gallery-scroll-wrap:active { cursor: grabbing; }
+    .gallery-track-h {
+      display: flex;
+      gap: 1.5rem;
+      padding: 0 2rem;
+      width: max-content;
+    }
+    .gallery-track-h figure {
+      flex: 0 0 auto;
+      margin: 0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .gallery-track-h img {
+      width: 360px;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s var(--ease-out);
+    }
+    .gallery-track-h figure:hover img { transform: scale(1.05); }
+    .gallery-caption {
+      width: var(--max-w);
+      margin: var(--space-lg) auto 0;
+      font-size: var(--fs-small);
+      color: var(--clr-white-muted);
+      text-align: right;
+    }
+
+    /* ============================================
+       ACCESS
+       ============================================ */
+    .section-access {
+      padding: var(--space-3xl) 0;
+      background: var(--clr-surface);
+    }
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+    .access-info .info-item {
+      display: grid;
+      grid-template-columns: 5rem 1fr;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--clr-line);
+    }
+    .access-info .info-item:last-child { border-bottom: none; }
+    .access-info .info-key {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-micro);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--clr-text-muted);
+    }
+    .access-info .info-val { font-weight: var(--fw-medium); }
+    .access-map-visual {
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .access-map-visual img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+    }
+    .access-map-visual .map-pin-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      font-size: 2.2rem;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .site-footer {
+      background: var(--clr-navy);
+      color: var(--clr-white);
+      padding: var(--space-2xl) 0 var(--space-lg);
+    }
+    .footer-wave-top {
+      height: 40px;
+      overflow: hidden;
+      margin-bottom: var(--space-xl);
+    }
+    .footer-wave-top svg { width: 100%; height: 40px; fill: var(--clr-surface); opacity: 0.04; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-xl);
+      padding-bottom: var(--space-xl);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-brand .footer-logo {
+      font-family: var(--ff-heading);
+      font-size: 1.4rem;
+      font-weight: var(--fw-bold);
+      letter-spacing: 0.1em;
+      color: var(--clr-blue-light);
+    }
+    .footer-brand p {
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.5);
+      margin-top: var(--space-md);
+      max-width: 30em;
+      line-height: 1.7;
+    }
+    .footer-col h4 {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-small);
+      font-weight: var(--fw-semibold);
+      color: var(--clr-blue-light);
+      margin-bottom: var(--space-md);
+      letter-spacing: 0.06em;
+    }
+    .footer-col a {
+      display: block;
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.4);
+      padding: 0.25rem 0;
+      transition: color 0.25s ease;
+    }
+    .footer-col a:hover { color: var(--clr-blue-light); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--space-lg);
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-bottom .footer-copy {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-micro);
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 960px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-visual img { height: 340px; }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+      .access-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .site-nav {
+        position: fixed;
+        top: 0; right: 0;
+        width: 100%;
+        height: 100svh;
+        background: rgba(26,47,74,0.97);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-lg);
+        transform: translateX(100%);
+        transition: transform 0.5s var(--ease-out);
+        z-index: -1;
+      }
+      .site-nav.is-open { transform: translateX(0); }
+      .site-nav a { color: var(--clr-white-soft); font-size: 1.1rem; }
+      .site-nav a::after { background: var(--clr-blue-light); }
+      .site-nav .nav-cta { background: transparent; border: 1px solid var(--clr-blue-light); }
+      .nav-toggle { display: flex; }
+      .nav-toggle span { background: var(--clr-white); }
+      .site-header.is-scrolled .nav-toggle span { background: var(--clr-navy); }
+
+      .menu-grid { grid-template-columns: 1fr; }
+      .about-icons { grid-template-columns: 1fr; gap: var(--space-md); }
+      .footer-top { grid-template-columns: 1fr; gap: var(--space-lg); }
+      .footer-bottom { flex-direction: column; gap: var(--space-sm); text-align: center; }
+      .gallery-track-h img { width: 260px; height: 200px; }
+    }
+
+    @media (min-width: 769px) {
+      .site-nav { display: flex !important; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal, .reveal-left, .reveal-right { opacity: 1; transform: none; }
+      .site-logo .logo-wave { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="#top" class="site-logo">
+        NALU<span class="logo-wave">~</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="site-nav" id="siteNav" aria-label="メインナビゲーション">
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#access">Access</a>
+        <a href="#access" class="nav-cta">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80" alt="" id="heroImg">
+      </div>
+      <div class="hero-content">
+        <p class="hero-label">Chigasaki, Kanagawa</p>
+        <h1>
+          Coffee & Waves.
+          <strong>Find Your Rhythm.</strong>
+        </h1>
+        <p class="hero-desc">湘南・茅ヶ崎の海岸から徒歩1分。波の音をBGMに、一杯のコーヒーとゆるやかに流れる時間をお過ごしください。</p>
+        <div class="hero-actions">
+          <a href="#menu" class="btn btn-primary">Order Menu</a>
+          <a href="#about" class="btn btn-outline-light">Our Story</a>
+        </div>
+      </div>
+      <div class="hero-scroll">
+        <span>WAVE</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- WAVE DIVIDER -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"/>
+      </svg>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="section-about" id="about">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Our Story</span>
+          <h2>波と、<strong>コーヒーと。</strong></h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-visual reveal-left">
+            <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&q=80" alt="海辺のカフェ" loading="lazy">
+            <div class="floating-icon">☕</div>
+          </div>
+          <div class="about-text reveal">
+            <h2>Life is Better<br><strong>by the Beach.</strong></h2>
+            <p class="about-sub">— surfer's fuel since 2012 —</p>
+            <p class="about-body">NALU COFFEEは、湘南の海を愛するサーファーとコーヒー焙煎士が立ち上げた、海辺のコミュニティカフェです。波が高ければ海へ、そうでなければカウンターでゆっくりと。サーフボードを片手に立ち寄る人々、散歩がてらにふらりと訪れる地元の人々。そんな誰のものでもない、でも誰かの一日にそっと寄り添える場所でありたい。</p>
+            <div class="about-icons">
+              <div class="about-icon-item">
+                <div class="ai-icon">🌊</div>
+                <div class="ai-title">Beach Front</div>
+                <div class="ai-desc">海岸まで徒歩1分</div>
+              </div>
+              <div class="about-icon-item">
+                <div class="ai-icon">☕</div>
+                <div class="ai-title">Specialty Coffee</div>
+                <div class="ai-desc">自家焙煎スペシャルティ</div>
+              </div>
+              <div class="about-icon-item">
+                <div class="ai-icon">🏄</div>
+                <div class="ai-title">Surfer Friendly</div>
+                <div class="ai-desc">サーファー大歓迎</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU -->
+    <section class="section-menu" id="menu">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Menu</span>
+          <h2>Our <strong>Selection</strong></h2>
+          <p class="desc">波と風と、一杯のコーヒー。湘南の空気と共に。</p>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-card reveal">
+            <div class="menu-card-img">
+              <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&q=80" alt="ハンドドリップコーヒー" loading="lazy">
+            </div>
+            <div class="menu-card-body">
+              <span class="card-cat">Drip Coffee</span>
+              <h3>シーズンブレンド</h3>
+              <p class="card-desc">その時期だけの限定ブレンド。湘南の潮風をイメージした爽やかな味わい。</p>
+              <div class="card-price">¥580</div>
+            </div>
+          </div>
+          <div class="menu-card reveal">
+            <div class="menu-card-img">
+              <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?w=600&q=80" alt="エスプレッソ" loading="lazy">
+            </div>
+            <div class="menu-card-body">
+              <span class="card-cat">Espresso</span>
+              <h3>ウエーブ ラテ</h3>
+              <p class="card-desc">波をイメージしたフォームアート。エスプレッソの力強さとミルクの甘さ。</p>
+              <div class="card-price">¥520</div>
+            </div>
+          </div>
+          <div class="menu-card reveal">
+            <div class="menu-card-img">
+              <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80" alt="コールドブリュー" loading="lazy">
+            </div>
+            <div class="menu-card-body">
+              <span class="card-cat">Cold Brew</span>
+              <h3>オーシャンコールド</h3>
+              <p class="card-desc">16時間かけて抽出した水出しコーヒー。真夏のテラスにぴったり。</p>
+              <div class="card-price">¥550</div>
+            </div>
+          </div>
+        </div>
+        <p class="menu-tagline">~ サーファーには10%オフ。波情報、教えてください。 ~</p>
+      </div>
+    </section>
+
+    <!-- GALLERY (Horizontal Scroll) -->
+    <section class="section-gallery" id="gallery">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Gallery</span>
+          <h2>Our <strong>Atmosphere</strong></h2>
+        </div>
+      </div>
+      <div class="gallery-scroll-wrap" id="galleryScroll">
+        <div class="gallery-track-h" id="galleryTrackH">
+          <figure><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80" alt="カフェ内装" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80" alt="コーヒーカウンター" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=600&q=80" alt="湘南の海" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="夕暮れのビーチ" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1465153690352-10c1b29577f8?w=600&q=80" alt="サーフィン" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1495774856032-8b90bbb32b32?w=600&q=80" alt="海辺のテラス席" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80" alt="カフェ内装" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80" alt="コーヒーカウンター" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=600&q=80" alt="湘南の海" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="夕暮れのビーチ" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1465153690352-10c1b29577f8?w=600&q=80" alt="サーフィン" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1495774856032-8b90bbb32b32?w=600&q=80" alt="海辺のテラス席" loading="lazy"></figure>
+        </div>
+      </div>
+      <p class="gallery-caption">Chigasaki Beach &middot; 湘南の風を感じて</p>
+    </section>
+
+    <!-- ACCESS -->
+    <section class="section-access" id="access">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Access</span>
+          <h2>Come <strong>Visit Us</strong></h2>
+        </div>
+        <div class="access-grid">
+          <div class="access-info reveal">
+            <div class="info-item">
+              <span class="info-key">Name</span>
+              <span class="info-val">NALU COFFEE</span>
+            </div>
+            <div class="info-item">
+              <span class="info-key">Address</span>
+              <span class="info-val">神奈川県茅ヶ崎市東海岸南2-8-22<br>サンライズ茅ヶ崎 1F</span>
+            </div>
+            <div class="info-item">
+              <span class="info-key">Hours</span>
+              <span class="info-val">平日: 7:00–18:00<br>土日祝: 6:30–19:00</span>
+            </div>
+            <div class="info-item">
+              <span class="info-key">Closed</span>
+              <span class="info-val">火曜日・水曜日（不定休あり）</span>
+            </div>
+            <div class="info-item">
+              <span class="info-key">Contact</span>
+              <span class="info-val">nalu@chigasaki-coffee.jp<br>0467-55-0198</span>
+            </div>
+            <div class="info-item">
+              <span class="info-key">Access</span>
+              <span class="info-val">JR東海道線 茅ヶ崎駅 徒歩15分<br>駐車場2台あり</span>
+            </div>
+            <div style="margin-top:var(--space-lg);">
+              <a href="#" class="btn btn-primary">Google Maps</a>
+            </div>
+          </div>
+          <div class="access-map-visual reveal">
+            <img src="https://images.unsplash.com/photo-1495774856032-8b90bbb32b32?w=800&q=80" alt="店舗外観" loading="lazy">
+            <div class="map-pin-icon">📍</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer" id="footer">
+    <div class="footer-wave-top" aria-hidden="true">
+      <svg viewBox="0 0 1440 40" preserveAspectRatio="none">
+        <path d="M0,20 C240,40 480,0 720,20 C960,40 1200,0 1440,20 L1440,40 L0,40 Z"/>
+      </svg>
+    </div>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-logo">NALU~</span>
+          <p>湘南・茅ヶ崎の海岸から徒歩1分。波の音をBGMに、一杯のコーヒーを。</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <a href="#about">About</a>
+          <a href="#menu">Menu</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#access">Access</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="#">Instagram</a>
+          <a href="#">Twitter / X</a>
+          <a href="#">Facebook</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 NALU COFFEE. All rights reserved.</span>
+        <span class="footer-copy">Chigasaki, Kanagawa — since 2012</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ JAVASCRIPT ============ -->
+  <script>
+    (function(){
+      'use strict';
+
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---------- HEADER ---------- */
+      var header = document.getElementById('siteHeader');
+      var onScroll = function() {
+        header.classList.toggle('is-scrolled', window.scrollY > 50);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* ---------- NAV TOGGLE ---------- */
+      var navToggle = document.getElementById('navToggle');
+      var siteNav = document.getElementById('siteNav');
+      if (navToggle && siteNav) {
+        navToggle.addEventListener('click', function() {
+          var isOpen = siteNav.classList.toggle('is-open');
+          navToggle.classList.toggle('is-active');
+          navToggle.setAttribute('aria-expanded', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        siteNav.addEventListener('click', function(e) {
+          if (e.target.tagName === 'A' && siteNav.classList.contains('is-open')) {
+            siteNav.classList.remove('is-open');
+            navToggle.classList.remove('is-active');
+            navToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      /* ---------- SMOOTH SCROLL ---------- */
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          var targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          var target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            var headerH = header.offsetHeight;
+            var targetPos = target.getBoundingClientRect().top + window.scrollY - headerH;
+            window.scrollTo({ top: targetPos, behavior: 'smooth' });
+          }
+        });
+      });
+
+      /* ---------- SCROLL REVEAL ---------- */
+      var revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+      if (!reduceMotion && revealElements.length) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+        revealElements.forEach(function(el) { observer.observe(el); });
+      } else {
+        revealElements.forEach(function(el) { el.classList.add('is-visible'); });
+      }
+
+      /* ---------- PARALLAX HERO ---------- */
+      var heroImg = document.getElementById('heroImg');
+      if (heroImg && !reduceMotion) {
+        window.addEventListener('scroll', function() {
+          var scrolled = window.scrollY;
+          var heroSection = document.querySelector('.hero');
+          if (heroSection) {
+            var heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+            if (window.scrollY < heroBottom) {
+              heroImg.style.transform = 'translateY(' + (scrolled * 0.3) + 'px)';
+            }
+          }
+        }, { passive: true });
+      }
+
+      /* ---------- GALLERY HORIZONTAL DRAG ---------- */
+      var scrollWrap = document.getElementById('galleryScroll');
+      if (scrollWrap) {
+        var isDown = false;
+        var startX, scrollLeft;
+
+        scrollWrap.addEventListener('mousedown', function(e) {
+          isDown = true;
+          startX = e.pageX - scrollWrap.offsetLeft;
+          scrollLeft = scrollWrap.scrollLeft;
+          scrollWrap.style.cursor = 'grabbing';
+        });
+        scrollWrap.addEventListener('mouseleave', function() {
+          isDown = false;
+          scrollWrap.style.cursor = 'grab';
+        });
+        scrollWrap.addEventListener('mouseup', function() {
+          isDown = false;
+          scrollWrap.style.cursor = 'grab';
+        });
+        scrollWrap.addEventListener('mousemove', function(e) {
+          if (!isDown) return;
+          e.preventDefault();
+          var x = e.pageX - scrollWrap.offsetLeft;
+          var walk = (x - startX) * 2;
+          scrollWrap.scrollLeft = scrollLeft - walk;
+        });
+
+        // Auto scroll
+        if (!reduceMotion) {
+          var autoScrollInterval = setInterval(function() {
+            if (!isDown) {
+              scrollWrap.scrollLeft += 1;
+              // Reset when reaching the end
+              if (scrollWrap.scrollLeft >= (scrollWrap.scrollWidth - scrollWrap.clientWidth)) {
+                scrollWrap.scrollLeft = 0;
+              }
+            }
+          }, 40);
+        }
+      }
+
+    })();
+  </script>
+</body>
+</html>
