@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRICK & BEANS - Brooklyn Roastery Cafe</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ========== HEADER / NAV ========== -->
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="#top" class="header__logo">BRICK & BEANS</a>
+      <nav class="header__nav" id="nav">
+        <ul class="header__nav-list">
+          <li><a href="#roasting">Roasting</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#staff">Staff</a></li>
+          <li><a href="#access">Access</a></li>
+          <li><a href="#instagram">Instagram</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="header__hamburger" id="hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== TOP / HERO ========== -->
+  <section class="hero" id="top">
+    <div class="hero__overlay"></div>
+    <div class="hero__bg"></div>
+    <div class="hero__content">
+      <p class="hero__subtitle">— BROOKLYN ROASTERY —</p>
+      <h1 class="hero__title">BRICK & BEANS</h1>
+      <p class="hero__desc">Handcrafted Small-Batch Coffee Roasters</p>
+      <div class="hero__cta">
+        <a href="#menu" class="btn btn--primary">View Menu</a>
+        <a href="#roasting" class="btn btn--outline">Our Story</a>
+      </div>
+    </div>
+    <div class="hero__scroll">
+      <span>SCROLL</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ========== ROASTING ========== -->
+  <section class="section roasting" id="roasting">
+    <div class="section__inner">
+      <p class="section__label">— CRAFT & PASSION —</p>
+      <h2 class="section__title">焙煎へのこだわり</h2>
+      <div class="roasting__grid">
+        <div class="roasting__img-wrap">
+          <div class="roasting__img"></div>
+        </div>
+        <div class="roasting__text">
+          <h3 class="roasting__heading">Small Batch <br>Artisan Roasting</h3>
+          <p class="roasting__desc">
+            ブルックリンの小さなガレージから始まった私たちの物語。一台の焙煎機と、妥協を許さない情熱だけを胸に、最高の一杯を追求し続けています。
+          </p>
+          <p class="roasting__desc">
+            厳選された生豆を、その特性に合わせて最適なプロファイルで丁寧に焙煎。酸味・苦味・甘みのバランスを徹底的に計算し、芳醇なアロマと奥深い味わいを引き出します。
+          </p>
+          <ul class="roasting__points">
+            <li>直火式焙煎による力強い風味</li>
+            <li>産地ごとの最適プロファイル設計</li>
+            <li>注文後のハンドパック品質</li>
+            <li>カッピングによる品質管理</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MENU ========== -->
+  <section class="section menu" id="menu">
+    <div class="section__inner">
+      <p class="section__label">— OUR SELECTION —</p>
+      <h2 class="section__title">メニュー</h2>
+      <div class="menu__tabs">
+        <button class="menu__tab active" data-tab="coffee">COFFEE</button>
+        <button class="menu__tab" data-tab="food">FOOD</button>
+        <button class="menu__tab" data-tab="special">SPECIAL</button>
+      </div>
+
+      <!-- Coffee Menu -->
+      <div class="menu__items active" id="menu-coffee">
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">BLACK COFFEE</h3>
+            <p class="menu__item-desc">Our signature single-origin pour-over</p>
+          </div>
+          <span class="menu__item-price">¥550</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">AMERICANO</h3>
+            <p class="menu__item-desc">Espresso with hot water — bold & smooth</p>
+          </div>
+          <span class="menu__item-price">¥500</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">CAPPUCCINO</h3>
+            <p class="menu__item-desc">Espresso with steamed milk & thick foam</p>
+          </div>
+          <span class="menu__item-price">¥600</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">LATTE</h3>
+            <p class="menu__item-desc">Smooth espresso with creamy steamed milk</p>
+          </div>
+          <span class="menu__item-price">¥650</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">ESPRESSO</h3>
+            <p class="menu__item-desc">Double shot — rich & intense</p>
+          </div>
+          <span class="menu__item-price">¥450</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">COLD BREW</h3>
+            <p class="menu__item-desc">12-hour steeped, served over ice</p>
+          </div>
+          <span class="menu__item-price">¥600</span>
+        </div>
+      </div>
+
+      <!-- Food Menu -->
+      <div class="menu__items" id="menu-food">
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">BAGEL & CREAM CHEESE</h3>
+            <p class="menu__item-desc">New York-style bagel with chive cream cheese</p>
+          </div>
+          <span class="menu__item-price">¥550</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">AVOCADO TOAST</h3>
+            <p class="menu__item-desc">Sourdough, avocado, chili flakes & lime</p>
+          </div>
+          <span class="menu__item-price">¥850</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">CINNAMON ROLL</h3>
+            <p class="menu__item-desc">Baked fresh daily with cream cheese frosting</p>
+          </div>
+          <span class="menu__item-price">¥500</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">CROISSANT</h3>
+            <p class="menu__item-desc">Buttery, flaky French-style croissant</p>
+          </div>
+          <span class="menu__item-price">¥450</span>
+        </div>
+      </div>
+
+      <!-- Special Menu -->
+      <div class="menu__items" id="menu-special">
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">SEASONAL BLEND</h3>
+            <p class="menu__item-desc">Limited release — ask our barista</p>
+          </div>
+          <span class="menu__item-price">¥700</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">COFFEE COCKTAIL</h3>
+            <p class="menu__item-desc">Cold brew + whiskey barrel-aged syrup</p>
+          </div>
+          <span class="menu__item-price">¥1,200</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">ROASTERY SET</h3>
+            <p class="menu__item-desc">Coffee of your choice + pastry of the day</p>
+          </div>
+          <span class="menu__item-price">¥1,000</span>
+        </div>
+        <div class="menu__item">
+          <div class="menu__item-info">
+            <h3 class="menu__item-name">BEAN TASTING FLIGHT</h3>
+            <p class="menu__item-desc">3 single origins — compare the profiles</p>
+          </div>
+          <span class="menu__item-price">¥1,500</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GALLERY ========== -->
+  <section class="section gallery" id="gallery">
+    <div class="section__inner">
+      <p class="section__label">— THE VIBE —</p>
+      <h2 class="section__title">店内写真</h2>
+      <p class="section__subtext">レンガ壁に囲まれた温かみのある空間。焙煎の香りが漂う、心地よい時間が流れています。</p>
+    </div>
+    <div class="gallery__grid">
+      <div class="gallery__item gallery__item--1"></div>
+      <div class="gallery__item gallery__item--2"></div>
+      <div class="gallery__item gallery__item--3"></div>
+      <div class="gallery__item gallery__item--4"></div>
+      <div class="gallery__item gallery__item--5"></div>
+      <div class="gallery__item gallery__item--6"></div>
+    </div>
+  </section>
+
+  <!-- ========== STAFF ========== -->
+  <section class="section staff" id="staff">
+    <div class="section__inner">
+      <p class="section__label">— OUR TEAM —</p>
+      <h2 class="section__title">スタッフ紹介</h2>
+      <div class="staff__grid">
+        <div class="staff__card">
+          <div class="staff__img staff__img--1"></div>
+          <h3 class="staff__name">山田 蓮</h3>
+          <p class="staff__role">店長 / 焙煎士</p>
+          <p class="staff__bio">ブルックリンで6年修行を積んだ焙煎のプロ。帰国後、この街で本場の味を提供するために独立。焙煎プロファイルの設計から仕入れまで全てを監修する。</p>
+        </div>
+        <div class="staff__card">
+          <div class="staff__img staff__img--2"></div>
+          <h3 class="staff__name">佐藤 美咲</h3>
+          <p class="staff__role">バリスタ / ラテアート選手権入賞</p>
+          <p class="staff__bio">ラテアートの国内大会で入賞した実力派。一杯一杯に丁寧な抽出と美しいアートを届ける。お客様との会話を何より大切にしている。</p>
+        </div>
+        <div class="staff__card">
+          <div class="staff__img staff__img--3"></div>
+          <h3 class="staff__name">中村 匠</h3>
+          <p class="staff__role">グリーンコーヒーバイヤー</p>
+          <p class="staff__bio">世界中の農園を飛び回り、最高の生豆だけを厳選。農家との直接取引を大切にし、サステナブルなコーヒー生産を支援している。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ACCESS ========== -->
+  <section class="section access" id="access">
+    <div class="section__inner">
+      <p class="section__label">— FIND US —</p>
+      <h2 class="section__title">アクセス</h2>
+      <div class="access__grid">
+        <div class="access__map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.7479757149877!2d139.71062831525844!3d35.66128018020019!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188c9e7b7f5b5b%3A0x8c5b3c8c8c8c8c8c!2z44CSMTA3LTAwNjEg5p2x5Lqs6YO95riL6LC35Yy65a6u5qmL77yR5LiB55uu77yR!5e0!3m2!1sja!2sjp!4v1"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+        <div class="access__info">
+          <div class="access__block">
+            <h3 class="access__heading">ADDRESS</h3>
+            <p class="access__text">東京都港区南青山3-18-7<br>BRICK BUILDING 1F</p>
+          </div>
+          <div class="access__block">
+            <h3 class="access__heading">HOURS</h3>
+            <p class="access__text">
+              月〜金: 7:00 - 20:00<br>
+              土日祝: 8:00 - 19:00
+            </p>
+          </div>
+          <div class="access__block">
+            <h3 class="access__heading">TEL</h3>
+            <p class="access__text">03-1234-5678</p>
+          </div>
+          <div class="access__block">
+            <h3 class="access__heading">ACCESS</h3>
+            <p class="access__text">東京メトロ「表参道駅」B1出口より徒歩3分<br>「渋谷駅」より徒歩10分</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== INSTAGRAM ========== -->
+  <section class="section instagram" id="instagram">
+    <div class="section__inner">
+      <p class="section__label">— FOLLOW US —</p>
+      <h2 class="section__title">Instagram</h2>
+      <p class="section__subtext">日々のコーヒー風景や焙煎の様子を発信中 <a href="#" class="instagram__handle">@brick_and_beans</a></p>
+    </div>
+    <div class="instagram__grid">
+      <div class="instagram__post instagram__post--1">
+        <div class="instagram__post-overlay">
+          <span>☕ 朝の一杯</span>
+        </div>
+      </div>
+      <div class="instagram__post instagram__post--2">
+        <div class="instagram__post-overlay">
+          <span>🔥 焙煎風景</span>
+        </div>
+      </div>
+      <div class="instagram__post instagram__post--3">
+        <div class="instagram__post-overlay">
+          <span>🥐 焼き立てペストリー</span>
+        </div>
+      </div>
+      <div class="instagram__post instagram__post--4">
+        <div class="instagram__post-overlay">
+          <span>🌿 エスプレッソ</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="section contact" id="contact">
+    <div class="section__inner">
+      <p class="section__label">— GET IN TOUCH —</p>
+      <h2 class="section__title">お問い合わせ</h2>
+      <form class="contact__form" id="contactForm">
+        <div class="contact__row">
+          <div class="contact__field">
+            <label for="name" class="contact__label">お名前 <span class="contact__required">*</span></label>
+            <input type="text" id="name" class="contact__input" required placeholder="例: 山田 太郎">
+          </div>
+          <div class="contact__field">
+            <label for="email" class="contact__label">メールアドレス <span class="contact__required">*</span></label>
+            <input type="email" id="email" class="contact__input" required placeholder="example@mail.com">
+          </div>
+        </div>
+        <div class="contact__field">
+          <label for="subject" class="contact__label">件名</label>
+          <input type="text" id="subject" class="contact__input" placeholder="件名を入力">
+        </div>
+        <div class="contact__field">
+          <label for="message" class="contact__label">メッセージ <span class="contact__required">*</span></label>
+          <textarea id="message" class="contact__textarea" required placeholder="お問い合わせ内容をご記入ください"></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary contact__submit">SEND MESSAGE</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <h3 class="footer__logo">BRICK & BEANS</h3>
+        <p class="footer__tagline">— Brooklyn Roastery Cafe —</p>
+      </div>
+      <div class="footer__links">
+        <a href="#roasting">Roasting</a>
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#staff">Staff</a>
+        <a href="#access">Access</a>
+        <a href="#instagram">Instagram</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <p class="footer__copy">&copy; 2026 BRICK & BEANS. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
