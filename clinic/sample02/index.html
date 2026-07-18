@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美容室ZOROYA | 似合うを骨格から設計するデザインカラー</title>
+  <meta name="description" content="美容室ZOROYAは、なりたい雰囲気を骨格・髪質・肌色から似合う色に翻訳する、ハイライトとブリーチのデザインカラーが得意なヘアサロンです。伸びてもきれいに見える色設計と、押し売りのないカウンセリング。">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Zen+Kaku+Gothic:wght@400;500;700;900&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#171717; --ink-deep:#0C0C0C; --bg:#FFFFFF; --bg2:#F4F0EF; --paper:#FAFAF8;
+      --accent:#B0758B; --accent-deep:#8F5C71; --body:#3C373A; --muted:#857F83;
+      --line:rgba(23,23,23,.14); --line-soft:rgba(23,23,23,.07); --line-white:rgba(255,255,255,.16);
+    }
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{margin:0; color:var(--body); font-family:"Zen Kaku Gothic",sans-serif; line-height:1.9; -webkit-font-smoothing:antialiased; font-size:16px; overflow-x:hidden;
+      background-color:var(--bg);
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='340'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.016 0.13' numOctaves='3' seed='4' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.44 0 0 0 0 0.30 0 0 0 0 0.36 0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+      background-size:340px; background-attachment:fixed;}
+    img{max-width:100%; display:block;}
+    a{color:inherit; text-decoration:none;}
+    .mono{font-family:"Space Grotesk",monospace; letter-spacing:.04em;}
+    h1,h2,h3{margin:0; color:var(--ink); font-family:"Shippori Mincho",serif; line-height:1.5; word-break:auto-phrase; text-wrap:balance; font-weight:700;}
+    h1,h2,h3,.lead,.btn,summary{word-break:auto-phrase; text-wrap:balance;}
+    p{margin:0;}
+    .wrap{width:min(1160px,calc(100% - 56px)); margin:0 auto;}
+    .eyebrow{font-family:"Space Grotesk",monospace; font-size:12px; letter-spacing:.26em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; display:inline-flex; gap:12px; align-items:center;}
+    .eyebrow::before{content:""; width:30px; height:2px; background:var(--accent);}
+    .mk{color:var(--accent);}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:.5em; font-weight:700; font-size:15px; letter-spacing:.04em; padding:15px 30px; border:1.5px solid transparent; transition:transform .2s ease, background .2s ease, color .2s ease;}
+    .btn.primary{background:var(--ink); color:#fff;}
+    .btn.primary:hover{transform:translateY(-2px); background:var(--accent-deep);}
+    .btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+    .btn.ghost:hover{border-color:var(--ink);}
+    .btn.light{background:transparent; color:#fff; border-color:var(--line-white);}
+    .btn.light:hover{background:#fff; color:var(--ink);}
+    section{position:relative;}
+
+    /* ZOROYA:HEADER（header-03：ミニマルバー＋フルスクリーンメニュー） */
+    .zhd{position:fixed; top:0; left:0; right:0; z-index:60;}
+    .zhd__inner{position:relative; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:20px 32px; mix-blend-mode:difference; color:#fff;}
+    .zhd__brand img{height:38px; width:auto; display:block;}
+    .zhd__burger{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:none; border:0; cursor:pointer; padding:9px; border-radius:50%; transition:background .25s ease;}
+    .zhd__burger span{display:block; width:30px; height:2px; background:#fff; transition:transform .35s, opacity .25s, background .25s;}
+    /* メニューを開いている間：×がどの背景でも確実に見える閉じるボタンにする */
+    body.is-locked .zhd__inner{mix-blend-mode:normal;}
+    body.is-locked .zhd__burger{background:rgba(20,20,20,.55); border:1px solid rgba(255,255,255,.5); width:46px; height:46px; padding:0;}
+    body.is-locked .zhd__burger span{background:#fff; width:22px;}
+    .zhd__menu{position:fixed; inset:0; z-index:55; background:var(--ink); color:#fff; display:grid; grid-template-columns:1.15fr .85fr; clip-path:circle(0% at 92% 6%); transition:clip-path .6s cubic-bezier(.7,0,.2,1); visibility:hidden;}
+    .zhd__menu.is-open{clip-path:circle(150% at 92% 6%); visibility:visible;}
+    .zhd__left{padding:13vh 6vw 6vh; display:flex; flex-direction:column;}
+    .zhd__lbl{font-family:"Space Grotesk",monospace; font-size:11px; letter-spacing:.3em; color:var(--accent); margin-bottom:18px;}
+    .zhd__nav a{font-family:"Shippori Mincho",serif; font-size:clamp(20px,2.6vw,34px); font-weight:700; color:#fff; padding:7px 0; display:flex; align-items:baseline; gap:14px; transition:color .2s, padding .2s;}
+    .zhd__nav a .no{font-family:"Space Grotesk",monospace; font-size:12px; color:var(--accent);}
+    .zhd__nav a:hover{color:var(--accent); padding-left:12px;}
+    .zhd__book{margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:16px; border:1px solid rgba(255,255,255,.25); border-radius:14px; padding:18px 22px; color:#fff; transition:background .2s; max-width:520px;}
+    .zhd__book:hover{background:rgba(255,255,255,.06);}
+    .zhd__book .rt{font-family:"Shippori Mincho",serif; font-size:18px; font-weight:700;}
+    .zhd__book .rs{font-size:12px; color:rgba(255,255,255,.6); margin-top:3px;}
+    .zhd__book .arr{color:var(--accent); font-size:20px;}
+    .zhd__right{position:relative; display:flex; flex-direction:column;}
+    .zhd__img{position:relative; flex:1; overflow:hidden; min-height:0;}
+    .zhd__img img{width:100%; height:100%; object-fit:cover; opacity:.5; filter:grayscale(1);}
+    .zhd__info{padding:30px 6vw 6vh; background:var(--ink-deep);}
+    .zhd__info .brand{font-family:"Shippori Mincho",serif; font-size:22px; font-weight:700; letter-spacing:.04em;}
+    .zhd__info .brand small{display:block; font-family:"Space Grotesk",monospace; font-size:10px; letter-spacing:.28em; color:rgba(255,255,255,.6); margin-top:3px;}
+    .zhd__info .row{margin-top:14px; font-size:13px; color:#fff; line-height:1.7;}
+    .zhd__info .row .lab{font-family:"Space Grotesk",monospace; font-size:10px; letter-spacing:.14em; color:var(--accent); margin-right:8px;}
+    .zhd__info .tel{font-family:"Space Grotesk",monospace; font-weight:700; font-size:18px; color:#fff;}
+    body.is-locked{overflow:hidden;}
+    /* /ZOROYA:HEADER */
+
+    /* ZOROYA:MAIN */
+    /* HERO ＝ 19.Duotone（白黒の世界に、カーソルで色が戻る） */
+    .hero{position:relative; width:100vw; left:50%; margin-left:-50vw; height:min(900px,100svh); min-height:600px; overflow:hidden; background:#000;}
+    .duo{position:absolute; inset:0; background:url("src/fv.jpg") center/cover no-repeat;}
+    .duo-base{filter:grayscale(1) contrast(1.06) brightness(.9);}
+    .duo-color{clip-path:none; will-change:clip-path;}
+    .hero-overlay{position:absolute; inset:0; z-index:3; background:linear-gradient(96deg, rgba(12,12,12,.8) 0%, rgba(12,12,12,.34) 42%, rgba(12,12,12,0) 78%);}
+    .hero-content{position:absolute; inset:0; z-index:6; display:flex; align-items:center;}
+    .hero-content .inner{width:min(1280px,calc(100% - 48px)); margin:0 auto; max-width:720px; display:grid; gap:24px;}
+    .hero .eyebrow{color:#E7C9D5;} .hero .eyebrow::before{background:var(--accent);}
+    .hero h1{color:#fff; font-size:clamp(34px,5vw,62px); letter-spacing:.04em; line-height:1.45; text-shadow:0 2px 40px rgba(0,0,0,.4);}
+    .hero .lead{color:rgba(255,255,255,.9); max-width:30em; font-size:16px;}
+    .hero-note{color:rgba(255,255,255,.66); font-size:12px; letter-spacing:.1em;}
+    .hero-frame{position:absolute; inset:26px; z-index:5; border:1px solid var(--line-white); pointer-events:none;}
+    .hero-hint{position:absolute; right:26px; bottom:26px; z-index:6; color:rgba(255,255,255,.66); font-family:"Space Grotesk",monospace; font-size:12px; letter-spacing:.12em; display:flex; align-items:center; gap:8px;}
+    .hero-hint::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(176,117,139,.28);}
+    .j .duo-color{clip-path:circle(170px at 50% 45%);}
+    @media (prefers-reduced-motion:reduce){ .j .duo-color{clip-path:none;} }
+
+    /* INTRO（intro-08：左フルブリード写真×右 詩的明朝＋痛み点灯） */
+    .cintro{padding:0;}
+    .cintro__split{display:grid; grid-template-columns:1.05fr 1fr; align-items:stretch; min-height:80vh; position:relative;}
+    .cintro__photo{position:relative; overflow:hidden; border-radius:0 18px 18px 0;}
+    .cintro__photo img{width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.03); will-change:transform;}
+    .cintro__num{position:absolute; top:18px; left:18px; z-index:2; font-family:"Space Grotesk",monospace; font-size:11px; letter-spacing:.2em; color:#fff; background:var(--accent); padding:6px 12px; border-radius:99px;}
+    .cintro__dots{position:absolute; left:-22px; bottom:-22px; width:130px; height:130px; z-index:0; background-image:radial-gradient(var(--accent) 1.6px,transparent 1.6px); background-size:16px 16px; opacity:.5;}
+    .cintro__copy{display:flex; flex-direction:column; justify-content:center; padding:84px 56px; position:relative;}
+    .cintro__copy .eyebrow{align-self:flex-start;}
+    .cintro__kicker{font-family:"Shippori Mincho",serif; font-size:clamp(26px,3.6vw,42px); font-weight:700; line-height:1.45; margin:18px 0 14px;}
+    .cintro__sub{color:var(--muted); font-size:15px; max-width:30em; margin:0 0 30px;}
+    .cintro__pains{display:grid; border-top:1px solid var(--line);}
+    .cintro__pain{display:grid; grid-template-columns:42px 1fr; gap:18px; align-items:baseline; padding:22px 0; border-bottom:1px solid var(--line);}
+    .cintro__pain .ck{font-family:"Space Grotesk",monospace; font-size:13px; color:var(--accent);}
+    .cintro__pain p{margin:0; font-family:"Shippori Mincho",serif; font-size:clamp(17px,2vw,22px); font-weight:600; color:rgba(23,23,23,.28); transition:color .5s ease;}
+    .cintro__pain.is-lit p{color:var(--ink);}
+    .cintro__closer{margin-top:34px; font-family:"Shippori Mincho",serif; font-size:clamp(18px,2.4vw,26px); font-weight:700; line-height:1.6;}
+    .cintro__closer .hl{background:linear-gradient(transparent 60%, rgba(176,117,139,.28) 60%);}
+
+    /* BRAND BAND（維持：ダークで抑揚・仮想敵との対比） */
+    .brandband{width:100vw; position:relative; left:50%; margin-left:-50vw; background:var(--ink-deep); color:#EDE7EA; padding:96px 0; overflow:hidden;}
+    .brandband::before{content:""; position:absolute; right:-120px; bottom:-120px; width:380px; height:380px; border-radius:50%; background:radial-gradient(circle,rgba(176,117,139,.3),transparent 65%); filter:blur(50px); mix-blend-mode:screen;}
+    .brandband .eyebrow{color:var(--accent);} .brandband .eyebrow::before{background:var(--accent);}
+    .brandband h2{color:#fff; font-weight:700; font-size:clamp(24px,3.4vw,40px); line-height:1.6; margin-top:18px; max-width:20em;}
+    .brandband h2 .mk{color:var(--accent);}
+    .brandband p{color:rgba(237,231,234,.82); margin-top:20px; max-width:40em;}
+
+    /* CONCEPT（features-07：左に大画像＋大ワード／右に番号付きフィーチャー） */
+    .cfeat{padding:120px 0;}
+    .cfeat__wrap{display:grid; grid-template-columns:.92fr 1.08fr; gap:64px; align-items:center;}
+    .cfeat__imgcol{position:relative;}
+    .cfeat__imgwrap{position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:4px; box-shadow:0 40px 80px -40px rgba(23,23,23,.55); clip-path:inset(0 0 0 0);}
+    .cfeat__imgwrap img{width:100%; height:100%; object-fit:cover; filter:grayscale(.15) contrast(1.03); will-change:transform;}
+    .cfeat__tagno{position:absolute; right:18px; top:18px; z-index:3; font-family:"Space Grotesk",monospace; font-size:12px; letter-spacing:.16em; color:#fff; background:rgba(0,0,0,.4); padding:6px 12px; border-radius:99px;}
+    .cfeat__bigword{display:block; margin:-0.3em 0 0 -3%; position:relative; z-index:3; font-family:"Shippori Mincho",serif; font-weight:700; font-size:clamp(46px,6.2vw,106px); letter-spacing:.06em; line-height:.85; color:#D9D5D1; pointer-events:none;}
+    .cfeat__content .eyebrow{align-self:flex-start;}
+    .cfeat__content h2{font-family:"Shippori Mincho",serif; font-weight:800; font-size:clamp(28px,3.6vw,46px); line-height:1.4; margin:12px 0 30px;}
+    .cfeat__list{display:grid; gap:0; border-top:1px solid var(--line);}
+    .cfeat__item{display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:start; padding:26px 4px; border-bottom:1px solid var(--line);}
+    .cfeat__item .n{font-family:"Shippori Mincho",serif; font-weight:800; font-size:36px; line-height:1; color:transparent; -webkit-text-stroke:1.2px var(--accent);}
+    .cfeat__item h3{font-family:"Shippori Mincho",serif; font-size:clamp(19px,2.1vw,24px); font-weight:700; margin:0 0 8px;}
+    .cfeat__item p{color:var(--muted); font-size:14.5px; margin:0;}
+    .cfeat__item .tag{display:inline-block; margin-top:10px; font-family:"Space Grotesk",monospace; font-size:11px; letter-spacing:.1em; color:var(--accent-deep);}
+
+    /* GALLERY（維持） */
+    .zgal{padding:clamp(72px,9vw,112px) 0; background:var(--paper);}
+    .zgal .zg-wrap{width:min(1180px,calc(100% - 48px)); margin:0 auto;}
+    .zgal .zg-head{margin-bottom:40px; text-align:center;}
+    .zgal .zg-eyebrow{font-family:"Space Grotesk",monospace; font-size:12px; letter-spacing:.26em; text-transform:uppercase; color:var(--accent); font-weight:700;}
+    .zgal .zg-title{font-family:"Shippori Mincho",serif; font-weight:700; font-size:clamp(28px,4vw,46px); margin:12px 0 0; color:var(--ink);}
+    .zgal .zg-title .zg-mk{color:var(--accent);}
+    .zgal .zg-grid{column-count:3; column-gap:18px;}
+    .zgal .zg-item{break-inside:avoid; margin:0 0 18px; display:block; position:relative; overflow:hidden; border-radius:4px; box-shadow:0 20px 44px -32px rgba(0,0,0,.45);}
+    .zgal .zg-item img{width:100%; display:block; transition:transform .8s cubic-bezier(.2,.7,.2,1);}
+    .zgal .zg-item::after{content:""; position:absolute; inset:0; background:linear-gradient(to top,rgba(12,12,12,.32),transparent 46%); opacity:0; transition:opacity .4s;}
+    .zgal .zg-item:hover img{transform:scale(1.07);}
+    .zgal .zg-item:hover::after{opacity:1;}
+
+    /* VOICE（voice-02：大ポートレート＋大引用。3名分） */
+    .cvoice{padding:130px 0; background:var(--bg2);}
+    .cvoice__head{margin-bottom:74px;}
+    .cvoice__head h2{font-size:clamp(30px,4.6vw,52px); font-weight:800; margin-top:16px;}
+    .cvoice__grid{display:grid; grid-template-columns:repeat(3,1fr); gap:56px 40px;}
+    .cvoice__item{display:grid; gap:28px;}
+    .cvoice__portrait{position:relative; aspect-ratio:3/4; border-radius:18px; overflow:hidden; clip-path:inset(0 0 100% 0); background:#ddd;}
+    .cvoice__portrait img{width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1);}
+    .cvoice__bigq{font-family:"Shippori Mincho",serif; font-size:clamp(19px,1.9vw,24px); font-weight:600; line-height:1.7; margin:0; color:var(--ink);}
+    .cvoice__bigq .qm{color:var(--accent); font-size:1.2em;}
+    .cvoice__bigq small{display:block; margin-top:14px; font-family:"Zen Kaku Gothic",sans-serif; font-size:14px; font-weight:400; color:var(--muted); line-height:1.8;}
+    .cvoice__by{margin-top:6px; display:flex; align-items:center; gap:14px;}
+    .cvoice__by .ln{width:34px; height:1px; background:var(--accent);}
+    .cvoice__by .nm{font-weight:700; font-size:14px; color:var(--ink);} .cvoice__by .rl{font-size:13px; color:var(--muted);}
+
+    /* MENU（pricing-05：看板プライス＋3カード＋メニュー一覧） */
+    .cprice{padding:120px 0; overflow:hidden;}
+    .cprice__head{text-align:center; margin-bottom:50px;}
+    .cprice__head h2{font-size:clamp(28px,4vw,46px); font-weight:800; margin-top:14px;}
+    .cprice__head .lead{color:var(--muted); font-size:15px; margin-top:16px;}
+    .cprice__cards{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+    .cprice__card{background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:36px 28px; text-align:center; box-shadow:0 24px 50px -34px rgba(143,92,113,.4);}
+    .cprice__card h3{font-family:"Shippori Mincho",serif; font-weight:700; font-size:19px; color:var(--accent-deep); margin:0 0 18px; line-height:1.5;}
+    .cprice__card .hr{height:1px; background:var(--line); margin:0 0 18px;}
+    .cprice__card .pn{font-size:13px; color:var(--muted);}
+    .cprice__card .lbl{font-size:12px; color:var(--muted); margin-top:14px;}
+    .cprice__card .price{font-family:"Shippori Mincho",serif; font-weight:800; font-size:clamp(40px,6vw,72px); color:var(--ink); line-height:1.1; display:inline-flex; align-items:flex-start; margin-top:6px;}
+    .cprice__card .price .y{font-size:.34em; margin-top:.5em; margin-right:.04em; color:var(--accent);}
+    .cprice__card .price .u{font-size:.26em; margin-top:2em; margin-left:.1em; color:var(--muted);}
+    .cprice__card .tax{font-family:"Space Grotesk",monospace; font-size:11px; color:var(--muted); margin-top:10px;}
+    .cprice__grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; margin-top:54px; align-items:start;}
+    .cprice__list{list-style:none; margin:0; padding:0; border-top:1px solid var(--line);}
+    .cprice__list li{display:grid; grid-template-columns:1fr auto auto; gap:16px; align-items:baseline; padding:20px 4px; border-bottom:1px solid var(--line);}
+    .cprice__list li .mt{font-family:"Shippori Mincho",serif; font-weight:700; font-size:17px; color:var(--ink);}
+    .cprice__list li .md{font-size:13px; color:var(--muted);}
+    .cprice__list li .mp{font-family:"Shippori Mincho",serif; color:var(--accent-deep); font-weight:700; white-space:nowrap;}
+    .cprice__note{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:30px;}
+    .cprice__note .nt{font-family:"Space Grotesk",monospace; font-size:11px; letter-spacing:.16em; color:var(--accent-deep); text-transform:uppercase;}
+    .cprice__note h4{font-size:19px; margin:8px 0 10px;}
+    .cprice__note p{color:var(--muted); font-size:14px; margin:0 0 20px;}
+
+    /* MESSAGE（message-03：見開き・特大ドロップキャップ＋署名ドロー） */
+    .cmsg{padding:120px 0 140px; background:var(--bg2);}
+    .cmsg__spread{display:grid; grid-template-columns:300px 1fr; gap:0 64px; align-items:start; margin-top:24px;}
+    .cmsg__left{position:relative;}
+    .cmsg__vlabel{position:absolute; left:-14px; top:0; writing-mode:vertical-rl; font-family:"Space Grotesk",monospace; font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--accent-deep);}
+    .cmsg__portrait{margin-left:34px; aspect-ratio:4/5; overflow:hidden; border-radius:6px; clip-path:inset(0 0 100% 0);}
+    .cmsg__portrait img{width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.04);}
+    .cmsg__meta{margin:22px 0 0 34px;}
+    .cmsg__meta .role{font-family:"Space Grotesk",monospace; font-size:11px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase;}
+    .cmsg__meta .nm{font-family:"Shippori Mincho",serif; font-size:22px; font-weight:700; margin-top:4px;}
+    .cmsg__right{padding-top:6px;}
+    .cmsg__kicker{font-family:"Space Grotesk",monospace; font-size:11px; letter-spacing:.3em; color:var(--accent-deep); text-transform:uppercase; border-bottom:1px solid var(--ink); padding-bottom:14px;}
+    .cmsg__body{font-family:"Shippori Mincho",serif; font-weight:500; font-size:clamp(17px,1.55vw,20px); line-height:2.15; margin-top:30px; max-width:30em;}
+    .cmsg__body p{margin:0 0 1.4em;}
+    .cmsg__body .drop{float:left; font-family:"Shippori Mincho",serif; font-weight:800; font-size:clamp(86px,10vw,140px); line-height:.74; margin:6px 18px -6px 0; color:var(--accent);}
+    .cmsg__body .lead-line{font-size:clamp(22px,2.6vw,32px); font-weight:600; line-height:1.5;}
+    .cmsg__sign{margin-top:44px; display:flex; align-items:center; gap:24px;}
+    .cmsg__sign svg{width:200px; height:64px; overflow:visible;}
+    .cmsg__sign path{fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round;}
+    .cmsg__sign .stamp{font-family:"Space Grotesk",monospace; font-size:10px; letter-spacing:.2em; color:var(--muted); text-transform:uppercase;}
+
+    /* NEWS（blog-07：縦書きJOURNAL＋スクロールリスト） */
+    .cnews{padding:120px 0;}
+    .cnews__layout{display:grid; grid-template-columns:.5fr 1.5fr; gap:50px; align-items:start;}
+    .cnews__side{position:sticky; top:14vh; border-right:1px solid var(--line); padding-right:40px;}
+    .cnews__vt{writing-mode:vertical-rl; font-family:"Shippori Mincho",serif; font-weight:800; font-size:clamp(40px,6vw,80px); letter-spacing:.16em; color:var(--accent-deep); line-height:1;}
+    .cnews__eb{writing-mode:vertical-rl; font-family:"Space Grotesk",monospace; font-size:11px; letter-spacing:.3em; color:var(--muted); margin-top:14px;}
+    .cnews__list{display:flex; flex-direction:column; border-top:1px solid var(--ink);}
+    .cnews__row{display:grid; grid-template-columns:140px 1fr auto; gap:24px; align-items:center; padding:24px 6px; border-bottom:1px solid var(--line); color:inherit; transition:background .25s ease, padding .25s ease;}
+    .cnews__row:hover{background:rgba(176,117,139,.06); padding-left:14px;}
+    .cnews__row .thumb{width:140px; aspect-ratio:16/10; border-radius:6px; overflow:hidden;}
+    .cnews__row .thumb img{width:100%; height:100%; object-fit:cover; filter:grayscale(1); transition:transform .4s ease, filter .4s ease;}
+    .cnews__row:hover .thumb img{transform:scale(1.06); filter:grayscale(0);}
+    .cnews__row .meta{display:flex; align-items:center; gap:12px; margin-bottom:8px;}
+    .cnews__row .date{font-family:"Space Grotesk",monospace; font-size:12px; color:var(--accent-deep);}
+    .cnews__row .cat{font-size:11px; font-weight:700; color:#fff; background:var(--accent); padding:3px 11px; border-radius:4px;}
+    .cnews__row .cat.info{background:var(--ink);}
+    .cnews__row h3{font-family:"Shippori Mincho",serif; font-size:clamp(16px,2vw,20px); font-weight:700; margin:0; line-height:1.6;}
+    .cnews__row .arr{width:44px; height:44px; border-radius:50%; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:var(--accent-deep); flex:0 0 auto; transition:.25s;}
+    .cnews__row:hover .arr{background:var(--accent); color:#fff; border-color:var(--accent);}
+
+    /* FAQ（faq-03：左sticky×番号アコーディオン） */
+    .cfaq{padding:130px 0; background:var(--bg2);}
+    .cfaq__layout{display:grid; grid-template-columns:.8fr 1.2fr; gap:50px; align-items:start;}
+    .cfaq__side{position:sticky; top:90px;}
+    .cfaq__side h2{font-family:"Shippori Mincho",serif; font-weight:600; font-size:clamp(28px,3.6vw,44px); margin:14px 0 14px;}
+    .cfaq__side p{color:var(--muted); font-size:14px;}
+    .cfaq__acc{border-top:1px solid var(--line);}
+    .cfaq__item{border-bottom:1px solid var(--line);}
+    .cfaq__q{display:grid; grid-template-columns:48px 1fr 30px; align-items:center; gap:14px; padding:24px 6px; cursor:pointer; background:none; border:0; width:100%; text-align:left; font:inherit; color:inherit;}
+    .cfaq__q .no{font-family:"Space Grotesk",monospace; font-size:13px; color:var(--accent-deep);}
+    .cfaq__q .tx{font-family:"Shippori Mincho",serif; font-weight:600; font-size:clamp(16px,1.9vw,19px); color:var(--ink);}
+    .cfaq__q .ic{position:relative; width:18px; height:18px; justify-self:end;}
+    .cfaq__q .ic::before,.cfaq__q .ic::after{content:""; position:absolute; background:var(--accent-deep); transition:.3s;}
+    .cfaq__q .ic::before{top:8px; left:0; width:18px; height:2px;}
+    .cfaq__q .ic::after{top:0; left:8px; width:2px; height:18px;}
+    .cfaq__item.is-open .ic::after{transform:rotate(90deg); opacity:0;}
+    .cfaq__a{max-height:0; overflow:hidden; transition:max-height .5s ease;}
+    .cfaq__a div{padding:0 6px 26px 62px; color:var(--muted); font-size:14.5px;}
+    .cfaq__item.is-open .cfaq__a{max-height:340px;}
+
+    /* FINAL CTA（cta-01：ダーク全幅＋動く光） */
+    .finalcta{width:100vw; position:relative; left:50%; margin-left:-50vw; min-height:82vh; display:flex; align-items:center; justify-content:center; overflow:hidden; text-align:center; background:#100E0F;}
+    .finalcta .bg{position:absolute; inset:0;}
+    .finalcta .bg img{width:100%; height:100%; object-fit:cover; filter:grayscale(1) brightness(.6);}
+    .finalcta .ov{position:absolute; inset:0; background:linear-gradient(180deg,rgba(16,14,15,.78),rgba(16,14,15,.6) 50%,rgba(16,14,15,.9));}
+    .finalcta .glow{position:absolute; width:58vw; height:58vw; border-radius:50%; filter:blur(90px); mix-blend-mode:screen; opacity:.5; background:radial-gradient(circle,var(--accent),transparent 65%); left:10%; top:10%;}
+    .finalcta .glow2{background:radial-gradient(circle,#D8B7C4,transparent 65%); right:8%; bottom:6%; left:auto; top:auto;}
+    .finalcta .inner{position:relative; z-index:3; width:min(820px,calc(100% - 48px));}
+    .finalcta .eyebrow{color:#E7C9D5; justify-content:center;} .finalcta .eyebrow::before{background:var(--accent);} .finalcta .eyebrow::after{content:""; width:30px; height:2px; background:var(--accent);}
+    .finalcta h2{color:#fff; font-weight:800; font-size:clamp(30px,5.4vw,66px); line-height:1.4; margin:22px 0 0; text-shadow:0 4px 40px rgba(0,0,0,.5);}
+    .finalcta h2 .mk{color:#E7C9D5;}
+    .finalcta p.lead{color:rgba(255,255,255,.86); font-size:17px; margin:22px auto 0; max-width:32em;}
+    .finalcta .btns{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:40px;}
+    .finalcta .sub{margin-top:24px; font-family:"Space Grotesk",monospace; font-size:12px; letter-spacing:.1em; color:rgba(255,255,255,.55);}
+    /* /ZOROYA:MAIN */
+
+    /* ZOROYA:FOOTER（footer-02：ミニマル中央・白） */
+    .footer{border-top:1px solid var(--line); background:var(--paper);}
+    .footer .ft{width:min(880px,calc(100% - 56px)); margin:0 auto; padding:66px 0 40px; text-align:center;}
+    .footer .fmark{width:42px; height:42px; margin:0 auto 22px; border:2px solid var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:"Shippori Mincho",serif; font-weight:700; color:var(--accent);}
+    .footer .flogo img{height:42px; width:auto; margin:0 auto; display:block;}
+    .footer .fen{font-family:"Space Grotesk",monospace; font-size:10px; letter-spacing:.3em; color:var(--muted); margin-top:8px;}
+    .footer nav{display:flex; gap:28px; justify-content:center; flex-wrap:wrap; margin:30px 0 22px;}
+    .footer nav a{font-size:14px; color:var(--ink);}
+    .footer nav a:hover{color:var(--accent-deep);}
+    .footer .fnap{color:var(--muted); font-size:13px; line-height:1.9; margin-bottom:26px;}
+    .footer .cp{font-family:"Space Grotesk",monospace; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:24px;}
+    /* /ZOROYA:FOOTER */
+
+    @media (max-width:960px){
+      .cintro__split,.cfeat__wrap,.cvoice__grid,.cprice__cards,.cprice__grid,.cmsg__spread,.cnews__layout,.cfaq__layout{grid-template-columns:1fr;}
+      .cintro__photo{aspect-ratio:4/3; border-radius:0;} .cintro__copy{padding:60px 32px 84px;}
+      .cfeat__imgwrap{aspect-ratio:4/3;} .cfeat__bigword{font-size:64px;}
+      .cvoice__portrait{max-width:280px;}
+      .cprice__cards{gap:16px;}
+      .cmsg__vlabel{position:static; writing-mode:horizontal-tb; margin-bottom:10px;} .cmsg__portrait{margin-left:0; max-width:260px;} .cmsg__meta{margin-left:0;}
+      .cnews__side{position:static; border-right:none; border-bottom:1px solid var(--line); padding:0 0 18px; display:flex; gap:18px; align-items:center;} .cnews__vt,.cnews__eb{writing-mode:horizontal-tb;}
+      .cnews__row{grid-template-columns:1fr auto;} .cnews__row .thumb{display:none;}
+      .cfaq__side{position:static;}
+    }
+    @media (max-width:768px){
+      .hero{height:min(680px,92svh); min-height:520px;}
+      .hero-frame{inset:14px;}
+      .btn{width:100%;}
+      .cprice__cards{grid-template-columns:1fr;}
+    }
+  </style>
+  <script>document.documentElement.className+=" j";</script>
+</head>
+<body>
+  <!-- ZOROYA:HEADER -->
+  <header class="zhd">
+    <div class="zhd__inner">
+      <a class="zhd__brand" href="#top" aria-label="美容室ZOROYA トップへ"><img src="src/logo.png" alt="美容室ZOROYA"></a>
+      <button class="zhd__burger" id="zhdToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="zhdMenu"><span></span><span></span><span></span></button>
+    </div>
+    <nav class="zhd__menu" id="zhdMenu" aria-label="メインメニュー">
+      <div class="zhd__left">
+        <div class="zhd__lbl">MENU</div>
+        <div class="zhd__nav">
+          <a href="index.html" aria-current="page"><span class="no">01</span>トップ</a>
+          <a href="service.html"><span class="no">02</span>サービス</a>
+          <a href="about.html"><span class="no">03</span>概要</a>
+          <a href="faq.html"><span class="no">04</span>FAQ</a>
+          <a href="contact.html"><span class="no">05</span>お問い合わせ</a>
+          <a href="privacy.html"><span class="no">06</span>プライバシー</a>
+        </div>
+        <a class="zhd__book" href="contact.html">
+          <div><div class="rt">LINEで相談・予約する</div><div class="rs">希望画像を送るだけでも大丈夫です</div></div>
+          <span class="arr">↗</span>
+        </a>
+      </div>
+      <div class="zhd__right">
+        <div class="zhd__img"><img src="src/case-1.jpg" alt="透明感ハイライトの作例"></div>
+        <div class="zhd__info">
+          <div class="brand">美容室ZOROYA<small>ZOROYA HAIR DESIGN</small></div>
+          <div class="row"><span class="lab">ADD</span>都内○○（プレースホルダ）／ 最寄駅徒歩5分</div>
+          <div class="row"><span class="lab">TEL</span><span class="tel">03-0000-0000</span>　<span style="color:rgba(255,255,255,.6)">10:00–20:00／火曜定休</span></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- /ZOROYA:HEADER -->
+
+  <!-- ZOROYA:MAIN -->
+  <main id="top">
+
+    <!-- HERO ＝ fv-02 Wipe -->
+    <section class="hero" id="hero">
+      <div class="duo duo-base"></div>
+      <div class="duo duo-color" id="duoColor"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-frame"></div>
+      <div class="hero-content">
+        <div class="inner">
+          <p class="eyebrow">ZOROYA HAIR DESIGN ／ 似合わせカラー</p>
+          <h1>似合う色は、<br>骨格から決まる。</h1>
+          <p class="lead">「カラー、また思っていたのと違う仕上がりになりそう」。見せた写真のとおりに染めるだけでは、似合うかどうかは運任せです。なりたい雰囲気を、骨格・髪質・肌色から似合う色に翻訳して設計します。</p>
+          <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <a class="btn light" href="#contact">LINEで相談・予約する</a>
+            <a class="btn light" href="#voice">作例を見る</a>
+          </div>
+          <p class="hero-note">都内○○ ／ 10:00–20:00 ／ 火曜定休 ／ 最寄駅徒歩5分</p>
+        </div>
+      </div>
+      <span class="hero-hint">写真に触れると、色が戻ります</span>
+    </section>
+
+    <section class="cintro" id="intro">
+      <div class="cintro__split">
+        <div class="cintro__photo">
+          <span class="cintro__num">CASE</span>
+          <img src="src/case-1.jpg" alt="透明感ハイライトの施術">
+          <div class="cintro__dots"></div>
+        </div>
+        <div class="cintro__copy">
+          <span class="eyebrow">Before Booking</span>
+          <h2 class="cintro__kicker">変えたい気持ちと、<br>失敗したくない気持ち。</h2>
+          <p class="cintro__sub">ひとつでも心当たりがあれば、原因は「色選び」ではなく「似合わせの設計」にあるかもしれません。</p>
+          <div class="cintro__pains" id="cintroPains">
+            <div class="cintro__pain"><span class="ck">01</span><p>見せた写真どおりに染めても、なぜか似合わない。</p></div>
+            <div class="cintro__pain"><span class="ck">02</span><p>流行りの色にしたら、自分だけ浮いてしまった。</p></div>
+            <div class="cintro__pain"><span class="ck">03</span><p>伸びると根元の境目が気になって、すぐ通い直す。</p></div>
+            <div class="cintro__pain"><span class="ck">04</span><p>ブリーチの傷みが不安で、踏み出せない。</p></div>
+          </div>
+          <p class="cintro__closer">どれも、染める前に<span class="hl">似合うへ翻訳する</span>だけで変わります。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="brandband" id="concept-band">
+      <div class="wrap">
+        <p class="eyebrow">Concept</p>
+        <h2>言われた色をそのまま入れるだけでは、<br><span class="mk">似合う</span>は賭けになる。</h2>
+        <p>流行りの色が、あなたに似合うとは限りません。美容室ZOROYAは、なりたい雰囲気の奥にある理想を、骨格・髪質・肌色・退色した後の状態まで含めて「似合う」に翻訳してから染めます。</p>
+      </div>
+    </section>
+
+    <section class="cfeat" id="concept">
+      <div class="wrap">
+        <div class="cfeat__wrap">
+          <div class="cfeat__imgcol">
+            <div class="cfeat__imgwrap" id="cfeatImg"><img src="src/case-1.jpg" alt="骨格に合わせた似合わせカラーの作例"></div>
+            <span class="cfeat__tagno">HOW WE DESIGN</span>
+            <span class="cfeat__bigword">DESIGN</span>
+          </div>
+          <div class="cfeat__content">
+            <span class="eyebrow">How we design</span>
+            <h2>似合うを、<span class="mk">設計する</span>。</h2>
+            <div class="cfeat__list">
+              <div class="cfeat__item"><span class="n">01</span><div><h3>骨格で見え方を整える</h3><p>顔まわり、前髪、レイヤー、ハイライトの位置を合わせ、写真だけでは決めきれない似合わせをつくります。</p><span class="tag">SHAPE</span></div></div>
+              <div class="cfeat__item"><span class="n">02</span><div><h3>髪質で施術を調整する</h3><p>細毛・硬毛・広がり・過去のカラー履歴を見ながら、色の入り方とダメージを管理します。無理な施術はすすめません。</p><span class="tag">TEXTURE</span></div></div>
+              <div class="cfeat__item"><span class="n">03</span><div><h3>伸びた後まで考える</h3><p>根元が伸びても境目が強く出にくい配置や、退色した後も濁りにくい色設計を大切にします。</p><span class="tag">DESIGN</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZOROYA:GALLERY（維持） -->
+    <section class="zgal" id="gallery">
+      <div class="zg-wrap">
+        <div class="zg-head"><span class="zg-eyebrow">Style gallery</span><h2 class="zg-title">作品の、<span class="zg-mk">記録</span>。</h2></div>
+        <div class="zg-grid">
+          <a class="zg-item" href="#"><img src="src/case-1.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#"><img src="src/style-2.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#"><img src="src/case-2.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#"><img src="src/style-1.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#"><img src="src/case-3.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#"><img src="src/style-3.jpg" alt="スタイル作品"></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cvoice" id="voice">
+      <div class="wrap">
+        <div class="cvoice__head">
+          <span class="eyebrow">Customer voice</span>
+          <h2>作例で、明るさと<span class="mk">雰囲気</span>を確認できます。</h2>
+        </div>
+        <div class="cvoice__grid" id="cvoiceGrid">
+          <div class="cvoice__item">
+            <div class="cvoice__portrait"><img src="src/voice-1.jpg" alt=""></div>
+            <div>
+              <p class="cvoice__bigq"><span class="qm">“</span>暗くても、重く見えない色に。<small>仕事で明るくしすぎられないけれど、やわらかく見える色にしてもらえました。</small></p>
+              <div class="cvoice__by"><span class="ln"></span><span class="nm">30代</span><span class="rl">／ 事務職の方</span></div>
+            </div>
+          </div>
+          <div class="cvoice__item">
+            <div class="cvoice__portrait"><img src="src/voice-2.jpg" alt=""></div>
+            <div>
+              <p class="cvoice__bigq"><span class="qm">“</span>初めてのブリーチも相談できた。<small>傷みが不安でしたが、できる範囲を説明してもらえて安心して任せられました。</small></p>
+              <div class="cvoice__by"><span class="ln"></span><span class="nm">20代</span><span class="rl">／ 学生の方</span></div>
+            </div>
+          </div>
+          <div class="cvoice__item">
+            <div class="cvoice__portrait"><img src="src/voice-3.jpg" alt=""></div>
+            <div>
+              <p class="cvoice__bigq"><span class="qm">“</span>伸びても気になりにくい。<small>根元が伸びても自然に見えるので、次回まで気分よく過ごせました。</small></p>
+              <div class="cvoice__by"><span class="ln"></span><span class="nm">40代</span><span class="rl">／ 会社員の方</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cprice" id="menu">
+      <div class="wrap">
+        <div class="cprice__head">
+          <span class="eyebrow">Menu — メニュー</span>
+          <h2>デザインカラー（似合わせ）を主役に。</h2>
+          <p class="lead">カウンセリング・カラー設計・仕上げまで。まずは、なりたい雰囲気から。</p>
+        </div>
+        <div class="cprice__cards" id="cpriceCards">
+          <div class="cprice__card"><h3>透明感を<br>足したい方へ</h3><div class="hr"></div><div class="pn">ハイライト</div><div class="lbl">FROM</div><div class="price"><span class="y">¥</span><span class="c" data-to="9900">0</span><span class="u">〜</span></div><div class="tax">（税込・公開前に正式料金へ差し替え）</div></div>
+          <div class="cprice__card"><h3>明るく抜けを<br>つくりたい方へ</h3><div class="hr"></div><div class="pn">ブリーチカラー</div><div class="lbl">FROM</div><div class="price"><span class="y">¥</span><span class="c" data-to="14300">0</span><span class="u">〜</span></div><div class="tax">（税込・公開前に正式料金へ差し替え）</div></div>
+          <div class="cprice__card"><h3>カラーが映える<br>髪に整えたい方へ</h3><div class="hr"></div><div class="pn">カット＋ケア</div><div class="lbl">FROM</div><div class="price"><span class="y">¥</span><span class="c" data-to="6600">0</span><span class="u">〜</span></div><div class="tax">（税込・公開前に正式料金へ差し替え）</div></div>
+        </div>
+        <div class="cprice__grid">
+          <ul class="cprice__list">
+            <li><span class="mt">ハイライト</span><span class="md">立体感・伸びても自然</span><span class="mp">¥6,600〜</span></li>
+            <li><span class="mt">ブリーチカラー</span><span class="md">透明感・肌になじむ明るさ</span><span class="mp">¥13,200〜</span></li>
+            <li><span class="mt">カット</span><span class="md">カラーが映える骨格カット</span><span class="mp">¥7,700〜</span></li>
+            <li><span class="mt">パーマ</span><span class="md">動きと抜け感</span><span class="mp">¥16,500〜</span></li>
+            <li><span class="mt">髪質改善トリートメント</span><span class="md">質感・手触りを整える</span><span class="mp">¥19,800〜</span></li>
+          </ul>
+          <div class="cprice__note">
+            <div class="nt">Note</div>
+            <h4>まずは、なりたい雰囲気から</h4>
+            <p>どのメニューで予約すればいいか迷う場合も、LINEで希望画像を送っていただければ、髪の状態を確認してご案内します。物販の押し売りはしません。</p>
+            <a class="btn primary" href="#contact">LINEで相談・予約する</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cmsg" id="message">
+      <div class="wrap">
+        <span class="eyebrow">Stylist</span>
+        <div class="cmsg__spread">
+          <div class="cmsg__left">
+            <div class="cmsg__vlabel">Stylist — スタイリスト</div>
+            <div class="cmsg__portrait" id="cmsgPortrait"><img src="src/profile.jpg" alt="美容室ZOROYAのスタイリスト"></div>
+            <div class="cmsg__meta"><div class="role">スタイリスト／カラー専門</div><div class="nm">担当スタイリスト</div></div>
+          </div>
+          <div class="cmsg__right">
+            <div class="cmsg__kicker">A Letter</div>
+            <div class="cmsg__body">
+              <p><span class="drop">強</span><span class="lead-line">さやスピードを競う仕事ではありません。</span></p>
+              <p>なりたい雰囲気を聞いて、骨格や髪質、肌の色、そして退色した後の見え方まで考えて、似合う色に翻訳すること。それが、伸びてもきれいに見える髪につながると考えています。</p>
+              <p>だから、染める前のカウンセリングをいちばん大切にしています。不安があるままでは、予約しなくて大丈夫です。</p>
+            </div>
+            <div class="cmsg__sign">
+              <svg viewBox="0 0 200 64"><path id="cmsgSign" d="M6 46 C 20 14, 34 14, 38 42 C 40 56, 48 24, 62 28 C 74 31, 62 52, 78 48 C 96 43, 100 18, 116 24 M112 26 C 130 20, 140 44, 156 36 C 170 29, 166 50, 184 42"/></svg>
+              <span class="stamp">ZOROYA HAIR DESIGN</span>
+            </div>
+            <a class="btn ghost" href="#access" style="margin-top:24px;">サロンについて</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cnews" id="news">
+      <div class="wrap">
+        <div class="cnews__layout">
+          <div class="cnews__side">
+            <div class="cnews__vt">NEWS</div>
+            <div class="cnews__eb">お知らせ・キャンペーン</div>
+          </div>
+          <div class="cnews__list" id="cnewsList">
+            <a class="cnews__row" href="#"><span class="thumb"><img src="src/case-1.jpg" alt="夏の透明感ハイライトの作例"></span><div><div class="meta"><span class="date">2026.06.20</span><span class="cat">キャンペーン</span></div><h3>夏の透明感ハイライト｜初回カウンセリング特典のお知らせ</h3></div><span class="arr">→</span></a>
+            <a class="cnews__row" href="#"><span class="thumb"><img src="src/case-2.jpg" alt="髪質改善トリートメントの作例"></span><div><div class="meta"><span class="date">2026.06.05</span><span class="cat info">新メニュー</span></div><h3>髪質改善トリートメントのメニューを追加しました</h3></div><span class="arr">→</span></a>
+            <a class="cnews__row" href="#"><span class="thumb"><img src="src/case-3.jpg" alt="明るめカラーの作例"></span><div><div class="meta"><span class="date">2026.05.18</span><span class="cat info">お知らせ</span></div><h3>6月の定休日と、ご予約状況についてのご案内</h3></div><span class="arr">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cfaq" id="faq">
+      <div class="wrap">
+        <div class="cfaq__layout">
+          <div class="cfaq__side">
+            <span class="eyebrow">FAQ</span>
+            <h2>初めての方へ。</h2>
+            <p>申し込み前によくいただく不安をまとめました。ここにないことも、お気軽にどうぞ。</p>
+          </div>
+          <div class="cfaq__acc" id="cfaqAcc">
+            <div class="cfaq__item is-open"><button class="cfaq__q" type="button" aria-expanded="true"><span class="no">01</span><span class="tx">ブリーチなしでも透明感は出せますか。</span><span class="ic"></span></button><div class="cfaq__a"><div>髪質や履歴によって可能な範囲が変わります。ブリーチなしで近づける場合と、部分的なハイライトが合う場合があります。来店時に見極めます。</div></div></div>
+            <div class="cfaq__item"><button class="cfaq__q" type="button" aria-expanded="false"><span class="no">02</span><span class="tx">白髪があっても明るいカラーにできますか。</span><span class="ic"></span></button><div class="cfaq__a"><div>白髪の量や位置に合わせて、隠すだけではない明るめカラーを提案できます。伸びた後の見え方まで考えて設計します。</div></div></div>
+            <div class="cfaq__item"><button class="cfaq__q" type="button" aria-expanded="false"><span class="no">03</span><span class="tx">商品を買わないと気まずいですか。</span><span class="ic"></span></button><div class="cfaq__a"><div>気まずくありません。必要な場合だけ理由を添えて案内しますが、購入を前提にした接客はしません。</div></div></div>
+            <div class="cfaq__item"><button class="cfaq__q" type="button" aria-expanded="false"><span class="no">04</span><span class="tx">どのメニューで予約すればよいか分かりません。</span><span class="ic"></span></button><div class="cfaq__a"><div>LINEで希望画像を送ってください。髪の状態を確認し、予約枠とメニューの目安をご案内します。</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="finalcta" id="contact">
+      <div class="bg"><img src="src/case-2.jpg" alt=""></div>
+      <div class="ov"></div>
+      <span class="glow" id="g1"></span><span class="glow glow2" id="g2"></span>
+      <div class="inner">
+        <span class="eyebrow reveal">Reservation</span>
+        <h2 class="reveal">似合うか不安なままでも、<br>まずは<span class="mk">相談</span>から。</h2>
+        <p class="lead reveal">希望画像が1枚あるだけでも大丈夫です。今の髪の状態と、なりたい雰囲気をLINEで送ってください。カウンセリングだけのご相談でも、もちろん構いません。</p>
+        <div class="btns reveal">
+          <a class="btn light" href="#">LINEで相談・予約する</a>
+          <a class="btn light" href="#">予約サイトを見る</a>
+        </div>
+        <div class="sub reveal">カウンセリング重視 ／ 物販の押し売りなし ／ 似合わせ設計</div>
+      </div>
+    </section>
+
+  </main>
+  <!-- /ZOROYA:MAIN -->
+
+  <!-- ZOROYA:FOOTER -->
+  <footer class="footer" id="access">
+    <div class="ft">
+      <a class="flogo" href="#top"><img src="src/logo.png" alt="美容室ZOROYA"></a>
+      <div class="fen">ZOROYA HAIR DESIGN</div>
+      <nav><a href="#concept">似合わせ</a><a href="#voice">お客様の声</a><a href="#menu">メニュー</a><a href="#message">スタイリスト</a><a href="#contact">ご予約</a></nav>
+      <div class="fnap">都内○○（プレースホルダ）／ 10:00–20:00 火曜定休 ／ 最寄駅徒歩5分 ／ Instagram・LINE</div>
+      <div class="cp">© 美容室ZOROYA ／ このサイトのデザイン意匠、コード構成は、ぞろ屋合同会社に帰属します。無断での複製コピーは禁止です。</div>
+    </div>
+  </footer>
+  <!-- /ZOROYA:FOOTER -->
+
+  <!-- 演出：fv-02 Wipe（カーソルで似合う色が現れる）＋ ScrollTriggerセクション群。未読込/縮減時は静的に成立 -->
+  <script>
+    (function(){
+      var root = document.documentElement;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ヘッダー：フルスクリーンメニュー（root起点・ID一意）
+      (function(){
+        var tg = document.getElementById('zhdToggle'), mn = document.getElementById('zhdMenu');
+        if (!tg || !mn) return;
+        function toggle(){
+          var open = mn.classList.toggle('is-open');
+          document.body.classList.toggle('is-locked', open);
+          tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+          tg.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+          tg.querySelectorAll('span').forEach(function(s,i){
+            s.style.transform = open ? (i===0 ? 'translateY(8px) rotate(45deg)' : i===2 ? 'translateY(-8px) rotate(-45deg)' : 'scaleX(0)') : '';
+            s.style.opacity = (open && i===1) ? '0' : '1';
+          });
+        }
+        tg.addEventListener('click', toggle);
+        mn.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ if (mn.classList.contains('is-open')) toggle(); }); });
+        document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && mn.classList.contains('is-open')) toggle(); });
+      })();
+    })();
+
+    window.addEventListener('load', function () {
+      var root = document.documentElement;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var duo = document.getElementById('duoColor'), hero = document.getElementById('hero');
+
+      // 19.Duotone（カーソル追従。縮減/未読込時は全面カラー）
+      if (duo && hero && !reduce) {
+        var rad = 190;
+        function move(x, y) { var b = hero.getBoundingClientRect(); duo.style.clipPath = 'circle(' + rad + 'px at ' + (x - b.left) + 'px ' + (y - b.top) + 'px)'; }
+        hero.addEventListener('mousemove', function (e) { move(e.clientX, e.clientY); }, { passive: true });
+        hero.addEventListener('touchmove', function (e) { var t = e.touches[0]; move(t.clientX, t.clientY); }, { passive: true });
+        hero.addEventListener('mouseleave', function () { duo.style.clipPath = 'circle(170px at 50% 45%)'; });
+      } else { root.classList.remove('j'); }
+
+      if (!window.gsap) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      function revealOnce(el, vars){
+        gsap.from(el, Object.assign({ y: 28, opacity: 0, duration: 1, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true } }, vars || {}));
+      }
+
+      // intro（intro-08）：写真パララックス＋本文＋痛みの点灯
+      revealOnce('.cintro__photo img', { y: 0, scale: 1.12, duration: 1.6 });
+      ['.cintro__copy .eyebrow', '.cintro__kicker', '.cintro__sub'].forEach(function(s){ var el = document.querySelector(s); if (el) revealOnce(el); });
+      gsap.utils.toArray('.cintro__pain').forEach(function (el) {
+        if (!reduce) ScrollTrigger.create({ trigger: el, start: 'top 80%', once: true, onEnter: function () { el.classList.add('is-lit'); } });
+        else el.classList.add('is-lit');
+        revealOnce(el, { x: -20, y: 0, duration: .8 });
+      });
+      revealOnce('.cintro__closer');
+
+      // brandband
+      gsap.utils.toArray('.brandband .eyebrow, .brandband h2, .brandband p').forEach(function(el){ revealOnce(el); });
+
+      // concept（features-07）：クリップ開き＋番号フィーチャー
+      gsap.set('#cfeatImg', { clipPath: 'inset(0 100% 0 0)' });
+      gsap.to('#cfeatImg', { clipPath: 'inset(0 0% 0 0)', duration: 1.3, ease: 'power4.inOut', scrollTrigger: { trigger: '#concept', start: 'top 78%', once: true } });
+      revealOnce('.cfeat__bigword', { x: -30, y: 0, duration: 1.1 });
+      gsap.utils.toArray('.cfeat__content .eyebrow, .cfeat__content h2, .cfeat__item').forEach(function(el){ revealOnce(el); });
+
+      // gallery（維持）：要素ごと once
+      gsap.utils.toArray('.zgal .zg-head, .zgal .zg-item').forEach(function(el){ revealOnce(el); });
+
+      // voice（voice-02）：ポートレートのクリップ＋引用。要素ごとScrollTrigger（消失回避）
+      gsap.utils.toArray('.cvoice__item').forEach(function (item) {
+        var pt = item.querySelector('.cvoice__portrait');
+        if (!reduce) {
+          gsap.to(pt, { clipPath: 'inset(0 0 0% 0)', duration: 1.3, ease: 'power4.inOut', scrollTrigger: { trigger: item, start: 'top 82%', once: true } });
+        } else { pt.style.clipPath = 'inset(0)'; }
+        revealOnce(item.querySelector('.cvoice__bigq'));
+        revealOnce(item.querySelector('.cvoice__by'), { delay: .15 });
+      });
+      revealOnce('.cvoice__head .eyebrow'); revealOnce('.cvoice__head h2');
+
+      // menu（pricing-05）：カードと価格カウント＋一覧スタッガー
+      gsap.utils.toArray('.cprice__card').forEach(function (c) { revealOnce(c, { y: 34, duration: .9 }); });
+      gsap.utils.toArray('.cprice__card .c').forEach(function (el) {
+        var to = +el.getAttribute('data-to'), o = { v: 0 };
+        gsap.to(o, { v: to, duration: 1.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true }, onUpdate: function () { el.textContent = Math.round(o.v).toLocaleString(); } });
+      });
+      gsap.utils.toArray('.cprice__list li').forEach(function (li) { revealOnce(li, { x: -20, y: 0, duration: .7 }); });
+      revealOnce('.cprice__note');
+      revealOnce('.cprice__head .eyebrow'); revealOnce('.cprice__head h2'); revealOnce('.cprice__head .lead');
+
+      // message（message-03）：ポートレートクリップ／ドロップキャップ／本文／署名ドロー
+      (function(){
+        var pt = document.getElementById('cmsgPortrait');
+        if (pt) {
+          if (!reduce) ScrollTrigger.create({ trigger: '#message', start: 'top 74%', once: true, onEnter: function () { gsap.fromTo(pt, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 1.4, ease: 'power4.inOut' }); } });
+          else pt.style.clipPath = 'inset(0)';
+        }
+      })();
+      revealOnce('.cmsg .eyebrow'); revealOnce('.cmsg__vlabel'); revealOnce('.cmsg__meta');
+      revealOnce('.cmsg__kicker');
+      gsap.from('.cmsg__body .drop', { opacity: 0, scale: .7, x: -20, duration: 1, ease: 'back.out(1.6)', scrollTrigger: { trigger: '.cmsg__body', start: 'top 80%', once: true } });
+      gsap.utils.toArray('.cmsg__body p').forEach(function (p) { revealOnce(p, { y: 24 }); });
+      (function () { var sg = document.getElementById('cmsgSign'); if (!sg) return; var L = sg.getTotalLength(); sg.style.strokeDasharray = L; sg.style.strokeDashoffset = L; gsap.to(sg, { strokeDashoffset: 0, duration: 1.6, ease: 'power1.inOut', scrollTrigger: { trigger: '.cmsg__sign', start: 'top 86%', once: true } }); })();
+
+      // news（blog-07）：縦書き見出し＋行リスト（要素ごと once）
+      revealOnce('.cnews__vt'); revealOnce('.cnews__eb');
+      gsap.utils.toArray('.cnews__row').forEach(function (r) { revealOnce(r, { y: 24, duration: .7 }); });
+
+      // faq（faq-03）：左見出し＋アイテム＋アコーディオン開閉
+      gsap.utils.toArray('.cfaq__side .eyebrow, .cfaq__side h2, .cfaq__side p').forEach(function(el){ revealOnce(el); });
+      gsap.utils.toArray('.cfaq__item').forEach(function (el) { revealOnce(el, { y: 24, duration: .8 }); });
+      document.querySelectorAll('#cfaqAcc .cfaq__q').forEach(function (q) {
+        q.addEventListener('click', function () {
+          var item = q.closest('.cfaq__item');
+          var open = item.classList.toggle('is-open');
+          q.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
+
+      // final CTA（cta-01）：背景パララックス＋光の漂い
+      gsap.to('.finalcta .bg', { scale: 1.08, ease: 'none', scrollTrigger: { trigger: '.finalcta', start: 'top bottom', end: 'bottom top', scrub: true } });
+      if (!reduce) {
+        gsap.to('#g1', { xPercent: 30, yPercent: 25, scale: 1.25, duration: 9, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+        gsap.to('#g2', { xPercent: -25, yPercent: -20, scale: 1.3, duration: 11, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      }
+    });
+  </script>
+</body>
+</html>

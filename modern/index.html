@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE BLACK CAFE - Premium Roastery</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="modern_style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <h1 class="logo"><a href="#">THE BLACK CAFE</a></h1>
+            <nav class="nav-menu" id="nav-menu">
+                <ul>
+                    <li><a href="#about">Concept</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#location">Location</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero parallax">
+        <div class="hero-bg" style="background-image: url('modern_hero.jpg');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-label reveal-text">EST. 2026</p>
+            <h2 class="hero-title reveal-text delay-1">THE ART OF<br>MINIMALISM.</h2>
+            <p class="hero-subtitle reveal-text delay-2">Crafting the perfect cup in a space designed for clarity.</p>
+        </div>
+        <div class="scroll-indicator">
+            <span class="scroll-text">SCROLL</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text fade-in-up">
+                    <h3 class="section-subtitle">CONCEPT</h3>
+                    <h2 class="section-title">無駄を削ぎ落とし、<br>本質だけを抽出する。</h2>
+                    <p class="desc">私たちが目指すのは、ただコーヒーを飲む場所ではなく、思考をクリアにするための空間です。<br>厳選されたシングルオリジン豆と、バリスタの確かな技術が、あなたに極上の一杯をお約束します。</p>
+                    
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-number count-up" data-target="98">0</div>
+                            <div class="stat-label">Coffee Score</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number count-up" data-target="12">0</div>
+                            <div class="stat-label">Single Origins</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number count-up" data-target="2026">0</div>
+                            <div class="stat-label">Established</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image-wrapper fade-in-up delay-1">
+                    <img src="modern_interior.jpg" alt="Minimalist Interior" class="about-img">
+                    <div class="about-image-bg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section menu bg-dark">
+        <div class="container">
+            <div class="menu-header fade-in-up">
+                <h3 class="section-subtitle text-light">OUR OFFERINGS</h3>
+                <h2 class="section-title text-white">MENU</h2>
+            </div>
+            
+            <div class="tabs fade-in-up delay-1">
+                <button class="tab-btn active" data-tab="coffee">Coffee</button>
+                <button class="tab-btn" data-tab="espresso">Espresso</button>
+                <button class="tab-btn" data-tab="pastry">Pastry</button>
+            </div>
+
+            <div class="tab-content fade-in-up delay-2">
+                <!-- Coffee -->
+                <div id="coffee" class="menu-list active">
+                    <div class="menu-item hover-line">
+                        <div class="menu-info">
+                            <h4 class="menu-name">Pour Over</h4>
+                            <p class="menu-desc">Ethiopia Yirgacheffe / Floral, Citrus, Clean</p>
+                        </div>
+                        <div class="menu-price">¥750</div>
+                    </div>
+                    <div class="menu-item hover-line">
+                        <div class="menu-info">
+                            <h4 class="menu-name">Cold Brew</h4>
+                            <p class="menu-desc">Kenya AA / Blackcurrant, Bright, Smooth</p>
+                        </div>
+                        <div class="menu-price">¥700</div>
+                    </div>
+                    <div class="menu-item hover-line">
+                        <div class="menu-info">
+                            <h4 class="menu-name">AeroPress</h4>
+                            <p class="menu-desc">Colombia Supremo / Chocolate, Full-bodied</p>
+                        </div>
+                        <div class="menu-price">¥650</div>
+                    </div>
+                </div>
+
+                <!-- Espresso -->
+                <div id="espresso" class="menu-list">
+                    <div class="menu-item hover-line">
+                        <div class="menu-info">
+                            <h4 class="menu-name">Espresso</h4>
+                            <p class="menu-desc">Signature Blend / Intense, Syrupy</p>
+                        </div>
+                        <div class="menu-price">¥500</div>
+                    </div>
+                    <div class="menu-item hover-line">
+                        <div class="menu-info">
+                            <h4 class="menu-name">Macchiato</h4>
+                            <p class="menu-desc">Espresso with a dash of milk foam</p>
+                        </div>
+                        <div class="menu-price">¥550</div>
+                    </div>
+                    <div class="menu-item hover-line">
+                        <div class="menu-info">
+                            <h4 class="menu-name">Caffè Latte</h4>
+                            <p class="menu-desc">Smooth microfoam over double espresso</p>
+                        </div>
+                        <div class="menu-price">¥650</div>
+                    </div>
+                </div>
+
+                <!-- Pastry -->
+                <div id="pastry" class="menu-list">
+                    <div class="menu-item hover-line">
+                        <div class="menu-info">
+                            <h4 class="menu-name">Black Croissant</h4>
+                            <p class="menu-desc">Charcoal infused, flaky layers with butter</p>
+                        </div>
+                        <div class="menu-price">¥450</div>
+                    </div>
+                    <div class="menu-item hover-line">
+                        <div class="menu-info">
+                            <h4 class="menu-name">Basque Cheesecake</h4>
+                            <p class="menu-desc">Caramelized top, creamy center</p>
+                        </div>
+                        <div class="menu-price">¥600</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery / Quote Section -->
+    <section id="gallery" class="section quote parallax">
+        <div class="quote-bg" style="background-image: url('modern_interior.jpg');"></div>
+        <div class="hero-overlay"></div>
+        <div class="container quote-content fade-in-up">
+            <h2 class="quote-text">"Coffee is a language in itself."</h2>
+            <p class="quote-author">- Jackie Chan</p>
+        </div>
+    </section>
+
+    <!-- Location -->
+    <section id="location" class="section location">
+        <div class="container">
+            <div class="location-grid">
+                <div class="location-image-wrapper fade-in-up">
+                    <img src="modern_exterior.jpg" alt="Exterior" class="location-img">
+                </div>
+                <div class="location-info fade-in-up delay-1">
+                    <h3 class="section-subtitle">VISIT US</h3>
+                    <h2 class="section-title">LOCATION</h2>
+                    
+                    <dl class="info-dl">
+                        <dt>ADDRESS</dt>
+                        <dd>〒150-0000<br>東京都渋谷区モダン町 2-4-6<br>THE BLACK BLDG 1F</dd>
+                        <dt>HOURS</dt>
+                        <dd>MON - FRI: 08:00 - 22:00<br>SAT - SUN: 09:00 - 23:00</dd>
+                        <dt>CONTACT</dt>
+                        <dd>hello@theblackcafe.com<br>03-0000-0000</dd>
+                    </dl>
+                    
+                    <a href="#" class="btn-outline"><span>VIEW ON GOOGLE MAPS</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h2 class="footer-logo">THE BLACK CAFE</h2>
+                    <p class="footer-desc">Premium Roastery & Espresso Bar</p>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>JOIN THE CLUB</h4>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit">→</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-links">
+                    <a href="#">INSTAGRAM</a>
+                    <a href="#">TWITTER</a>
+                    <a href="#">JOURNAL</a>
+                </div>
+                <p class="copyright">&copy; 2026 THE BLACK CAFE. ALL RIGHTS RESERVED.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="modern_script.js"></script>
+</body>
+</html>
