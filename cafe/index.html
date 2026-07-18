@@ -12,46 +12,96 @@ header h1 { font-size:24px; margin:0 0 4px; }
 header p { color:#6b6b6b; margin:0; font-size:14px; }
 .back { display:inline-block; margin-bottom:16px; font-size:12px; color:#6b6b6b; text-decoration:none; letter-spacing:0.08em; }
 .back:hover { color:#221c16; }
-.grid { max-width:1000px; margin:0 auto; padding:16px 24px 80px; display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; }
+.grid { max-width:1000px; margin:0 auto; padding:16px 24px 80px; display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; }
 .card { background:#fff; border:1px solid #e7e2d8; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; text-decoration:none; color:inherit; transition:transform .2s; box-shadow:0 1px 2px rgba(33,28,22,.04); }
 .card:hover { transform:translateY(-4px); box-shadow:0 24px 44px -26px rgba(33,28,22,.5); border-color:#e7b04b; }
-.card .thumb { width:100%; aspect-ratio:16/10; background:#e7e2d8; display:flex; align-items:center; justify-content:center; font-size:36px; color:#6b6b6b; }
+.card .thumb { width:100%; aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; font-size:36px; }
 .card .body { padding:14px 16px 18px; flex:1; display:flex; flex-direction:column; }
 .card .label { font-size:11px; font-weight:600; color:#fff; background:#243b53; padding:2px 10px; border-radius:20px; align-self:flex-start; margin-bottom:6px; }
 .card .label.green { background:#0a5; }
+.card .label.gold { background:#c9a84c; }
 .card h2 { font-size:17px; margin:0 0 4px; }
 .card p { font-size:13px; color:#6b6b6b; margin:0; flex:1; }
+.card .tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+.card .tag { font-size:10px; color:#8c8578; background:#f0ece4; padding:2px 8px; border-radius:10px; }
 </style>
 </head>
 <body>
 <header>
   <a class="back" href="../index.html">← STORE DESIGNS</a>
   <h1>☕ CAFE DESIGNS</h1>
-  <p>カフェ・コーヒー店のデザインサンプル一覧</p>
+  <p>カフェ・コーヒー店のデザインカテゴリ一覧（全8スタイル）</p>
 </header>
 <main class="grid">
+  <!-- 1. ブルックリン・インダストリアル -->
   <a class="card" href="brooklyn/index.html">
-    <div class="thumb">🧱</div>
+    <div class="thumb" style="background:#1a1a1a;">🧱</div>
     <div class="body">
-      <span class="label green">完成</span>
-      <h2>BRICK & BEANS</h2>
-      <p>ブルックリン・インダストリアル。黒・レンガ・ダークグレーの力強いデザイン。</p>
+      <span class="label green">2件</span>
+      <h2>ブルックリン・インダストリアル</h2>
+      <p>黒・レンガ・鉄。力強いタイポグラフィ。自家焙煎・ロースタリー向け。男性客にも人気。</p>
+      <div class="tags"><span class="tag">BRICK & BEANS</span><span class="tag">BLACKSMITH ROASTERY</span></div>
     </div>
   </a>
-  <a class="card" href="blacksmith/index.html">
-    <div class="thumb">⚒️</div>
-    <div class="body">
-      <span class="label green">完成</span>
-      <h2>BLACKSMITH ROASTERY</h2>
-      <p>プレミアムブルックリン。カスタムカーソル・プリローダー・3Dチルト搭載のリッチ版。</p>
-    </div>
-  </a>
+
+  <!-- 2. モダン・ミニマル ← MEGURI COFFEE をここに移動 -->
   <a class="card" href="meguri/index.html">
-    <div class="thumb">🍃</div>
+    <div class="thumb" style="background:#faf8f4;">◻️</div>
     <div class="body">
-      <span class="label green">完成</span>
-      <h2>MEGURI COFFEE</h2>
-      <p>表参道・和モダン。白・ベージュ・コーヒーブラウンの落ち着いたスペシャルティコーヒー。</p>
+      <span class="label green">1件</span>
+      <h2>モダン・ミニマル</h2>
+      <p>白・グレー・ベージュ。余白を多く使った大きな写真。スペシャルティコーヒー向け。表参道・青山イメージ。</p>
+      <div class="tags"><span class="tag">MEGURI COFFEE</span></div>
+    </div>
+  </a>
+
+  <!-- 3. レトロ・純喫茶 -->
+  <a class="card" href="#" style="opacity:0.5; pointer-events:none;">
+    <div class="thumb" style="background:#3b291f;">☕</div>
+    <div class="body">
+      <span class="label">準備中</span>
+      <h2>レトロ・純喫茶</h2>
+      <p>ダークブラウン・深緑・ゴールド。セリフ体フォント。コーヒー・ナポリタン・プリン。銀座・神保町イメージ。</p>
+    </div>
+  </a>
+
+  <!-- 4. 北欧ナチュラル -->
+  <a class="card" href="#" style="opacity:0.5; pointer-events:none;">
+    <div class="thumb" style="background:#e8e0d2;">🌿</div>
+    <div class="body">
+      <span class="label">準備中</span>
+      <h2>北欧ナチュラル</h2>
+      <p>木目・アイボリー・くすみカラー。観葉植物。温かみのあるデザイン。女性客・ファミリー向け。</p>
+    </div>
+  </a>
+
+  <!-- 6. 韓国カフェ風 -->
+  <a class="card" href="#" style="opacity:0.5; pointer-events:none;">
+    <div class="thumb" style="background:#fff8f0;">🌸</div>
+    <div class="body">
+      <span class="label">準備中</span>
+      <h2>韓国カフェ風</h2>
+      <p>白・クリーム・淡色。曲線デザイン。スイーツを大きく見せる。Instagramを意識した構成。</p>
+    </div>
+  </a>
+
+  <!-- 7. 海辺・リゾートカフェ -->
+  <a class="card" href="#" style="opacity:0.5; pointer-events:none;">
+    <div class="thumb" style="background:#d4e8e8;">🌊</div>
+    <div class="body">
+      <span class="label">準備中</span>
+      <h2>海辺・リゾートカフェ</h2>
+      <p>水色・白・サンドカラー。開放感のあるレイアウト。テラス席や海の写真。湘南・沖縄イメージ。</p>
+    </div>
+  </a>
+
+  <!-- 8. ベーカリーカフェ -->
+  <a class="card" href="#" style="opacity:0.5; pointer-events:none;">
+    <div class="thumb" style="background:#d4c4a8;">🥖</div>
+    <div class="body">
+      <span class="label">準備中</span>
+      <h2>ベーカリーカフェ</h2>
+      <p>ベージュ・ブラウン。パンを主役にした写真。朝食・ランチメニューを目立たせる。地域密着型。</p>
     </div>
   </a>
 </main>
