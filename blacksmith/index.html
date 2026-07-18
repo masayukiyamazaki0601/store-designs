@@ -9,16 +9,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --black:#0c0b0a;
-    --charcoal:#171513;
-    --panel:#1f1b18;
+    --black:#0a0908;
+    --charcoal:#151311;
+    --panel:#1d1916;
+    --panel2:#242019;
     --brick:#7a3b26;
-    --brick-bright:#a8492a;
+    --brick-bright:#b5502c;
+    --copper:#c98a4b;
     --steel:#4a4642;
     --ash:#8d8579;
-    --cream:#e8e0d2;
+    --cream:#ece4d6;
     --cream-dim:#b8ae9d;
-    --line: rgba(232,224,210,0.12);
+    --line: rgba(236,228,214,0.12);
+    --line-strong: rgba(236,228,214,0.22);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -28,264 +31,195 @@
     font-family:'Archivo',sans-serif;
     line-height:1.6;
     overflow-x:hidden;
+    cursor:none;
   }
   h1,h2,h3,.display{
     font-family:'Anton',sans-serif;
     font-weight:400;
     text-transform:uppercase;
     letter-spacing:0.02em;
-    line-height:0.95;
+    line-height:0.92;
   }
-  .mono{
-    font-family:'JetBrains Mono',monospace;
-    letter-spacing:0.08em;
-  }
+  .mono{font-family:'JetBrains Mono',monospace;letter-spacing:0.08em;}
   a{color:inherit;text-decoration:none;}
-  img{max-width:100%;display:block;width:100%;height:auto;}
-  .wrap{
-    max-width:1200px;
-    margin:0 auto;
-    padding:0 32px;
-  }
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px;}
   ::selection{background:var(--brick-bright);color:var(--black);}
 
-  /* texture overlay */
+  /* custom cursor */
+  .cursor{
+    position:fixed;top:0;left:0;width:26px;height:26px;
+    border:1px solid var(--cream);border-radius:50%;
+    pointer-events:none;z-index:10000;
+    transform:translate(-50%,-50%);
+    transition:width .25s,height .25s,background .25s,border-color .25s;
+    mix-blend-mode:difference;
+  }
+  .cursor-dot{
+    position:fixed;top:0;left:0;width:4px;height:4px;background:var(--cream);
+    border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);
+    mix-blend-mode:difference;
+  }
+  .cursor.big{width:64px;height:64px;background:rgba(236,228,214,0.15);}
+  @media (max-width:900px){.cursor,.cursor-dot{display:none;}body{cursor:auto;}}
+
   .noise{
-    position:fixed;inset:0;
-    pointer-events:none;
-    z-index:9999;
-    opacity:0.035;
+    position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.035;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     mix-blend-mode:overlay;
   }
 
-  /* header */
+  /* preloader */
+  #preloader{
+    position:fixed;inset:0;background:var(--black);z-index:20000;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #preloader.hide{opacity:0;visibility:hidden;}
+  .pre-title{font-family:'Anton',sans-serif;font-size:15vw;color:transparent;-webkit-text-stroke:1px var(--cream);letter-spacing:0.02em;}
+  .pre-bar{width:220px;height:2px;background:var(--panel);position:relative;overflow:hidden;}
+  .pre-fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:var(--brick-bright);animation:preload 1.6s ease forwards;}
+  @keyframes preload{to{width:100%;}}
+  .pre-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ash);letter-spacing:0.2em;}
+
+  /* progress bar */
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--brick-bright);z-index:1001;width:0%;}
+
+  /* ticker */
+  .ticker-band{
+    background:var(--brick-bright);color:var(--black);
+    overflow:hidden;white-space:nowrap;position:relative;z-index:999;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.12em;
+  }
+  .ticker-track{display:inline-flex;padding:8px 0;animation:ticker 26s linear infinite;}
+  .ticker-track span{padding:0 24px;text-transform:uppercase;}
+  @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
   header{
-    position:fixed;top:0;left:0;right:0;
-    z-index:1000;
-    background:rgba(12,11,10,0.88);
-    backdrop-filter:blur(6px);
+    position:fixed;top:26px;left:0;right:0;z-index:1000;
+    background:rgba(10,9,8,0.85);backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
-  .nav{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:18px 32px;
-    max-width:1200px;margin:0 auto;
-  }
-  .logo{
-    font-family:'Anton',sans-serif;
-    font-size:22px;
-    letter-spacing:0.03em;
-    display:flex;align-items:center;gap:10px;
-  }
-  .logo .dot{
-    width:9px;height:9px;background:var(--brick-bright);
-    display:inline-block;
-  }
-  .nav-links{
-    display:flex;gap:32px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;letter-spacing:0.08em;
-    text-transform:uppercase;
-  }
-  .nav-links a{
-    color:var(--cream-dim);
-    position:relative;
-    padding-bottom:4px;
-    transition:color .25s;
-  }
-  .nav-links a:hover{color:var(--cream);}
-  .nav-links a::after{
-    content:"";position:absolute;left:0;bottom:0;
-    width:0;height:1px;background:var(--brick-bright);
-    transition:width .25s;
-  }
-  .nav-links a:hover::after{width:100%;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1240px;margin:0 auto;}
+  .logo{font-family:'Anton',sans-serif;font-size:21px;letter-spacing:0.03em;display:flex;align-items:center;gap:10px;}
+  .logo .dot{width:9px;height:9px;background:var(--brick-bright);display:inline-block;animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  .nav-links{display:flex;gap:30px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;}
+  .nav-links a{color:var(--cream-dim);position:relative;padding-bottom:4px;transition:color .25s;}
+  .nav-links a.active,.nav-links a:hover{color:var(--cream);}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--brick-bright);transition:width .25s;}
+  .nav-links a.active::after,.nav-links a:hover::after{width:100%;}
   .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;}
-  .burger span{width:24px;height:2px;background:var(--cream);border-radius:2px;}
+  .burger span{width:24px;height:2px;background:var(--cream);}
+
+  /* side dot nav */
+  .side-nav{
+    position:fixed;right:28px;top:50%;transform:translateY(-50%);
+    z-index:900;display:flex;flex-direction:column;gap:14px;
+  }
+  .side-nav a{width:8px;height:8px;border-radius:50%;border:1px solid var(--line-strong);display:block;transition:all .25s;}
+  .side-nav a.active{background:var(--brick-bright);border-color:var(--brick-bright);transform:scale(1.3);}
+  @media (max-width:900px){.side-nav{display:none;}}
 
   /* hero */
-  .hero{
-    min-height:100vh;
-    display:flex;flex-direction:column;justify-content:center;
-    position:relative;
-    padding-top:90px;
-    overflow:hidden;
-  }
+  .hero{min-height:100vh;position:relative;display:flex;align-items:center;padding-top:120px;overflow:hidden;}
   .hero-bg{
     position:absolute;inset:0;
     background:url('images/hero.jpg') center 30%/cover no-repeat;
-    transform:scale(1.05);
-    transition:transform .3s ease-out;
+    will-change:transform;
   }
-  .hero::after{
-    content:"";
-    position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.97) 88%);
+  .hero-bg::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(10,9,8,0.55) 0%, rgba(10,9,8,0.97) 92%);
   }
-  .hero::before{
-    content:"";
-    position:absolute;inset:0;z-index:1;
-    background-image:repeating-linear-gradient(90deg, transparent, transparent 76px, rgba(0,0,0,0.4) 76px 79px);
-    opacity:0.5;
-  }
-  .hero-inner{
-    position:relative;z-index:2;
-    padding:0 32px;
-    max-width:1200px;margin:0 auto;width:100%;
-  }
-  .eyebrow{
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;letter-spacing:0.25em;
-    color:var(--brick-bright);
-    margin-bottom:24px;
-    display:flex;align-items:center;gap:12px;
-  }
-  .eyebrow::before{content:"";width:32px;height:1px;background:var(--brick-bright);}
-  .hero h1{
-    font-size:clamp(52px,10vw,148px);
-    color:var(--cream);
-    margin-bottom:8px;
-    text-shadow:0 4px 40px rgba(0,0,0,0.4);
-  }
-  .hero h1 span{color:transparent;-webkit-text-stroke:2px var(--cream);}
-  .hero-sub{
-    max-width:520px;
-    color:var(--cream-dim);
-    font-size:17px;
-    margin:28px 0 40px;
-    text-shadow:0 2px 12px rgba(0,0,0,0.5);
-  }
+  .hero-inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;width:100%;padding:0 32px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.25em;color:var(--copper);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+  .eyebrow::before{content:"";width:32px;height:1px;background:var(--copper);}
+  .hero h1{font-size:clamp(52px,11vw,168px);color:var(--cream);margin-bottom:6px;}
+  .hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--cream);}
+  .hero-sub{max-width:520px;color:var(--cream-dim);font-size:17px;margin:26px 0 38px;}
   .btn-row{display:flex;gap:16px;flex-wrap:wrap;}
-  .btn{
-    display:inline-block;
-    padding:16px 32px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:13px;letter-spacing:0.1em;text-transform:uppercase;
-    border:1px solid var(--cream);
-    transition:all .25s;
-    cursor:pointer;
-  }
-  .btn.solid{
-    background:var(--brick-bright);
-    border-color:var(--brick-bright);
-    color:var(--black);
-    font-weight:700;
-  }
+  .btn{display:inline-block;padding:16px 32px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--cream);transition:all .3s;position:relative;overflow:hidden;}
+  .btn.solid{background:var(--brick-bright);border-color:var(--brick-bright);color:var(--black);font-weight:700;}
   .btn.solid:hover{background:var(--cream);border-color:var(--cream);}
+  .btn.outline{background:transparent;}
   .btn.outline:hover{background:var(--cream);color:var(--black);}
 
-  .roast-gauge{
-    margin-top:64px;
-    display:flex;align-items:center;gap:18px;
-    max-width:640px;
+  .hero-float{
+    position:absolute;right:6%;bottom:14%;z-index:3;
+    background:rgba(10,9,8,0.7);backdrop-filter:blur(6px);
+    border:1px solid var(--line-strong);padding:22px 26px;max-width:220px;
+    animation:float 5s ease-in-out infinite;
   }
-  .roast-gauge .mono{font-size:11px;color:var(--ash);white-space:nowrap;}
-  .gauge-track{
-    flex:1;height:6px;background:var(--panel);
-    position:relative;border:1px solid var(--line);
-    border-radius:3px;overflow:hidden;
-  }
-  .gauge-fill{
-    position:absolute;left:0;top:0;bottom:0;
-    width:64%;
-    background:linear-gradient(90deg,#c9a86a,#7a3b26,#3b2013);
-    border-radius:3px;
-  }
-  .gauge-marker{
-    position:absolute;top:-6px;left:64%;
-    width:2px;height:18px;background:var(--cream);
-  }
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  .hero-float .num{font-family:'Anton',sans-serif;font-size:38px;color:var(--copper);}
+  .hero-float .label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ash);letter-spacing:0.08em;margin-top:4px;}
+  @media (max-width:900px){.hero-float{display:none;}}
 
-  section{
-    position:relative;
-    padding:120px 0;
-    border-bottom:1px solid var(--line);
-  }
-  .section-head{
-    display:flex;justify-content:space-between;align-items:flex-end;
-    margin-bottom:64px;flex-wrap:wrap;gap:24px;
-  }
-  .tag{
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;color:var(--brick-bright);
-    letter-spacing:0.2em;margin-bottom:14px;display:block;
-  }
-  .section-head h2{font-size:clamp(34px,5vw,56px);}
+  .scroll-cue{position:absolute;bottom:36px;left:32px;z-index:3;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ash);letter-spacing:0.15em;}
+  .scroll-line{width:1px;height:36px;background:var(--ash);position:relative;overflow:hidden;}
+  .scroll-line::after{content:"";position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--copper);animation:scrolldrop 1.8s ease-in-out infinite;}
+  @keyframes scrolldrop{to{top:100%;}}
+
+  section{position:relative;padding:130px 0;border-bottom:1px solid var(--line);}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px;flex-wrap:wrap;gap:24px;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--copper);letter-spacing:0.2em;margin-bottom:14px;display:block;}
+  .section-head h2{font-size:clamp(36px,5.4vw,60px);}
   .head-note{max-width:340px;color:var(--ash);font-size:14px;}
 
+  /* marquee band */
+  .marquee-band{border-bottom:1px solid var(--line);border-top:1px solid var(--line);overflow:hidden;padding:22px 0;background:var(--charcoal);}
+  .marquee-track{display:inline-flex;white-space:nowrap;animation:marquee 22s linear infinite;}
+  .marquee-track span{font-family:'Anton',sans-serif;font-size:34px;padding:0 28px;color:transparent;-webkit-text-stroke:1px var(--line-strong);text-transform:uppercase;}
+  .marquee-track span.solid{-webkit-text-stroke:0;color:var(--copper);}
+  @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
   /* roasting */
-  .roast-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
-  }
+  .roast-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;}
+  .roast-img-wrap{position:relative;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line);}
+  .roast-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease;}
+  .roast-img-wrap:hover img{transform:scale(1.06);}
+  .roast-img-wrap .frame-tag{position:absolute;bottom:14px;left:14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--cream);background:rgba(10,9,8,0.7);padding:6px 10px;}
   .roast-copy p{color:var(--cream-dim);margin-bottom:20px;font-size:16px;max-width:480px;}
-  .curve-box{
-    background:var(--panel);
-    border:1px solid var(--line);
-    padding:32px;
-  }
-  .curve-box .mono{font-size:11px;color:var(--ash);margin-bottom:16px;display:block;}
-  svg.curve{width:100%;height:auto;display:block;}
-  .stat-strip{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    margin-top:56px;border-top:1px solid var(--line);
-  }
+  .curve-box{background:var(--panel);border:1px solid var(--line);padding:28px;margin-top:36px;}
+  .curve-box .mono{font-size:11px;color:var(--ash);margin-bottom:14px;display:block;}
+  svg.curve{width:100%;height:auto;}
+  .curve path.line{stroke-dasharray:600;stroke-dashoffset:600;transition:stroke-dashoffset 1.6s ease;}
+  .curve.in path.line{stroke-dashoffset:0;}
+  .stat-strip{display:grid;grid-template-columns:repeat(3,1fr);margin-top:56px;border-top:1px solid var(--line);}
   .stat{padding:28px 24px 0;border-right:1px solid var(--line);}
   .stat:last-child{border-right:none;}
-  .stat .num{font-family:'Anton',sans-serif;font-size:40px;color:var(--brick-bright);}
-  .stat .label{font-size:12px;color:var(--ash);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;margin-top:6px;}
+  .stat .num{font-family:'Anton',sans-serif;font-size:42px;color:var(--copper);}
+  .stat .label{font-size:11px;color:var(--ash);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;margin-top:6px;}
 
   /* menu */
   .menu-tabs{display:flex;gap:8px;margin-bottom:48px;flex-wrap:wrap;}
-  .menu-tab{
-    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;
-    text-transform:uppercase;padding:10px 20px;
-    border:1px solid var(--line);color:var(--ash);cursor:pointer;
-    transition:all .2s;background:transparent;
-  }
-  .menu-tab.active,.menu-tab:hover{border-color:var(--brick-bright);color:var(--cream);}
+  .menu-tab{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:10px 20px;border:1px solid var(--line);color:var(--ash);cursor:pointer;transition:all .2s;background:transparent;}
+  .menu-tab.active,.menu-tab:hover{border-color:var(--copper);color:var(--cream);}
   .menu-panel{display:none;}
-  .menu-panel.active{display:block;animation:fadeMenu .4s ease-out;}
-  @keyframes fadeMenu{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:translateY(0)}}
-  .menu-list{border-top:1px solid var(--line);}
-  .menu-item{
-    display:flex;justify-content:space-between;gap:24px;
-    padding:24px 0;border-bottom:1px solid var(--line);
-    align-items:baseline;cursor:default;
-  }
-  .menu-item:hover .menu-name{color:var(--brick-bright);}
-  .menu-name{font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase;transition:color .2s;}
+  .menu-panel.active{display:block;}
+  .menu-list{border-top:1px solid var(--line);position:relative;}
+  .menu-item{display:flex;justify-content:space-between;gap:24px;padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline;cursor:pointer;transition:padding-left .25s;}
+  .menu-item:hover{padding-left:14px;}
+  .menu-item:hover .menu-name{color:var(--copper);}
+  .menu-name{font-family:'Anton',sans-serif;font-size:23px;text-transform:uppercase;transition:color .2s;}
   .menu-desc{color:var(--ash);font-size:13px;margin-top:6px;max-width:420px;}
   .menu-price{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--cream-dim);white-space:nowrap;}
+  .menu-preview{
+    position:fixed;width:150px;height:150px;pointer-events:none;z-index:500;
+    background-size:cover;background-position:center;border:1px solid var(--line-strong);
+    opacity:0;transform:scale(0.92);transition:opacity .2s,transform .2s;
+  }
+  .menu-preview.show{opacity:1;transform:scale(1);}
+  @media (max-width:900px){.menu-preview{display:none;}}
 
-  /* gallery */
-  .gallery-grid{
-    display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:180px;gap:12px;
-  }
-  .g-item{
-    position:relative;overflow:hidden;cursor:pointer;
-    display:flex;align-items:flex-end;padding:18px;
-    border:1px solid var(--line);
-    transition:transform .4s ease, box-shadow .4s ease;
-  }
-  .g-item img{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    object-fit:cover;
-    transition:transform .6s ease;
-  }
-  .g-item:hover img{transform:scale(1.08);}
-  .g-item::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(12,11,10,0) 40%, rgba(12,11,10,0.9) 100%);
-    pointer-events:none;
-  }
-  .g-item:hover{transform:scale(1.02);box-shadow:0 20px 60px rgba(0,0,0,0.6);z-index:3;}
-  .g-item span{
-    position:relative;z-index:1;
-    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cream-dim);letter-spacing:0.05em;
-    text-shadow:0 2px 8px rgba(0,0,0,0.6);
-  }
+  /* gallery bento */
+  .gallery-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:150px;gap:12px;}
+  .g-item{background:var(--panel);border:1px solid var(--line);position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:16px;}
+  .g-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s ease,filter .5s ease;filter:grayscale(45%) contrast(1.05);}
+  .g-item:hover img{transform:scale(1.08);filter:grayscale(0%) contrast(1.05);}
+  .g-item::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,9,8,0) 40%, rgba(10,9,8,0.9) 100%);z-index:1;}
+  .g-item span{position:relative;z-index:2;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cream);letter-spacing:0.06em;}
   .g1{grid-column:span 2;grid-row:span 2;}
   .g2{grid-column:span 2;}
   .g3{grid-column:span 2;}
@@ -293,179 +227,158 @@
   .g5{grid-column:span 2;grid-row:span 2;}
   .g6{grid-column:span 2;}
 
-  /* staff */
+  /* staff tilt cards */
   .staff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
-  .staff-card{background:var(--black);padding:36px 28px;transition:background .3s ease;}
-  .staff-card:hover{background:var(--charcoal);}
-  .staff-photo{
-    width:100%;aspect-ratio:4/5;
-    background-size:cover;background-position:center;
-    border:1px solid var(--line);
-    margin-bottom:20px;position:relative;overflow:hidden;
-  }
-  .staff-photo::after{
-    content:"";position:absolute;inset:0;
-    background-image:repeating-linear-gradient(45deg, rgba(232,224,210,0.03) 0 1px, transparent 1px 8px);
-  }
-  .staff-role{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--brick-bright);letter-spacing:0.1em;text-transform:uppercase;}
+  .staff-card{background:var(--black);padding:0;overflow:hidden;perspective:800px;}
+  .staff-inner{padding:32px 26px;transform-style:preserve-3d;transition:transform .15s ease;}
+  .staff-photo{width:100%;aspect-ratio:4/5;background:linear-gradient(150deg,#2a221c,#0d0b0a);border:1px solid var(--line);margin-bottom:20px;position:relative;overflow:hidden;}
+  .staff-photo .badge{position:absolute;top:10px;right:10px;background:var(--copper);color:var(--black);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:4px 8px;font-weight:700;}
+  .staff-photo::after{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(236,228,214,0.035) 0 1px, transparent 1px 8px);}
+  .staff-photo .id-num{position:absolute;bottom:12px;left:12px;font-family:'JetBrains Mono',monospace;font-size:34px;color:rgba(236,228,214,0.12);}
+  .staff-role{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--copper);letter-spacing:0.1em;text-transform:uppercase;}
   .staff-name{font-family:'Anton',sans-serif;font-size:26px;margin:8px 0 12px;}
   .staff-bio{color:var(--ash);font-size:13px;}
 
   /* access */
   .access-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
-  .info-list{border-top:1px solid var(--line);margin-top:32px;}
+  .status-badge{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;padding:8px 14px;border:1px solid var(--line-strong);margin-bottom:28px;}
+  .status-dot{width:7px;height:7px;border-radius:50%;background:#5fa85f;animation:pulse 2s ease-in-out infinite;}
+  .status-dot.closed{background:#a85f5f;}
+  .info-list{border-top:1px solid var(--line);margin-top:16px;}
   .info-row{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);}
   .info-row .k{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ash);letter-spacing:0.08em;text-transform:uppercase;}
   .info-row .v{font-size:14px;text-align:right;color:var(--cream-dim);}
-  .map-box{
-    background:var(--panel);border:1px solid var(--line);
-    min-height:360px;position:relative;overflow:hidden;
-    background-image:
-      linear-gradient(rgba(232,224,210,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232,224,210,0.05) 1px, transparent 1px);
-    background-size:32px 32px;
-  }
-  .map-pin{
-    position:absolute;top:48%;left:52%;
-    width:14px;height:14px;background:var(--brick-bright);
-    border-radius:50% 50% 50% 0;transform:rotate(-45deg);
-    animation:pinPulse 2s ease-in-out infinite;
-  }
-  @keyframes pinPulse{0%,100%{box-shadow:0 0 0 0 rgba(168,73,42,0.6)}50%{box-shadow:0 0 0 12px rgba(168,73,42,0)}}
+  .map-box{background:var(--panel);border:1px solid var(--line);min-height:380px;position:relative;background-image:linear-gradient(rgba(236,228,214,0.05) 1px, transparent 1px),linear-gradient(90deg, rgba(236,228,214,0.05) 1px, transparent 1px);background-size:32px 32px;overflow:hidden;}
+  .map-pin{position:absolute;top:48%;left:52%;width:14px;height:14px;background:var(--brick-bright);border-radius:50% 50% 50% 0;transform:rotate(-45deg);animation:pinbounce 2s ease-in-out infinite;}
+  @keyframes pinbounce{0%,100%{margin-top:0;}50%{margin-top:-8px;}}
   .map-pin::after{content:"";position:absolute;inset:0;margin:auto;width:6px;height:6px;background:var(--black);border-radius:50%;}
+  .map-ring{position:absolute;top:48%;left:52%;width:14px;height:14px;border:1px solid var(--brick-bright);border-radius:50%;transform:translate(-50%,-40%);animation:ring 2s ease-out infinite;}
+  @keyframes ring{0%{width:14px;height:14px;opacity:0.8;}100%{width:90px;height:90px;opacity:0;}}
 
   /* instagram */
   .insta-head{display:flex;align-items:center;gap:16px;margin-bottom:48px;flex-wrap:wrap;}
   .insta-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
-  .insta-item{
-    aspect-ratio:1/1;position:relative;overflow:hidden;cursor:pointer;
-    border:1px solid var(--line);border-radius:4px;
-  }
-  .insta-item img{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    object-fit:cover;
-    transition:transform .5s ease;
-  }
+  .insta-item{aspect-ratio:1/1;background:var(--panel);border:1px solid var(--line);position:relative;overflow:hidden;cursor:pointer;}
+  .insta-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
   .insta-item:hover img{transform:scale(1.1);}
-  .insta-item::after{
-    content:"♡";position:absolute;inset:0;z-index:1;
-    display:flex;align-items:center;justify-content:center;
-    color:var(--cream);font-size:28px;opacity:0;
-    background:rgba(122,59,38,0.55);
-    transition:opacity .3s ease;
-  }
+  .insta-item::after{content:"♥";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--cream);font-size:22px;opacity:0;background:rgba(181,80,44,0.55);transition:opacity .25s;z-index:1;}
   .insta-item:hover::after{opacity:1;}
 
   /* contact */
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
-  .field{margin-bottom:22px;}
-  .field label{
-    display:block;font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);margin-bottom:8px;
-  }
-  .field input,.field textarea{
-    width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);
-    color:var(--cream);font-family:'Archivo',sans-serif;font-size:15px;padding:10px 2px;
-    outline:none;transition:border-color .2s;
-  }
-  .field input:focus,.field textarea:focus{border-color:var(--brick-bright);}
+  .field{margin-bottom:26px;position:relative;}
+  .field label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);margin-bottom:8px;}
+  .field input,.field textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--cream);font-family:'Archivo',sans-serif;font-size:15px;padding:10px 2px;outline:none;transition:border-color .2s;}
+  .field input:focus,.field textarea:focus{border-color:var(--copper);}
   .field textarea{resize:vertical;min-height:100px;}
   .contact-side{color:var(--cream-dim);}
   .contact-side p{margin-bottom:18px;font-size:15px;max-width:400px;}
 
-  footer{padding:48px 0;}
-  .footer-row{
-    display:flex;justify-content:space-between;align-items:center;
-    flex-wrap:wrap;gap:16px;
-    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ash);letter-spacing:0.05em;
-  }
+  footer{padding:0;}
+  .footer-cta{padding:100px 0;text-align:center;border-bottom:1px solid var(--line);}
+  .footer-cta h2{font-size:clamp(40px,8vw,110px);color:var(--cream);}
+  .footer-cta .mono{color:var(--ash);margin-top:18px;display:block;font-size:13px;}
+  .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding:32px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ash);letter-spacing:0.05em;max-width:1240px;margin:0 auto;}
+  .to-top{border:1px solid var(--line-strong);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s;}
+  .to-top:hover{border-color:var(--copper);}
 
-  /* animations */
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.16,.8,.3,1),transform .8s cubic-bezier(.16,.8,.3,1);}
   .reveal.in{opacity:1;transform:translateY(0);}
-
-  /* lightbox */
-  .lightbox{
-    display:none;position:fixed;inset:0;z-index:10000;
-    background:rgba(0,0,0,0.92);
-    align-items:center;justify-content:center;
-    cursor:pointer;
-  }
-  .lightbox.open{display:flex;animation:fadeIn .3s ease;}
-  @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
-  .lightbox img{max-width:90vw;max-height:90vh;border-radius:4px;box-shadow:0 20px 80px rgba(0,0,0,0.6);}
 
   @media (max-width:900px){
     .nav-links{display:none;}
     .burger{display:flex;}
     .roast-grid,.access-grid,.contact-grid{grid-template-columns:1fr;}
     .staff-grid{grid-template-columns:1fr;}
-    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
     .g1,.g2,.g3,.g4,.g5,.g6{grid-column:span 1;}
     .g1,.g5{grid-row:span 2;}
     .insta-grid{grid-template-columns:repeat(3,1fr);}
     .stat-strip{grid-template-columns:1fr;}
     .stat{border-right:none;border-bottom:1px solid var(--line);padding-bottom:20px;}
+    .nav-links.mobile-open{display:flex;flex-direction:column;position:fixed;top:0;right:0;width:70%;height:100vh;background:var(--black);padding:100px 32px;gap:28px;border-left:1px solid var(--line);}
   }
-  @media (max-width:900px){
-    .nav-links.mobile-open{
-      display:flex;flex-direction:column;
-      position:fixed;top:0;right:0;z-index:1001;
-      width:70%;height:100vh;
-      background:var(--black);
-      padding:100px 32px;gap:28px;
-      border-left:1px solid var(--line);
-    }
-  }
-  @media (max-width:600px){
-    .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:120px;}
-    .insta-grid{grid-template-columns:repeat(2,1fr);}
-  }
-  @media (prefers-reduced-motion:reduce){
+  @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     .reveal{opacity:1;transform:none;transition:none;}
-    .g-item:hover img,.insta-item:hover img{transform:none;}
+    .marquee-track,.ticker-track{animation:none;}
   }
 </style>
 </head>
 <body>
+
+<div id="preloader">
+  <div class="pre-title">ROASTING</div>
+  <div class="pre-bar"><div class="pre-fill"></div></div>
+  <span class="pre-label mono">LOADING THE ROOM — PLEASE WAIT</span>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
 <div class="noise"></div>
+<div class="progress" id="progress"></div>
+
+<div class="menu-preview" id="menuPreview"></div>
+
+<div class="ticker-band">
+  <div class="ticker-track">
+    <span>☕ SELF ROASTED SINCE 2014</span><span>📍 渋谷区○○ 1-2-3</span><span>🕗 08:00–20:00 年中無休</span><span>🔥 本日の焙煎：ETHIOPIA YIRGACHEFFE</span>
+    <span>☕ SELF ROASTED SINCE 2014</span><span>📍 渋谷区○○ 1-2-3</span><span>🕗 08:00–20:00 年中無休</span><span>🔥 本日の焙煎：ETHIOPIA YIRGACHEFFE</span>
+  </div>
+</div>
 
 <header>
   <div class="nav">
     <a href="#top" class="logo"><span class="dot"></span>BLACKSMITH ROASTERY</a>
     <nav class="nav-links" id="navLinks">
-      <a href="#top">Top</a>
-      <a href="#roast">Roasting</a>
-      <a href="#menu">Menu</a>
-      <a href="#gallery">Interior</a>
-      <a href="#staff">Staff</a>
-      <a href="#access">Access</a>
-      <a href="#instagram">Instagram</a>
-      <a href="#contact">Contact</a>
+      <a href="#top" data-sec="top">Top</a>
+      <a href="#roast" data-sec="roast">Roasting</a>
+      <a href="#menu" data-sec="menu">Menu</a>
+      <a href="#gallery" data-sec="gallery">Interior</a>
+      <a href="#staff" data-sec="staff">Staff</a>
+      <a href="#access" data-sec="access">Access</a>
+      <a href="#instagram" data-sec="instagram">Instagram</a>
+      <a href="#contact" data-sec="contact">Contact</a>
     </nav>
     <div class="burger" id="burger"><span></span><span></span><span></span></div>
   </div>
 </header>
 
+<nav class="side-nav" id="sideNav">
+  <a href="#top" data-sec="top" class="active"></a>
+  <a href="#roast" data-sec="roast"></a>
+  <a href="#menu" data-sec="menu"></a>
+  <a href="#gallery" data-sec="gallery"></a>
+  <a href="#staff" data-sec="staff"></a>
+  <a href="#access" data-sec="access"></a>
+  <a href="#instagram" data-sec="instagram"></a>
+  <a href="#contact" data-sec="contact"></a>
+</nav>
+
 <section id="top" class="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-inner">
     <span class="eyebrow mono">SELF ROASTED / BROOKLYN STYLE / SINCE 2014</span>
-    <h1>ROASTED<br>IN THE<br><span>RAW.</span></h1>
+    <h1>ROASTED<br>IN THE<br><span class="outline">RAW.</span></h1>
     <p class="hero-sub">配管とレンガがむき出しの焙煎所併設カフェ。豆の個性を焼き切らず、素材の力をそのまま抽出する。ここはコーヒー好きが集まる、ブルックリンの裏路地のような場所。</p>
     <div class="btn-row">
       <a href="#menu" class="btn solid">View Menu</a>
       <a href="#access" class="btn outline">Find Us</a>
     </div>
-    <div class="roast-gauge">
-      <span class="mono">LIGHT</span>
-      <div class="gauge-track"><div class="gauge-fill"></div><div class="gauge-marker"></div></div>
-      <span class="mono">DARK</span>
-    </div>
   </div>
+  <div class="hero-float">
+    <div class="num">7,300+</div>
+    <div class="label">CUPS ROASTED / MONTH</div>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div>SCROLL</div>
 </section>
+
+<div class="marquee-band">
+  <div class="marquee-track">
+    <span>SINGLE ORIGIN</span><span class="solid">DIRECT TRADE</span><span>SMALL BATCH</span><span class="solid">DRUM ROASTED</span><span>BROOKLYN STYLE</span>
+    <span>SINGLE ORIGIN</span><span class="solid">DIRECT TRADE</span><span>SMALL BATCH</span><span class="solid">DRUM ROASTED</span><span>BROOKLYN STYLE</span>
+  </div>
+</div>
 
 <section id="roast">
   <div class="wrap">
@@ -477,23 +390,28 @@
       <p class="head-note">火入れの一秒が味を変える。うちの焙煎士は温度計より、豆の弾ける音と匂いを信じている。</p>
     </div>
     <div class="roast-grid">
-      <div class="roast-copy reveal">
-        <p>店内奥の焙煎機は1957年製のドイツ製ドラムを改造したもの。毎朝5時、生豆の状態を見ながらその日の火力を決める。マニュアル通りには焼かない。</p>
-        <p>焙煎後は必ず24時間以上のガス抜きを経てから店頭へ。豆の持つ酸味と甘みのバランスが、無骨な見た目とは裏腹に驚くほど繊細だ。</p>
-        <p>豆はすべて生産者と直接契約したシングルオリジン。中間業者を挟まず、素材の背景まで買い付けている。</p>
+      <div class="roast-img-wrap reveal">
+        <img src="images/gallery-1.jpg" alt="生豆を確認する様子" loading="lazy">
+        <div class="frame-tag mono">FIG. 01 / GREEN BEAN CHECK</div>
       </div>
-      <div class="curve-box reveal">
-        <span class="mono">ROAST CURVE / TYPICAL PROFILE</span>
-        <svg class="curve" viewBox="0 0 400 220">
-          <line x1="0" y1="200" x2="400" y2="200" stroke="rgba(232,224,210,0.15)" stroke-width="1"/>
-          <line x1="0" y1="140" x2="400" y2="140" stroke="rgba(232,224,210,0.08)" stroke-width="1"/>
-          <line x1="0" y1="80" x2="400" y2="80" stroke="rgba(232,224,210,0.08)" stroke-width="1"/>
-          <path d="M0,190 C60,160 100,120 150,90 C220,50 280,30 400,10" fill="none" stroke="#a8492a" stroke-width="2.5"/>
-          <circle cx="150" cy="90" r="4" fill="#e8e0d2"/>
-          <circle cx="280" cy="30" r="4" fill="#e8e0d2"/>
-          <text x="150" y="78" fill="#b8ae9d" font-size="10" font-family="JetBrains Mono">FIRST CRACK</text>
-          <text x="255" y="20" fill="#b8ae9d" font-size="10" font-family="JetBrains Mono">DROP</text>
-        </svg>
+      <div class="reveal">
+        <div class="roast-copy">
+          <p>店内奥の焙煎機は1957年製のドイツ製ドラムを改造したもの。毎朝5時、生豆の状態を見ながらその日の火力を決める。マニュアル通りには焼かない。</p>
+          <p>焙煎後は必ず24時間以上のガス抜きを経てから店頭へ。豆の持つ酸味と甘みのバランスが、無骨な見た目とは裏腹に驚くほど繊細だ。</p>
+        </div>
+        <div class="curve-box">
+          <span class="mono">ROAST CURVE / TYPICAL PROFILE</span>
+          <svg class="curve" viewBox="0 0 400 220">
+            <line x1="0" y1="200" x2="400" y2="200" stroke="rgba(236,228,214,0.15)" stroke-width="1"/>
+            <line x1="0" y1="140" x2="400" y2="140" stroke="rgba(236,228,214,0.08)" stroke-width="1"/>
+            <line x1="0" y1="80" x2="400" y2="80" stroke="rgba(236,228,214,0.08)" stroke-width="1"/>
+            <path class="line" d="M0,190 C60,160 100,120 150,90 C220,50 280,30 400,10" fill="none" stroke="#c98a4b" stroke-width="2.5"/>
+            <circle cx="150" cy="90" r="4" fill="#ece4d6"/>
+            <circle cx="280" cy="30" r="4" fill="#ece4d6"/>
+            <text x="150" y="78" fill="#b8ae9d" font-size="10" font-family="JetBrains Mono">FIRST CRACK</text>
+            <text x="255" y="20" fill="#b8ae9d" font-size="10" font-family="JetBrains Mono">DROP</text>
+          </svg>
+        </div>
       </div>
     </div>
     <div class="stat-strip reveal">
@@ -511,9 +429,8 @@
         <span class="tag">02 — MENU</span>
         <h2>メニュー</h2>
       </div>
-      <p class="head-note">豆の個性を邪魔しない抽出方法だけを揃えている。</p>
+      <p class="head-note">豆の個性を邪魔しない抽出方法だけを揃えている。項目にカーソルを合わせると写真が浮かびます。</p>
     </div>
-
     <div class="menu-tabs reveal">
       <button class="menu-tab active" data-tab="coffee">Coffee</button>
       <button class="menu-tab" data-tab="brew">Brew Bar</button>
@@ -522,26 +439,24 @@
 
     <div class="menu-panel active" id="coffee">
       <div class="menu-list">
-        <div class="menu-item"><div><div class="menu-name">House Blend</div><div class="menu-desc">3種のシングルオリジンをブレンド。ナッツとキャラメルの余韻。</div></div><div class="menu-price">¥550</div></div>
-        <div class="menu-item"><div><div class="menu-name">Espresso</div><div class="menu-desc">深煎り豆を使用した濃厚な一杯。</div></div><div class="menu-price">¥450</div></div>
-        <div class="menu-item"><div><div class="menu-name">Cold Brew</div><div class="menu-desc">18時間水出し。すっきりとした甘み。</div></div><div class="menu-price">¥600</div></div>
-        <div class="menu-item"><div><div class="menu-name">Flat White</div><div class="menu-desc">濃厚なエスプレッソとミルクのバランス。</div></div><div class="menu-price">¥650</div></div>
+        <div class="menu-item" data-img="images/gallery-4.jpg"><div><div class="menu-name">House Blend</div><div class="menu-desc">3種のシングルオリジンをブレンド。ナッツとキャラメルの余韻。</div></div><div class="menu-price">¥550</div></div>
+        <div class="menu-item" data-img="images/gallery-2.jpg"><div><div class="menu-name">Espresso</div><div class="menu-desc">深煎り豆を使用した濃厚な一杯。</div></div><div class="menu-price">¥450</div></div>
+        <div class="menu-item" data-img="images/gallery-6.jpg"><div><div class="menu-name">Cold Brew</div><div class="menu-desc">18時間水出し。すっきりとした甘み。</div></div><div class="menu-price">¥600</div></div>
+        <div class="menu-item" data-img="images/insta-2.jpg"><div><div class="menu-name">Flat White</div><div class="menu-desc">濃厚なエスプレッソとミルクのバランス。</div></div><div class="menu-price">¥650</div></div>
       </div>
     </div>
-
     <div class="menu-panel" id="brew">
       <div class="menu-list">
-        <div class="menu-item"><div><div class="menu-name">Ethiopia Yirgacheffe</div><div class="menu-desc">ハンドドリップ。ベリー系の華やかな酸味。</div></div><div class="menu-price">¥750</div></div>
-        <div class="menu-item"><div><div class="menu-name">Guatemala Huehuetenango</div><div class="menu-desc">チョコレートのような重厚なコク。</div></div><div class="menu-price">¥750</div></div>
-        <div class="menu-item"><div><div class="menu-name">Kenya AA</div><div class="menu-desc">トマトのような複雑な酸とジューシーさ。</div></div><div class="menu-price">¥800</div></div>
+        <div class="menu-item" data-img="images/insta-1.jpg"><div><div class="menu-name">Ethiopia Yirgacheffe</div><div class="menu-desc">ハンドドリップ。ベリー系の華やかな酸味。</div></div><div class="menu-price">¥750</div></div>
+        <div class="menu-item" data-img="images/insta-3.jpg"><div><div class="menu-name">Guatemala Huehuetenango</div><div class="menu-desc">チョコレートのような重厚なコク。</div></div><div class="menu-price">¥750</div></div>
+        <div class="menu-item" data-img="images/insta-5.jpg"><div><div class="menu-name">Kenya AA</div><div class="menu-desc">トマトのような複雑な酸とジューシーさ。</div></div><div class="menu-price">¥800</div></div>
       </div>
     </div>
-
     <div class="menu-panel" id="food">
       <div class="menu-list">
-        <div class="menu-item"><div><div class="menu-name">Cast Iron Toast</div><div class="menu-desc">鋳鉄フライパンで焼いた厚切りトースト。</div></div><div class="menu-price">¥650</div></div>
-        <div class="menu-item"><div><div class="menu-name">Brooklyn Bagel</div><div class="menu-desc">自家製クリームチーズ添え。</div></div><div class="menu-price">¥700</div></div>
-        <div class="menu-item"><div><div class="menu-name">Banana Bread</div><div class="menu-desc">胡桃とダークチョコ入り。</div></div><div class="menu-price">¥500</div></div>
+        <div class="menu-item" data-img="images/gallery-5.jpg"><div><div class="menu-name">Cast Iron Toast</div><div class="menu-desc">鋳鉄フライパンで焼いた厚切りトースト。</div></div><div class="menu-price">¥650</div></div>
+        <div class="menu-item" data-img="images/insta-4.jpg"><div><div class="menu-name">Brooklyn Bagel</div><div class="menu-desc">自家製クリームチーズ添え。</div></div><div class="menu-price">¥700</div></div>
+        <div class="menu-item" data-img="images/gallery-3.jpg"><div><div class="menu-name">Banana Bread</div><div class="menu-desc">胡桃とダークチョコ入り。</div></div><div class="menu-price">¥500</div></div>
       </div>
     </div>
   </div>
@@ -556,14 +471,14 @@
       </div>
       <p class="head-note">配管、レンガ、鉄骨。無骨な素材がそのまま空間になっている。</p>
     </div>
-  </div>
-  <div class="gallery-grid reveal" style="max-width:1264px;margin:0 auto;padding:0 32px;">
-    <div class="g-item g1" onclick="openLightbox('images/gallery-1.jpg')"><img src="images/gallery-1.jpg" alt="ROASTING FLOOR" loading="lazy"><span>ROASTING FLOOR</span></div>
-    <div class="g-item g2" onclick="openLightbox('images/gallery-2.jpg')"><img src="images/gallery-2.jpg" alt="BRICK WALL SEATING" loading="lazy"><span>BRICK WALL SEATING</span></div>
-    <div class="g-item g3" onclick="openLightbox('images/gallery-3.jpg')"><img src="images/gallery-3.jpg" alt="EXPOSED PIPING" loading="lazy"><span>EXPOSED PIPING</span></div>
-    <div class="g-item g4" onclick="openLightbox('images/gallery-4.jpg')"><img src="images/gallery-4.jpg" alt="BAR COUNTER" loading="lazy"><span>BAR COUNTER</span></div>
-    <div class="g-item g5" onclick="openLightbox('images/gallery-5.jpg')"><img src="images/gallery-5.jpg" alt="GREEN BEAN STORAGE" loading="lazy"><span>GREEN BEAN STORAGE</span></div>
-    <div class="g-item g6" onclick="openLightbox('images/gallery-6.jpg')"><img src="images/gallery-6.jpg" alt="ROASTED LOT" loading="lazy"><span>ROASTED LOT</span></div>
+    <div class="gallery-grid reveal">
+      <div class="g-item g1"><img src="images/gallery-1.jpg" alt="焙煎機" loading="lazy"><span>ROASTING FLOOR</span></div>
+      <div class="g-item g2"><img src="images/gallery-2.jpg" alt="レンガの壁の店内" loading="lazy"><span>BRICK WALL SEATING</span></div>
+      <div class="g-item g3"><img src="images/gallery-3.jpg" alt="配管" loading="lazy"><span>EXPOSED PIPING</span></div>
+      <div class="g-item g4"><img src="images/gallery-4.jpg" alt="バーカウンター" loading="lazy"><span>BAR COUNTER</span></div>
+      <div class="g-item g5"><img src="images/gallery-5.jpg" alt="生豆の袋" loading="lazy"><span>GREEN BEAN STORAGE</span></div>
+      <div class="g-item g6"><img src="images/gallery-6.jpg" alt="焙煎豆" loading="lazy"><span>ROASTED LOT</span></div>
+    </div>
   </div>
 </section>
 
@@ -577,24 +492,24 @@
       <p class="head-note">豆にも人にも、余計な演出はいらない。</p>
     </div>
     <div class="staff-grid reveal">
-      <div class="staff-card">
-        <div class="staff-photo" style="background-image:url('images/staff-1.jpg')"></div>
+      <div class="staff-card"><div class="staff-inner">
+        <div class="staff-photo" style="background:url('images/staff-1.jpg') center/cover"><span class="id-num">01</span><span class="badge">ROASTER</span></div>
         <span class="staff-role">Head Roaster</span>
         <h3 class="staff-name">TAKUMI ITO</h3>
         <p class="staff-bio">10年間シアトルの焙煎所で修業後、独立。豆の声を聞く男。</p>
-      </div>
-      <div class="staff-card">
-        <div class="staff-photo" style="background-image:url('images/staff-2.jpg')"></div>
+      </div></div>
+      <div class="staff-card"><div class="staff-inner">
+        <div class="staff-photo" style="background:url('images/staff-2.jpg') center/cover"><span class="id-num">02</span><span class="badge">BARISTA</span></div>
         <span class="staff-role">Head Barista</span>
         <h3 class="staff-name">MIA SATO</h3>
         <p class="staff-bio">抽出理論に精通。ラテアートの大会で入賞経験あり。</p>
-      </div>
-      <div class="staff-card">
-        <div class="staff-photo" style="background-image:url('images/staff-3.jpg')"></div>
+      </div></div>
+      <div class="staff-card"><div class="staff-inner">
+        <div class="staff-photo" style="background:url('images/staff-3.jpg') center/cover"><span class="id-num">03</span><span class="badge">MANAGER</span></div>
         <span class="staff-role">Store Manager</span>
         <h3 class="staff-name">KENTA MORI</h3>
         <p class="staff-bio">お客との会話を大切にする、お店の顔。</p>
-      </div>
+      </div></div>
     </div>
   </div>
 </section>
@@ -609,6 +524,7 @@
     </div>
     <div class="access-grid reveal">
       <div>
+        <div class="status-badge" id="statusBadge"><span class="status-dot" id="statusDot"></span><span id="statusText">LOADING…</span></div>
         <div class="info-list">
           <div class="info-row"><span class="k">Address</span><span class="v">東京都渋谷区○○ 1-2-3<br>Brick Building 1F</span></div>
           <div class="info-row"><span class="k">Hours</span><span class="v">08:00 - 20:00<br>年中無休</span></div>
@@ -616,7 +532,7 @@
           <div class="info-row"><span class="k">Tel</span><span class="v">03-0000-0000</span></div>
         </div>
       </div>
-      <div class="map-box"><div class="map-pin"></div></div>
+      <div class="map-box"><div class="map-ring"></div><div class="map-pin"></div></div>
     </div>
   </div>
 </section>
@@ -630,11 +546,11 @@
       </div>
     </div>
     <div class="insta-grid reveal">
-      <div class="insta-item"><img src="images/insta-1.jpg" alt="coffee" loading="lazy"></div>
-      <div class="insta-item"><img src="images/insta-2.jpg" alt="coffee" loading="lazy"></div>
-      <div class="insta-item"><img src="images/insta-3.jpg" alt="coffee" loading="lazy"></div>
-      <div class="insta-item"><img src="images/insta-4.jpg" alt="coffee" loading="lazy"></div>
-      <div class="insta-item"><img src="images/insta-5.jpg" alt="coffee" loading="lazy"></div>
+      <div class="insta-item"><img src="images/insta-1.jpg" alt="" loading="lazy"></div>
+      <div class="insta-item"><img src="images/insta-2.jpg" alt="" loading="lazy"></div>
+      <div class="insta-item"><img src="images/insta-3.jpg" alt="" loading="lazy"></div>
+      <div class="insta-item"><img src="images/insta-4.jpg" alt="" loading="lazy"></div>
+      <div class="insta-item"><img src="images/insta-5.jpg" alt="" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -657,88 +573,148 @@
       <div class="contact-side">
         <p>ケータリング、卸売、店舗貸切に関するお問い合わせもこちらから承っております。</p>
         <p>返信までに2〜3営業日いただく場合がございます。</p>
-        <p class="mono" style="color:var(--brick-bright);letter-spacing:0.05em;">info@blacksmith-roastery.jp</p>
+        <p class="mono" style="color:var(--copper);letter-spacing:0.05em;">info@blacksmith-roastery.jp</p>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap footer-row">
-    <span>© 2026 BLACKSMITH ROASTERY</span>
-    <span>ROASTED IN BROOKLYN, SERVED EVERYWHERE</span>
+  <div class="footer-cta">
+    <h2>LET'S<br>ROAST.</h2>
+    <span class="mono">© 2026 BLACKSMITH ROASTERY — BROOKLYN STYLE, SERVED EVERYWHERE</span>
+  </div>
+  <div class="footer-row">
+    <span>渋谷区○○ 1-2-3 / 08:00–20:00</span>
+    <div class="to-top" id="toTop">↑</div>
   </div>
 </footer>
 
-<!-- lightbox -->
-<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
-  <img id="lightboxImg" src="" alt="拡大表示">
-</div>
-
 <script>
-// lightbox
-function openLightbox(src){
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightbox').classList.add('open');
-}
-
-// burger menu
-const burger = document.getElementById('burger');
-const navLinks = document.getElementById('navLinks');
-burger.addEventListener('click', () => {
-  navLinks.classList.toggle('mobile-open');
-});
-navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => navLinks.classList.remove('mobile-open'));
-});
-
-// menu tabs
-const tabs = document.querySelectorAll('.menu-tab');
-const panels = document.querySelectorAll('.menu-panel');
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
-    panels.forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById(tab.dataset.tab).classList.add('active');
+  // preloader
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('hide'), 900);
   });
-});
 
-// scroll reveal
-const revealEls = document.querySelectorAll('.reveal');
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('in');
-      io.unobserve(entry.target);
-    }
+  // custom cursor
+  const cursor = document.getElementById('cursor');
+  const cursorDot = document.getElementById('cursorDot');
+  let mx=0,my=0,cx=0,cy=0;
+  window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursorDot.style.left=mx+'px'; cursorDot.style.top=my+'px'; });
+  function loop(){ cx += (mx-cx)*0.15; cy += (my-cy)*0.15; cursor.style.left=cx+'px'; cursor.style.top=cy+'px'; requestAnimationFrame(loop); }
+  loop();
+  document.querySelectorAll('a,button,.menu-item,.g-item,.insta-item,.staff-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('big'));
   });
-}, { threshold: 0.15 });
-revealEls.forEach(el => io.observe(el));
 
-// hero parallax
-const heroBg = document.getElementById('heroBg');
-window.addEventListener('scroll', () => {
-  const scrolled = window.pageYOffset;
-  if (heroBg && scrolled < window.innerHeight) {
-    heroBg.style.transform = `scale(1.05) translateY(${scrolled * 0.08}px)`;
-  }
-}, { passive: true });
+  // progress bar + parallax
+  const progress = document.getElementById('progress');
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = pct + '%';
+    if (heroBg) heroBg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+  });
 
-// contact form
-document.getElementById('contactForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const btn = this.querySelector('button');
-  const original = btn.textContent;
-  btn.textContent = '✓ Sent.';
-  this.reset();
-  setTimeout(() => { btn.textContent = original; }, 2500);
-});
+  // burger
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('mobile-open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('mobile-open')));
 
-// close lightbox with escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
-});
+  // menu tabs
+  const tabs = document.querySelectorAll('.menu-tab');
+  const panels = document.querySelectorAll('.menu-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // menu hover preview image
+  const preview = document.getElementById('menuPreview');
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      preview.style.backgroundImage = `url(${item.dataset.img})`;
+      preview.classList.add('show');
+    });
+    item.addEventListener('mousemove', e => {
+      preview.style.left = (e.clientX + 24) + 'px';
+      preview.style.top = (e.clientY - 90) + 'px';
+    });
+    item.addEventListener('mouseleave', () => preview.classList.remove('show'));
+  });
+
+  // staff tilt
+  document.querySelectorAll('.staff-card').forEach(card => {
+    const inner = card.querySelector('.staff-inner');
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      inner.style.transform = `rotateY(${px*8}deg) rotateX(${-py*8}deg)`;
+    });
+    card.addEventListener('mouseleave', () => inner.style.transform = 'rotateY(0) rotateX(0)');
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // roast curve draw
+  const curve = document.querySelector('.curve');
+  const curveIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { curve.classList.add('in'); curveIo.unobserve(curve); } });
+  }, { threshold: 0.4 });
+  curveIo.observe(curve);
+
+  // side nav active state + header nav active
+  const sideLinks = document.querySelectorAll('.side-nav a');
+  const navA = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
+  const secIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sideLinks.forEach(l => l.classList.toggle('active', l.dataset.sec === id));
+        navA.forEach(l => l.classList.toggle('active', l.dataset.sec === id));
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s => secIo.observe(s));
+
+  // open/closed status
+  const statusText = document.getElementById('statusText');
+  const statusDot = document.getElementById('statusDot');
+  const now = new Date();
+  const hour = now.getHours();
+  const open = hour >= 8 && hour < 20;
+  statusText.textContent = open ? 'OPEN NOW — CLOSES AT 20:00' : 'CLOSED — OPENS AT 08:00';
+  if (!open) statusDot.classList.add('closed');
+
+  // contact form
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const btn = this.querySelector('button');
+    const original = btn.textContent;
+    btn.textContent = 'Sent.';
+    this.reset();
+    setTimeout(() => { btn.textContent = original; }, 2500);
+  });
+
+  // back to top
+  document.getElementById('toTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
 </script>
+
 </body>
 </html>
