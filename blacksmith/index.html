@@ -41,7 +41,7 @@
     letter-spacing:0.08em;
   }
   a{color:inherit;text-decoration:none;}
-  img{max-width:100%;display:block;}
+  img{max-width:100%;display:block;width:100%;height:auto;}
   .wrap{
     max-width:1200px;
     margin:0 auto;
@@ -49,7 +49,7 @@
   }
   ::selection{background:var(--brick-bright);color:var(--black);}
 
-  /* texture */
+  /* texture overlay */
   .noise{
     position:fixed;inset:0;
     pointer-events:none;
@@ -102,7 +102,7 @@
   }
   .nav-links a:hover::after{width:100%;}
   .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;}
-  .burger span{width:24px;height:2px;background:var(--cream);}
+  .burger span{width:24px;height:2px;background:var(--cream);border-radius:2px;}
 
   /* hero */
   .hero{
@@ -110,14 +110,23 @@
     display:flex;flex-direction:column;justify-content:center;
     position:relative;
     padding-top:90px;
-    background:
-      linear-gradient(180deg, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.97) 88%),
-      url("https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&w=1800&q=60") center 30%/cover no-repeat;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:url('images/hero.jpg') center 30%/cover no-repeat;
+    transform:scale(1.05);
+    transition:transform .3s ease-out;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.97) 88%);
   }
   .hero::before{
     content:"";
-    position:absolute;inset:0;
-    background-image: repeating-linear-gradient(90deg, transparent, transparent 76px, rgba(0,0,0,0.4) 76px 79px);
+    position:absolute;inset:0;z-index:1;
+    background-image:repeating-linear-gradient(90deg, transparent, transparent 76px, rgba(0,0,0,0.4) 76px 79px);
     opacity:0.5;
   }
   .hero-inner{
@@ -137,6 +146,7 @@
     font-size:clamp(52px,10vw,148px);
     color:var(--cream);
     margin-bottom:8px;
+    text-shadow:0 4px 40px rgba(0,0,0,0.4);
   }
   .hero h1 span{color:transparent;-webkit-text-stroke:2px var(--cream);}
   .hero-sub{
@@ -144,6 +154,7 @@
     color:var(--cream-dim);
     font-size:17px;
     margin:28px 0 40px;
+    text-shadow:0 2px 12px rgba(0,0,0,0.5);
   }
   .btn-row{display:flex;gap:16px;flex-wrap:wrap;}
   .btn{
@@ -153,6 +164,7 @@
     font-size:13px;letter-spacing:0.1em;text-transform:uppercase;
     border:1px solid var(--cream);
     transition:all .25s;
+    cursor:pointer;
   }
   .btn.solid{
     background:var(--brick-bright);
@@ -172,11 +184,13 @@
   .gauge-track{
     flex:1;height:6px;background:var(--panel);
     position:relative;border:1px solid var(--line);
+    border-radius:3px;overflow:hidden;
   }
   .gauge-fill{
     position:absolute;left:0;top:0;bottom:0;
     width:64%;
     background:linear-gradient(90deg,#c9a86a,#7a3b26,#3b2013);
+    border-radius:3px;
   }
   .gauge-marker{
     position:absolute;top:-6px;left:64%;
@@ -211,7 +225,7 @@
     padding:32px;
   }
   .curve-box .mono{font-size:11px;color:var(--ash);margin-bottom:16px;display:block;}
-  svg.curve{width:100%;height:auto;}
+  svg.curve{width:100%;height:auto;display:block;}
   .stat-strip{
     display:grid;grid-template-columns:repeat(3,1fr);
     margin-top:56px;border-top:1px solid var(--line);
@@ -231,12 +245,13 @@
   }
   .menu-tab.active,.menu-tab:hover{border-color:var(--brick-bright);color:var(--cream);}
   .menu-panel{display:none;}
-  .menu-panel.active{display:block;}
+  .menu-panel.active{display:block;animation:fadeMenu .4s ease-out;}
+  @keyframes fadeMenu{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:translateY(0)}}
   .menu-list{border-top:1px solid var(--line);}
   .menu-item{
     display:flex;justify-content:space-between;gap:24px;
     padding:24px 0;border-bottom:1px solid var(--line);
-    align-items:baseline;
+    align-items:baseline;cursor:default;
   }
   .menu-item:hover .menu-name{color:var(--brick-bright);}
   .menu-name{font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase;transition:color .2s;}
@@ -245,19 +260,32 @@
 
   /* gallery */
   .gallery-grid{
-    display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:140px;gap:12px;
+    display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:180px;gap:12px;
   }
   .g-item{
-    background:var(--panel) center/cover no-repeat;
+    position:relative;overflow:hidden;cursor:pointer;
+    display:flex;align-items:flex-end;padding:18px;
     border:1px solid var(--line);
-    position:relative;overflow:hidden;
-    display:flex;align-items:flex-end;padding:14px;
+    transition:transform .4s ease, box-shadow .4s ease;
   }
-  .g-item::before{
+  .g-item img{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    transition:transform .6s ease;
+  }
+  .g-item:hover img{transform:scale(1.08);}
+  .g-item::after{
     content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(12,11,10,0) 45%, rgba(12,11,10,0.85) 100%);
+    background:linear-gradient(180deg, rgba(12,11,10,0) 40%, rgba(12,11,10,0.9) 100%);
+    pointer-events:none;
   }
-  .g-item span{position:relative;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cream-dim);letter-spacing:0.05em;}
+  .g-item:hover{transform:scale(1.02);box-shadow:0 20px 60px rgba(0,0,0,0.6);z-index:3;}
+  .g-item span{
+    position:relative;z-index:1;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cream-dim);letter-spacing:0.05em;
+    text-shadow:0 2px 8px rgba(0,0,0,0.6);
+  }
   .g1{grid-column:span 2;grid-row:span 2;}
   .g2{grid-column:span 2;}
   .g3{grid-column:span 2;}
@@ -267,10 +295,11 @@
 
   /* staff */
   .staff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
-  .staff-card{background:var(--black);padding:36px 28px;}
+  .staff-card{background:var(--black);padding:36px 28px;transition:background .3s ease;}
+  .staff-card:hover{background:var(--charcoal);}
   .staff-photo{
     width:100%;aspect-ratio:4/5;
-    background:linear-gradient(150deg,#26201b,#0d0b0a);
+    background-size:cover;background-position:center;
     border:1px solid var(--line);
     margin-bottom:20px;position:relative;overflow:hidden;
   }
@@ -290,7 +319,7 @@
   .info-row .v{font-size:14px;text-align:right;color:var(--cream-dim);}
   .map-box{
     background:var(--panel);border:1px solid var(--line);
-    min-height:360px;position:relative;
+    min-height:360px;position:relative;overflow:hidden;
     background-image:
       linear-gradient(rgba(232,224,210,0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(232,224,210,0.05) 1px, transparent 1px);
@@ -300,22 +329,31 @@
     position:absolute;top:48%;left:52%;
     width:14px;height:14px;background:var(--brick-bright);
     border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+    animation:pinPulse 2s ease-in-out infinite;
   }
+  @keyframes pinPulse{0%,100%{box-shadow:0 0 0 0 rgba(168,73,42,0.6)}50%{box-shadow:0 0 0 12px rgba(168,73,42,0)}}
   .map-pin::after{content:"";position:absolute;inset:0;margin:auto;width:6px;height:6px;background:var(--black);border-radius:50%;}
 
   /* instagram */
   .insta-head{display:flex;align-items:center;gap:16px;margin-bottom:48px;flex-wrap:wrap;}
   .insta-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
   .insta-item{
-    aspect-ratio:1/1;background:var(--panel) center/cover no-repeat;border:1px solid var(--line);
-    position:relative;overflow:hidden;cursor:pointer;
+    aspect-ratio:1/1;position:relative;overflow:hidden;cursor:pointer;
+    border:1px solid var(--line);border-radius:4px;
   }
+  .insta-item img{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    transition:transform .5s ease;
+  }
+  .insta-item:hover img{transform:scale(1.1);}
   .insta-item::after{
-    content:"♥";position:absolute;inset:0;
+    content:"♡";position:absolute;inset:0;z-index:1;
     display:flex;align-items:center;justify-content:center;
-    color:var(--cream);font-size:22px;opacity:0;
+    color:var(--cream);font-size:28px;opacity:0;
     background:rgba(122,59,38,0.55);
-    transition:opacity .25s;
+    transition:opacity .3s ease;
   }
   .insta-item:hover::after{opacity:1;}
 
@@ -343,15 +381,27 @@
     font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ash);letter-spacing:0.05em;
   }
 
+  /* animations */
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
   .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* lightbox */
+  .lightbox{
+    display:none;position:fixed;inset:0;z-index:10000;
+    background:rgba(0,0,0,0.92);
+    align-items:center;justify-content:center;
+    cursor:pointer;
+  }
+  .lightbox.open{display:flex;animation:fadeIn .3s ease;}
+  @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+  .lightbox img{max-width:90vw;max-height:90vh;border-radius:4px;box-shadow:0 20px 80px rgba(0,0,0,0.6);}
 
   @media (max-width:900px){
     .nav-links{display:none;}
     .burger{display:flex;}
     .roast-grid,.access-grid,.contact-grid{grid-template-columns:1fr;}
     .staff-grid{grid-template-columns:1fr;}
-    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px;}
     .g1,.g2,.g3,.g4,.g5,.g6{grid-column:span 1;}
     .g1,.g5{grid-row:span 2;}
     .insta-grid{grid-template-columns:repeat(3,1fr);}
@@ -361,16 +411,21 @@
   @media (max-width:900px){
     .nav-links.mobile-open{
       display:flex;flex-direction:column;
-      position:fixed;top:0;right:0;
+      position:fixed;top:0;right:0;z-index:1001;
       width:70%;height:100vh;
       background:var(--black);
       padding:100px 32px;gap:28px;
       border-left:1px solid var(--line);
     }
   }
-  @media (prefers-reduced-motion: reduce){
+  @media (max-width:600px){
+    .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:120px;}
+    .insta-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
     .reveal{opacity:1;transform:none;transition:none;}
+    .g-item:hover img,.insta-item:hover img{transform:none;}
   }
 </style>
 </head>
@@ -395,6 +450,7 @@
 </header>
 
 <section id="top" class="hero">
+  <div class="hero-bg" id="heroBg"></div>
   <div class="hero-inner">
     <span class="eyebrow mono">SELF ROASTED / BROOKLYN STYLE / SINCE 2014</span>
     <h1>ROASTED<br>IN THE<br><span>RAW.</span></h1>
@@ -500,14 +556,14 @@
       </div>
       <p class="head-note">配管、レンガ、鉄骨。無骨な素材がそのまま空間になっている。</p>
     </div>
-    <div class="gallery-grid reveal">
-      <div class="g-item g1" style="background-image:url('https://images.unsplash.com/photo-1680381615265-6cce996f6e4f?auto=format&fit=crop&w=900&q=60')"><span>ROASTING FLOOR</span></div>
-      <div class="g-item g2" style="background-image:url('https://images.unsplash.com/photo-1733697968338-21feb4b7a4c3?auto=format&fit=crop&w=700&q=60')"><span>BRICK WALL SEATING</span></div>
-      <div class="g-item g3" style="background-image:url('https://images.unsplash.com/photo-1599097643242-1b5ed79fc698?auto=format&fit=crop&w=700&q=60')"><span>EXPOSED PIPING</span></div>
-      <div class="g-item g4" style="background-image:url('https://images.unsplash.com/photo-1518164483967-d6d558aa44df?auto=format&fit=crop&w=700&q=60')"><span>BAR COUNTER</span></div>
-      <div class="g-item g5" style="background-image:url('https://images.unsplash.com/photo-1465176728568-7da7e336b1e9?auto=format&fit=crop&w=900&q=60')"><span>GREEN BEAN STORAGE</span></div>
-      <div class="g-item g6" style="background-image:url('https://images.unsplash.com/photo-1561986810-4f3ba2f46ceb?auto=format&fit=crop&w=700&q=60')"><span>ROASTED LOT</span></div>
-    </div>
+  </div>
+  <div class="gallery-grid reveal" style="max-width:1264px;margin:0 auto;padding:0 32px;">
+    <div class="g-item g1" onclick="openLightbox('images/gallery-1.jpg')"><img src="images/gallery-1.jpg" alt="ROASTING FLOOR" loading="lazy"><span>ROASTING FLOOR</span></div>
+    <div class="g-item g2" onclick="openLightbox('images/gallery-2.jpg')"><img src="images/gallery-2.jpg" alt="BRICK WALL SEATING" loading="lazy"><span>BRICK WALL SEATING</span></div>
+    <div class="g-item g3" onclick="openLightbox('images/gallery-3.jpg')"><img src="images/gallery-3.jpg" alt="EXPOSED PIPING" loading="lazy"><span>EXPOSED PIPING</span></div>
+    <div class="g-item g4" onclick="openLightbox('images/gallery-4.jpg')"><img src="images/gallery-4.jpg" alt="BAR COUNTER" loading="lazy"><span>BAR COUNTER</span></div>
+    <div class="g-item g5" onclick="openLightbox('images/gallery-5.jpg')"><img src="images/gallery-5.jpg" alt="GREEN BEAN STORAGE" loading="lazy"><span>GREEN BEAN STORAGE</span></div>
+    <div class="g-item g6" onclick="openLightbox('images/gallery-6.jpg')"><img src="images/gallery-6.jpg" alt="ROASTED LOT" loading="lazy"><span>ROASTED LOT</span></div>
   </div>
 </section>
 
@@ -522,19 +578,19 @@
     </div>
     <div class="staff-grid reveal">
       <div class="staff-card">
-        <div class="staff-photo"></div>
+        <div class="staff-photo" style="background-image:url('images/staff-1.jpg')"></div>
         <span class="staff-role">Head Roaster</span>
         <h3 class="staff-name">TAKUMI ITO</h3>
         <p class="staff-bio">10年間シアトルの焙煎所で修業後、独立。豆の声を聞く男。</p>
       </div>
       <div class="staff-card">
-        <div class="staff-photo"></div>
+        <div class="staff-photo" style="background-image:url('images/staff-2.jpg')"></div>
         <span class="staff-role">Head Barista</span>
         <h3 class="staff-name">MIA SATO</h3>
         <p class="staff-bio">抽出理論に精通。ラテアートの大会で入賞経験あり。</p>
       </div>
       <div class="staff-card">
-        <div class="staff-photo"></div>
+        <div class="staff-photo" style="background-image:url('images/staff-3.jpg')"></div>
         <span class="staff-role">Store Manager</span>
         <h3 class="staff-name">KENTA MORI</h3>
         <p class="staff-bio">お客との会話を大切にする、お店の顔。</p>
@@ -574,11 +630,11 @@
       </div>
     </div>
     <div class="insta-grid reveal">
-      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1531711964235-a035b2c9e440?auto=format&fit=crop&w=500&q=60')"></div>
-      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1573628684836-5559b4c43f3b?auto=format&fit=crop&w=500&q=60')"></div>
-      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1652212159777-b3b98d40adab?auto=format&fit=crop&w=500&q=60')"></div>
-      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1607681034540-2c46cc71896d?auto=format&fit=crop&w=500&q=60')"></div>
-      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1537130508299-46ab547b4be3?auto=format&fit=crop&w=500&q=60')"></div>
+      <div class="insta-item"><img src="images/insta-1.jpg" alt="coffee" loading="lazy"></div>
+      <div class="insta-item"><img src="images/insta-2.jpg" alt="coffee" loading="lazy"></div>
+      <div class="insta-item"><img src="images/insta-3.jpg" alt="coffee" loading="lazy"></div>
+      <div class="insta-item"><img src="images/insta-4.jpg" alt="coffee" loading="lazy"></div>
+      <div class="insta-item"><img src="images/insta-5.jpg" alt="coffee" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -614,51 +670,75 @@
   </div>
 </footer>
 
+<!-- lightbox -->
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+  <img id="lightboxImg" src="" alt="拡大表示">
+</div>
+
 <script>
-  // burger menu
-  const burger = document.getElementById('burger');
-  const navLinks = document.getElementById('navLinks');
-  burger.addEventListener('click', () => {
-    navLinks.classList.toggle('mobile-open');
-  });
-  navLinks.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => navLinks.classList.remove('mobile-open'));
-  });
+// lightbox
+function openLightbox(src){
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
 
-  // menu tabs
-  const tabs = document.querySelectorAll('.menu-tab');
-  const panels = document.querySelectorAll('.menu-panel');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
-    });
-  });
+// burger menu
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('navLinks');
+burger.addEventListener('click', () => {
+  navLinks.classList.toggle('mobile-open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => navLinks.classList.remove('mobile-open'));
+});
 
-  // scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  revealEls.forEach(el => io.observe(el));
-
-  // contact form (front-end only)
-  document.getElementById('contactForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const btn = this.querySelector('button');
-    const original = btn.textContent;
-    btn.textContent = 'Sent.';
-    this.reset();
-    setTimeout(() => { btn.textContent = original; }, 2500);
+// menu tabs
+const tabs = document.querySelectorAll('.menu-tab');
+const panels = document.querySelectorAll('.menu-panel');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
   });
+});
+
+// scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
+
+// hero parallax
+const heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll', () => {
+  const scrolled = window.pageYOffset;
+  if (heroBg && scrolled < window.innerHeight) {
+    heroBg.style.transform = `scale(1.05) translateY(${scrolled * 0.08}px)`;
+  }
+}, { passive: true });
+
+// contact form
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const btn = this.querySelector('button');
+  const original = btn.textContent;
+  btn.textContent = '✓ Sent.';
+  this.reset();
+  setTimeout(() => { btn.textContent = original; }, 2500);
+});
+
+// close lightbox with escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+});
 </script>
-
 </body>
 </html>
