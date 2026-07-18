@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLACKSMITH ROASTERY | Brooklyn Style Coffee Roaster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0c0b0a;
+    --charcoal:#171513;
+    --panel:#1f1b18;
+    --brick:#7a3b26;
+    --brick-bright:#a8492a;
+    --steel:#4a4642;
+    --ash:#8d8579;
+    --cream:#e8e0d2;
+    --cream-dim:#b8ae9d;
+    --line: rgba(232,224,210,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--cream);
+    font-family:'Archivo',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+    line-height:0.95;
+  }
+  .mono{
+    font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.08em;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  ::selection{background:var(--brick-bright);color:var(--black);}
+
+  /* texture */
+  .noise{
+    position:fixed;inset:0;
+    pointer-events:none;
+    z-index:9999;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+
+  /* header */
+  header{
+    position:fixed;top:0;left:0;right:0;
+    z-index:1000;
+    background:rgba(12,11,10,0.88);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;
+    max-width:1200px;margin:0 auto;
+  }
+  .logo{
+    font-family:'Anton',sans-serif;
+    font-size:22px;
+    letter-spacing:0.03em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo .dot{
+    width:9px;height:9px;background:var(--brick-bright);
+    display:inline-block;
+  }
+  .nav-links{
+    display:flex;gap:32px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .nav-links a{
+    color:var(--cream-dim);
+    position:relative;
+    padding-bottom:4px;
+    transition:color .25s;
+  }
+  .nav-links a:hover{color:var(--cream);}
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:0;
+    width:0;height:1px;background:var(--brick-bright);
+    transition:width .25s;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;}
+  .burger span{width:24px;height:2px;background:var(--cream);}
+
+  /* hero */
+  .hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    position:relative;
+    padding-top:90px;
+    background:
+      linear-gradient(180deg, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.97) 88%),
+      url("https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&w=1800&q=60") center 30%/cover no-repeat;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image: repeating-linear-gradient(90deg, transparent, transparent 76px, rgba(0,0,0,0.4) 76px 79px);
+    opacity:0.5;
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    padding:0 32px;
+    max-width:1200px;margin:0 auto;width:100%;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:0.25em;
+    color:var(--brick-bright);
+    margin-bottom:24px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{content:"";width:32px;height:1px;background:var(--brick-bright);}
+  .hero h1{
+    font-size:clamp(52px,10vw,148px);
+    color:var(--cream);
+    margin-bottom:8px;
+  }
+  .hero h1 span{color:transparent;-webkit-text-stroke:2px var(--cream);}
+  .hero-sub{
+    max-width:520px;
+    color:var(--cream-dim);
+    font-size:17px;
+    margin:28px 0 40px;
+  }
+  .btn-row{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    padding:16px 32px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;letter-spacing:0.1em;text-transform:uppercase;
+    border:1px solid var(--cream);
+    transition:all .25s;
+  }
+  .btn.solid{
+    background:var(--brick-bright);
+    border-color:var(--brick-bright);
+    color:var(--black);
+    font-weight:700;
+  }
+  .btn.solid:hover{background:var(--cream);border-color:var(--cream);}
+  .btn.outline:hover{background:var(--cream);color:var(--black);}
+
+  .roast-gauge{
+    margin-top:64px;
+    display:flex;align-items:center;gap:18px;
+    max-width:640px;
+  }
+  .roast-gauge .mono{font-size:11px;color:var(--ash);white-space:nowrap;}
+  .gauge-track{
+    flex:1;height:6px;background:var(--panel);
+    position:relative;border:1px solid var(--line);
+  }
+  .gauge-fill{
+    position:absolute;left:0;top:0;bottom:0;
+    width:64%;
+    background:linear-gradient(90deg,#c9a86a,#7a3b26,#3b2013);
+  }
+  .gauge-marker{
+    position:absolute;top:-6px;left:64%;
+    width:2px;height:18px;background:var(--cream);
+  }
+
+  section{
+    position:relative;
+    padding:120px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:64px;flex-wrap:wrap;gap:24px;
+  }
+  .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;color:var(--brick-bright);
+    letter-spacing:0.2em;margin-bottom:14px;display:block;
+  }
+  .section-head h2{font-size:clamp(34px,5vw,56px);}
+  .head-note{max-width:340px;color:var(--ash);font-size:14px;}
+
+  /* roasting */
+  .roast-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+  }
+  .roast-copy p{color:var(--cream-dim);margin-bottom:20px;font-size:16px;max-width:480px;}
+  .curve-box{
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:32px;
+  }
+  .curve-box .mono{font-size:11px;color:var(--ash);margin-bottom:16px;display:block;}
+  svg.curve{width:100%;height:auto;}
+  .stat-strip{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    margin-top:56px;border-top:1px solid var(--line);
+  }
+  .stat{padding:28px 24px 0;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .num{font-family:'Anton',sans-serif;font-size:40px;color:var(--brick-bright);}
+  .stat .label{font-size:12px;color:var(--ash);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;margin-top:6px;}
+
+  /* menu */
+  .menu-tabs{display:flex;gap:8px;margin-bottom:48px;flex-wrap:wrap;}
+  .menu-tab{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;
+    text-transform:uppercase;padding:10px 20px;
+    border:1px solid var(--line);color:var(--ash);cursor:pointer;
+    transition:all .2s;background:transparent;
+  }
+  .menu-tab.active,.menu-tab:hover{border-color:var(--brick-bright);color:var(--cream);}
+  .menu-panel{display:none;}
+  .menu-panel.active{display:block;}
+  .menu-list{border-top:1px solid var(--line);}
+  .menu-item{
+    display:flex;justify-content:space-between;gap:24px;
+    padding:24px 0;border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .menu-item:hover .menu-name{color:var(--brick-bright);}
+  .menu-name{font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase;transition:color .2s;}
+  .menu-desc{color:var(--ash);font-size:13px;margin-top:6px;max-width:420px;}
+  .menu-price{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--cream-dim);white-space:nowrap;}
+
+  /* gallery */
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:140px;gap:12px;
+  }
+  .g-item{
+    background:var(--panel) center/cover no-repeat;
+    border:1px solid var(--line);
+    position:relative;overflow:hidden;
+    display:flex;align-items:flex-end;padding:14px;
+  }
+  .g-item::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(12,11,10,0) 45%, rgba(12,11,10,0.85) 100%);
+  }
+  .g-item span{position:relative;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cream-dim);letter-spacing:0.05em;}
+  .g1{grid-column:span 2;grid-row:span 2;}
+  .g2{grid-column:span 2;}
+  .g3{grid-column:span 2;}
+  .g4{grid-column:span 2;}
+  .g5{grid-column:span 2;grid-row:span 2;}
+  .g6{grid-column:span 2;}
+
+  /* staff */
+  .staff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .staff-card{background:var(--black);padding:36px 28px;}
+  .staff-photo{
+    width:100%;aspect-ratio:4/5;
+    background:linear-gradient(150deg,#26201b,#0d0b0a);
+    border:1px solid var(--line);
+    margin-bottom:20px;position:relative;overflow:hidden;
+  }
+  .staff-photo::after{
+    content:"";position:absolute;inset:0;
+    background-image:repeating-linear-gradient(45deg, rgba(232,224,210,0.03) 0 1px, transparent 1px 8px);
+  }
+  .staff-role{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--brick-bright);letter-spacing:0.1em;text-transform:uppercase;}
+  .staff-name{font-family:'Anton',sans-serif;font-size:26px;margin:8px 0 12px;}
+  .staff-bio{color:var(--ash);font-size:13px;}
+
+  /* access */
+  .access-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+  .info-list{border-top:1px solid var(--line);margin-top:32px;}
+  .info-row{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);}
+  .info-row .k{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ash);letter-spacing:0.08em;text-transform:uppercase;}
+  .info-row .v{font-size:14px;text-align:right;color:var(--cream-dim);}
+  .map-box{
+    background:var(--panel);border:1px solid var(--line);
+    min-height:360px;position:relative;
+    background-image:
+      linear-gradient(rgba(232,224,210,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,224,210,0.05) 1px, transparent 1px);
+    background-size:32px 32px;
+  }
+  .map-pin{
+    position:absolute;top:48%;left:52%;
+    width:14px;height:14px;background:var(--brick-bright);
+    border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+  }
+  .map-pin::after{content:"";position:absolute;inset:0;margin:auto;width:6px;height:6px;background:var(--black);border-radius:50%;}
+
+  /* instagram */
+  .insta-head{display:flex;align-items:center;gap:16px;margin-bottom:48px;flex-wrap:wrap;}
+  .insta-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+  .insta-item{
+    aspect-ratio:1/1;background:var(--panel) center/cover no-repeat;border:1px solid var(--line);
+    position:relative;overflow:hidden;cursor:pointer;
+  }
+  .insta-item::after{
+    content:"♥";position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--cream);font-size:22px;opacity:0;
+    background:rgba(122,59,38,0.55);
+    transition:opacity .25s;
+  }
+  .insta-item:hover::after{opacity:1;}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+  .field{margin-bottom:22px;}
+  .field label{
+    display:block;font-family:'JetBrains Mono',monospace;font-size:11px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);margin-bottom:8px;
+  }
+  .field input,.field textarea{
+    width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);
+    color:var(--cream);font-family:'Archivo',sans-serif;font-size:15px;padding:10px 2px;
+    outline:none;transition:border-color .2s;
+  }
+  .field input:focus,.field textarea:focus{border-color:var(--brick-bright);}
+  .field textarea{resize:vertical;min-height:100px;}
+  .contact-side{color:var(--cream-dim);}
+  .contact-side p{margin-bottom:18px;font-size:15px;max-width:400px;}
+
+  footer{padding:48px 0;}
+  .footer-row{
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:16px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ash);letter-spacing:0.05em;
+  }
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .burger{display:flex;}
+    .roast-grid,.access-grid,.contact-grid{grid-template-columns:1fr;}
+    .staff-grid{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .g1,.g2,.g3,.g4,.g5,.g6{grid-column:span 1;}
+    .g1,.g5{grid-row:span 2;}
+    .insta-grid{grid-template-columns:repeat(3,1fr);}
+    .stat-strip{grid-template-columns:1fr;}
+    .stat{border-right:none;border-bottom:1px solid var(--line);padding-bottom:20px;}
+  }
+  @media (max-width:900px){
+    .nav-links.mobile-open{
+      display:flex;flex-direction:column;
+      position:fixed;top:0;right:0;
+      width:70%;height:100vh;
+      background:var(--black);
+      padding:100px 32px;gap:28px;
+      border-left:1px solid var(--line);
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="logo"><span class="dot"></span>BLACKSMITH ROASTERY</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#top">Top</a>
+      <a href="#roast">Roasting</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Interior</a>
+      <a href="#staff">Staff</a>
+      <a href="#access">Access</a>
+      <a href="#instagram">Instagram</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<section id="top" class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow mono">SELF ROASTED / BROOKLYN STYLE / SINCE 2014</span>
+    <h1>ROASTED<br>IN THE<br><span>RAW.</span></h1>
+    <p class="hero-sub">配管とレンガがむき出しの焙煎所併設カフェ。豆の個性を焼き切らず、素材の力をそのまま抽出する。ここはコーヒー好きが集まる、ブルックリンの裏路地のような場所。</p>
+    <div class="btn-row">
+      <a href="#menu" class="btn solid">View Menu</a>
+      <a href="#access" class="btn outline">Find Us</a>
+    </div>
+    <div class="roast-gauge">
+      <span class="mono">LIGHT</span>
+      <div class="gauge-track"><div class="gauge-fill"></div><div class="gauge-marker"></div></div>
+      <span class="mono">DARK</span>
+    </div>
+  </div>
+</section>
+
+<section id="roast">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">01 — CRAFT</span>
+        <h2>焙煎への<br>こだわり</h2>
+      </div>
+      <p class="head-note">火入れの一秒が味を変える。うちの焙煎士は温度計より、豆の弾ける音と匂いを信じている。</p>
+    </div>
+    <div class="roast-grid">
+      <div class="roast-copy reveal">
+        <p>店内奥の焙煎機は1957年製のドイツ製ドラムを改造したもの。毎朝5時、生豆の状態を見ながらその日の火力を決める。マニュアル通りには焼かない。</p>
+        <p>焙煎後は必ず24時間以上のガス抜きを経てから店頭へ。豆の持つ酸味と甘みのバランスが、無骨な見た目とは裏腹に驚くほど繊細だ。</p>
+        <p>豆はすべて生産者と直接契約したシングルオリジン。中間業者を挟まず、素材の背景まで買い付けている。</p>
+      </div>
+      <div class="curve-box reveal">
+        <span class="mono">ROAST CURVE / TYPICAL PROFILE</span>
+        <svg class="curve" viewBox="0 0 400 220">
+          <line x1="0" y1="200" x2="400" y2="200" stroke="rgba(232,224,210,0.15)" stroke-width="1"/>
+          <line x1="0" y1="140" x2="400" y2="140" stroke="rgba(232,224,210,0.08)" stroke-width="1"/>
+          <line x1="0" y1="80" x2="400" y2="80" stroke="rgba(232,224,210,0.08)" stroke-width="1"/>
+          <path d="M0,190 C60,160 100,120 150,90 C220,50 280,30 400,10" fill="none" stroke="#a8492a" stroke-width="2.5"/>
+          <circle cx="150" cy="90" r="4" fill="#e8e0d2"/>
+          <circle cx="280" cy="30" r="4" fill="#e8e0d2"/>
+          <text x="150" y="78" fill="#b8ae9d" font-size="10" font-family="JetBrains Mono">FIRST CRACK</text>
+          <text x="255" y="20" fill="#b8ae9d" font-size="10" font-family="JetBrains Mono">DROP</text>
+        </svg>
+      </div>
+    </div>
+    <div class="stat-strip reveal">
+      <div class="stat"><div class="num">180°C</div><div class="label">DROP TEMPERATURE</div></div>
+      <div class="stat"><div class="num">12min</div><div class="label">AVG ROAST TIME</div></div>
+      <div class="stat"><div class="num">7カ国</div><div class="label">直接契約農園</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">02 — MENU</span>
+        <h2>メニュー</h2>
+      </div>
+      <p class="head-note">豆の個性を邪魔しない抽出方法だけを揃えている。</p>
+    </div>
+
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" data-tab="coffee">Coffee</button>
+      <button class="menu-tab" data-tab="brew">Brew Bar</button>
+      <button class="menu-tab" data-tab="food">Food</button>
+    </div>
+
+    <div class="menu-panel active" id="coffee">
+      <div class="menu-list">
+        <div class="menu-item"><div><div class="menu-name">House Blend</div><div class="menu-desc">3種のシングルオリジンをブレンド。ナッツとキャラメルの余韻。</div></div><div class="menu-price">¥550</div></div>
+        <div class="menu-item"><div><div class="menu-name">Espresso</div><div class="menu-desc">深煎り豆を使用した濃厚な一杯。</div></div><div class="menu-price">¥450</div></div>
+        <div class="menu-item"><div><div class="menu-name">Cold Brew</div><div class="menu-desc">18時間水出し。すっきりとした甘み。</div></div><div class="menu-price">¥600</div></div>
+        <div class="menu-item"><div><div class="menu-name">Flat White</div><div class="menu-desc">濃厚なエスプレッソとミルクのバランス。</div></div><div class="menu-price">¥650</div></div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="brew">
+      <div class="menu-list">
+        <div class="menu-item"><div><div class="menu-name">Ethiopia Yirgacheffe</div><div class="menu-desc">ハンドドリップ。ベリー系の華やかな酸味。</div></div><div class="menu-price">¥750</div></div>
+        <div class="menu-item"><div><div class="menu-name">Guatemala Huehuetenango</div><div class="menu-desc">チョコレートのような重厚なコク。</div></div><div class="menu-price">¥750</div></div>
+        <div class="menu-item"><div><div class="menu-name">Kenya AA</div><div class="menu-desc">トマトのような複雑な酸とジューシーさ。</div></div><div class="menu-price">¥800</div></div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="food">
+      <div class="menu-list">
+        <div class="menu-item"><div><div class="menu-name">Cast Iron Toast</div><div class="menu-desc">鋳鉄フライパンで焼いた厚切りトースト。</div></div><div class="menu-price">¥650</div></div>
+        <div class="menu-item"><div><div class="menu-name">Brooklyn Bagel</div><div class="menu-desc">自家製クリームチーズ添え。</div></div><div class="menu-price">¥700</div></div>
+        <div class="menu-item"><div><div class="menu-name">Banana Bread</div><div class="menu-desc">胡桃とダークチョコ入り。</div></div><div class="menu-price">¥500</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">03 — INTERIOR</span>
+        <h2>店内写真</h2>
+      </div>
+      <p class="head-note">配管、レンガ、鉄骨。無骨な素材がそのまま空間になっている。</p>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="g-item g1" style="background-image:url('https://images.unsplash.com/photo-1680381615265-6cce996f6e4f?auto=format&fit=crop&w=900&q=60')"><span>ROASTING FLOOR</span></div>
+      <div class="g-item g2" style="background-image:url('https://images.unsplash.com/photo-1733697968338-21feb4b7a4c3?auto=format&fit=crop&w=700&q=60')"><span>BRICK WALL SEATING</span></div>
+      <div class="g-item g3" style="background-image:url('https://images.unsplash.com/photo-1599097643242-1b5ed79fc698?auto=format&fit=crop&w=700&q=60')"><span>EXPOSED PIPING</span></div>
+      <div class="g-item g4" style="background-image:url('https://images.unsplash.com/photo-1518164483967-d6d558aa44df?auto=format&fit=crop&w=700&q=60')"><span>BAR COUNTER</span></div>
+      <div class="g-item g5" style="background-image:url('https://images.unsplash.com/photo-1465176728568-7da7e336b1e9?auto=format&fit=crop&w=900&q=60')"><span>GREEN BEAN STORAGE</span></div>
+      <div class="g-item g6" style="background-image:url('https://images.unsplash.com/photo-1561986810-4f3ba2f46ceb?auto=format&fit=crop&w=700&q=60')"><span>ROASTED LOT</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="staff">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">04 — TEAM</span>
+        <h2>スタッフ紹介</h2>
+      </div>
+      <p class="head-note">豆にも人にも、余計な演出はいらない。</p>
+    </div>
+    <div class="staff-grid reveal">
+      <div class="staff-card">
+        <div class="staff-photo"></div>
+        <span class="staff-role">Head Roaster</span>
+        <h3 class="staff-name">TAKUMI ITO</h3>
+        <p class="staff-bio">10年間シアトルの焙煎所で修業後、独立。豆の声を聞く男。</p>
+      </div>
+      <div class="staff-card">
+        <div class="staff-photo"></div>
+        <span class="staff-role">Head Barista</span>
+        <h3 class="staff-name">MIA SATO</h3>
+        <p class="staff-bio">抽出理論に精通。ラテアートの大会で入賞経験あり。</p>
+      </div>
+      <div class="staff-card">
+        <div class="staff-photo"></div>
+        <span class="staff-role">Store Manager</span>
+        <h3 class="staff-name">KENTA MORI</h3>
+        <p class="staff-bio">お客との会話を大切にする、お店の顔。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="access">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">05 — ACCESS</span>
+        <h2>アクセス</h2>
+      </div>
+    </div>
+    <div class="access-grid reveal">
+      <div>
+        <div class="info-list">
+          <div class="info-row"><span class="k">Address</span><span class="v">東京都渋谷区○○ 1-2-3<br>Brick Building 1F</span></div>
+          <div class="info-row"><span class="k">Hours</span><span class="v">08:00 - 20:00<br>年中無休</span></div>
+          <div class="info-row"><span class="k">Access</span><span class="v">○○駅 徒歩5分</span></div>
+          <div class="info-row"><span class="k">Tel</span><span class="v">03-0000-0000</span></div>
+        </div>
+      </div>
+      <div class="map-box"><div class="map-pin"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="instagram">
+  <div class="wrap">
+    <div class="insta-head reveal">
+      <div>
+        <span class="tag">06 — INSTAGRAM</span>
+        <h2>@blacksmith.roastery</h2>
+      </div>
+    </div>
+    <div class="insta-grid reveal">
+      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1531711964235-a035b2c9e440?auto=format&fit=crop&w=500&q=60')"></div>
+      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1573628684836-5559b4c43f3b?auto=format&fit=crop&w=500&q=60')"></div>
+      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1652212159777-b3b98d40adab?auto=format&fit=crop&w=500&q=60')"></div>
+      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1607681034540-2c46cc71896d?auto=format&fit=crop&w=500&q=60')"></div>
+      <div class="insta-item" style="background-image:url('https://images.unsplash.com/photo-1537130508299-46ab547b4be3?auto=format&fit=crop&w=500&q=60')"></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">07 — CONTACT</span>
+        <h2>お問い合わせ</h2>
+      </div>
+    </div>
+    <div class="contact-grid reveal">
+      <form id="contactForm">
+        <div class="field"><label>Name</label><input type="text" required></div>
+        <div class="field"><label>Email</label><input type="email" required></div>
+        <div class="field"><label>Message</label><textarea required></textarea></div>
+        <button type="submit" class="btn solid" style="border:none;cursor:pointer;">Send Message</button>
+      </form>
+      <div class="contact-side">
+        <p>ケータリング、卸売、店舗貸切に関するお問い合わせもこちらから承っております。</p>
+        <p>返信までに2〜3営業日いただく場合がございます。</p>
+        <p class="mono" style="color:var(--brick-bright);letter-spacing:0.05em;">info@blacksmith-roastery.jp</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© 2026 BLACKSMITH ROASTERY</span>
+    <span>ROASTED IN BROOKLYN, SERVED EVERYWHERE</span>
+  </div>
+</footer>
+
+<script>
+  // burger menu
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => {
+    navLinks.classList.toggle('mobile-open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('mobile-open'));
+  });
+
+  // menu tabs
+  const tabs = document.querySelectorAll('.menu-tab');
+  const panels = document.querySelectorAll('.menu-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // contact form (front-end only)
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const btn = this.querySelector('button');
+    const original = btn.textContent;
+    btn.textContent = 'Sent.';
+    this.reset();
+    setTimeout(() => { btn.textContent = original; }, 2500);
+  });
+</script>
+
+</body>
+</html>
