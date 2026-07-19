@@ -1,0 +1,42 @@
+---
+import siteData from '../data/site.json';
+---
+
+<section id="instagram">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">08 — INSTAGRAM</span>
+        <h2>INSTAGRAM</h2>
+      </div>
+      <p class="head-note">サロンの日常、スタイル写真、スタッフのリアルな姿を発信中。</p>
+    </div>
+    <div class="insta-grid reveal">
+      {siteData.instagramList.map((item: any) => (
+        <div class="insta-item">
+          <img src={item.image} alt="Instagram post" loading="lazy">
+          <a href={siteData.instagramUrl} target="_blank" class="insta-overlay">
+            <span>{siteData.instagramId}</span>
+          </a>
+        </div>
+      ))}
+    </div>
+    <div class="insta-cta reveal">
+      <a href={siteData.instagramUrl} target="_blank" class="btn outline">Follow {siteData.instagramId}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .insta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .insta-item { position: relative; overflow: hidden; aspect-ratio: 1/1; border: 1px solid var(--line); cursor: pointer; }
+  .insta-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease, filter .4s ease; }
+  .insta-item:hover img { transform: scale(1.1); filter: grayscale(60%); }
+  .insta-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(10,9,8,0.7); opacity: 0; transition: opacity .3s; color: var(--cream); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; }
+  .insta-item:hover .insta-overlay { opacity: 1; }
+  .insta-cta { text-align: center; margin-top: 36px; }
+
+  @media (max-width: 900px) {
+    .insta-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

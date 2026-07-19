@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Concept from '../components/Concept.astro';
+import Menu from '../components/Menu.astro';
+import Gallery from '../components/Gallery.astro';
+import Staff from '../components/Staff.astro';
+import Voice from '../components/Voice.astro';
+import Access from '../components/Access.astro';
+import FAQ from '../components/FAQ.astro';
+import Instagram from '../components/Instagram.astro';
+import Reserva from '../components/Reserva.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+
+import siteData from '../data/site.json';
+---
+
+<Layout title={`${siteData.name} | ${siteData.tagline}`}>
+  <!-- Header / Nav -->
+  <header>
+    <div class="nav">
+      <a href="#top" class="logo"><span class="mark"></span>{siteData.name}</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#top" data-sec="top" class="active">Top</a>
+        <a href="#concept" data-sec="concept">Concept</a>
+        <a href="#menu" data-sec="menu">Menu</a>
+        <a href="#gallery" data-sec="gallery">Works</a>
+        <a href="#staff" data-sec="staff">Staff</a>
+        <a href="#voice" data-sec="voice">Voice</a>
+        <a href="#access" data-sec="access">Access</a>
+        <a href="#faq" data-sec="faq">FAQ</a>
+        <a href="#instagram" data-sec="instagram">Instagram</a>
+        <a href="#reserva" data-sec="reserva" class="nav-cta">Reserve</a>
+      </nav>
+      <div class="burger" id="burger"><span></span><span></span><span></span></div>
+    </div>
+  </header>
+
+  <nav class="side-nav" id="sideNav">
+    <a href="#top" data-sec="top" class="active"></a>
+    <a href="#concept" data-sec="concept"></a>
+    <a href="#menu" data-sec="menu"></a>
+    <a href="#gallery" data-sec="gallery"></a>
+    <a href="#staff" data-sec="staff"></a>
+    <a href="#voice" data-sec="voice"></a>
+    <a href="#access" data-sec="access"></a>
+    <a href="#faq" data-sec="faq"></a>
+    <a href="#instagram" data-sec="instagram"></a>
+    <a href="#reserva" data-sec="reserva"></a>
+  </nav>
+
+  <main>
+    <Hero />
+    <Concept />
+    <Menu />
+    <Gallery />
+    <Staff />
+    <Voice />
+    <Access />
+    <FAQ />
+    <Instagram />
+    <Reserva />
+    <Contact />
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Burger Menu Logic
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    if (burger && navLinks) {
+      burger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => navLinks.classList.remove('open'));
+      });
+    }
+  });
+</script>
+
+<style>
+  /* header */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(10,9,8,0.9); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; max-width: 1200px; margin: 0 auto; }
+  .logo { font-family: 'Oswald', sans-serif; font-size: 20px; letter-spacing: 0.06em; display: flex; align-items: center; gap: 10px; }
+  .logo .mark { width: 7px; height: 7px; background: var(--brass); display: inline-block; transform: rotate(45deg); }
+  .nav-links { display: flex; gap: 28px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .nav-links a { color: var(--cream-dim); padding-bottom: 3px; transition: color .25s; position: relative; }
+  .nav-links a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px; background: var(--brass); transition: width .25s; }
+  .nav-links a.active, .nav-links a:hover { color: var(--cream); }
+  .nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
+  .nav-cta { background: var(--brass); color: var(--black) !important; padding: 8px 18px !important; font-weight: 700; }
+  .nav-cta::after { display: none !important; }
+  
+  .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; }
+  .burger span { width: 22px; height: 2px; background: var(--cream); transition: transform .3s; }
+
+  /* side dot nav */
+  .side-nav {
+    position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+    z-index: 900; display: flex; flex-direction: column; gap: 12px;
+  }
+  .side-nav a { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--line-strong); display: block; transition: all .3s; }
+  .side-nav a.active { background: var(--brass); border-color: var(--brass); transform: scale(1.4); box-shadow: 0 0 8px rgba(197,165,90,0.4); }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; position: fixed; top: 0; right: -100%; width: 75%; height: 100vh; background: var(--black); flex-direction: column; padding: 80px 28px 28px; gap: 20px; border-left: 1px solid var(--line); transition: right .4s ease; z-index: 999; }
+    .nav-links.open { right: 0; display: flex; }
+    .burger { display: flex; }
+    .side-nav { display: none; }
+  }
+</style>

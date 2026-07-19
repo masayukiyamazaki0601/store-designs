@@ -1,0 +1,38 @@
+---
+import siteData from '../data/site.json';
+---
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">03 — WORKS</span>
+        <h2>GALLERY</h2>
+      </div>
+      <p class="head-note">技術の証明。実際の施術事例をご覧ください。</p>
+    </div>
+    <div class="gallery-grid reveal">
+      {siteData.galleryList.map((g: any) => (
+        <div class={`g-item ${g.wide ? 'g-wide' : ''}`}>
+          <img src={g.image} alt={g.tag} loading="lazy">
+          <span class="tag">{g.tag}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .g-item { position: relative; overflow: hidden; aspect-ratio: 3/4; border: 1px solid var(--line); }
+  .g-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease, filter .4s ease; filter: grayscale(50%) contrast(1.1); }
+  .g-item:hover img { transform: scale(1.08); filter: grayscale(0%) contrast(1.05); }
+  .g-item .tag { position: absolute; bottom: 10px; left: 10px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.08em; color: var(--cream); background: rgba(10,9,8,0.7); padding: 4px 8px; margin: 0; }
+  .g-item::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,9,8,0.8) 0%, transparent 50%); z-index: 1; }
+  .g-wide { grid-column: span 2; grid-row: span 2; }
+
+  @media (max-width: 900px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .g-wide { grid-column: span 1; grid-row: span 1; }
+  }
+</style>

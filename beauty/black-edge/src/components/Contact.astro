@@ -1,0 +1,104 @@
+---
+import siteData from '../data/site.json';
+---
+
+<section id="contact" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">10 — CONTACT</span>
+        <h2>CONTACT</h2>
+      </div>
+    </div>
+    <div class="contact-grid reveal">
+      <form id="contactForm" action={siteData.contact.formspreeEndpoint} method="POST">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" name="name" required>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea name="message" required></textarea>
+        </div>
+        <!-- honeypot for spam protection (optional but good practice) -->
+        <input type="text" name="_gotcha" style="display:none">
+        
+        <button type="submit" class="btn solid" style="border:none;cursor:pointer;">Send Message</button>
+      </form>
+      <div class="contact-side">
+        <p>お問い合わせはフォームまたはお電話で承っております。</p>
+        <p>出張カットや撮影スタイリングのご依頼もお気軽にご相談ください。</p>
+        <p>返信までに2〜3営業日いただく場合がございます。</p>
+        <p class="mono" style="color:var(--brass);letter-spacing:0.05em;margin-top:20px;">{siteData.email}</p>
+        <p class="mono" style="color:var(--cream-dim);letter-spacing:0.05em;">TEL: {siteData.tel}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contactForm') as HTMLFormElement;
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('button');
+        const endpoint = this.getAttribute('action');
+        
+        if (!endpoint || endpoint.includes('your-form-id-here')) {
+          alert('フォームの送信先（Formspree等）が未設定です。');
+          return;
+        }
+
+        if (btn) {
+          const original = btn.textContent;
+          btn.textContent = 'Sending...';
+          btn.disabled = true;
+
+          try {
+            const formData = new FormData(this);
+            const response = await fetch(endpoint, {
+              method: 'POST',
+              body: formData,
+              headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+              btn.textContent = 'Sent Successfully.';
+              this.reset();
+            } else {
+              throw new Error('Network response was not ok.');
+            }
+          } catch (error) {
+            btn.textContent = 'Error. Try Again.';
+          } finally {
+            setTimeout(() => { 
+              btn.textContent = original; 
+              btn.disabled = false;
+            }, 3000);
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .field { margin-bottom: 22px; }
+  .field label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ash); margin-bottom: 6px; }
+  .field input, .field textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--line); color: var(--cream); font-family: 'Noto Sans JP', sans-serif; font-size: 14px; padding: 8px 2px; outline: none; transition: border-color .2s; }
+  .field input:focus, .field textarea:focus { border-color: var(--brass); }
+  .field textarea { resize: vertical; min-height: 90px; }
+  .contact-side { color: var(--cream-dim); }
+  .contact-side p { margin-bottom: 16px; font-size: 14px; max-width: 380px; font-weight: 300; }
+  .contact-side .mono { color: var(--brass); }
+
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

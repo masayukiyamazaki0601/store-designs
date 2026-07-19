@@ -1,0 +1,28 @@
+---
+import siteData from '../data/site.json';
+---
+
+<section id="reserva" class="reserva-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">09 — RESERVE</span>
+        <h2>RESERVE</h2>
+      </div>
+      <p class="head-note">24時間受付。お気軽にご予約ください。</p>
+    </div>
+    <div class="reveal" style="text-align:center;margin-bottom:40px;">
+      <p style="color:var(--cream-dim);font-size:14px;margin-bottom:20px;">下記フォームからご予約いただけます。初めての方もお気軽にどうぞ。</p>
+      <a href={siteData.reservaUrl} target="_blank" class="btn solid" style="display:inline-block;">予約ページへ</a>
+    </div>
+    <div class="reserva-frame reveal">
+      <iframe src="about:blank" width="100%" height="500" style="border:none;display:block;" title="予約フォーム"></iframe>
+    </div>
+    <p style="text-align:center;color:var(--ash);font-size:11px;margin-top:16px;font-family:'JetBrains Mono',monospace;">※ 実際のRESERVA埋め込みURLを設定してください</p>
+  </div>
+</section>
+
+<style>
+  .reserva-section { background: var(--charcoal); border-bottom: 1px solid var(--line); }
+  .reserva-frame { width: 100%; min-height: 500px; border: 1px solid var(--line); background: var(--panel); }
+</style>

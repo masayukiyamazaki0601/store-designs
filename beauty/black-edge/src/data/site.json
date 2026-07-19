@@ -1,0 +1,92 @@
+{
+  "name": "BLACK EDGE",
+  "tagline": "MEN'S HAIR SALON / SINCE 2016",
+  "catchphrase": "技術で決まる、男のスタイル。",
+  "conceptTitle": "BLACK<br>EDGE.",
+  "conceptDesc": [
+    "余計な装飾を排したインダストリアルな空間。BGMにはジャズやロックが流れ、鏡に向かう時間は非日常への入り口だ。",
+    "カットの精度、シェービングの深さ、スタイリングの再現性。どれ一つ妥協しない。技術に裏打ちされたスタイルを、対話を通じて作り上げる。",
+    "メンズ美容のプロフェッショナルとして、一人ひとりの「なりたい」に応える。"
+  ],
+  "conceptNote": "無駄を削ぎ落とした空間で、技術と向き合う。それが俺たちの流儀だ。",
+  "address": "東京都渋谷区○○ 1-2-3",
+  "building": "Black Edge Building 1F",
+  "postalCode": "150-0000",
+  "region": "東京都",
+  "locality": "渋谷区",
+  "tel": "03-0000-0000",
+  "email": "info@blackedge-hair.com",
+  "access": "○○駅 徒歩3分",
+  "hours": "10:00 - 20:00",
+  "holiday": "月曜定休",
+  "parking": "近隣コインパーキング",
+  "heroImage": "/images/hero.jpg",
+  "stats": [
+    { "num": "12", "label": "YEARS OF CRAFT" },
+    { "num": "98%", "label": "SATISFACTION" },
+    { "num": "3,000+", "label": "REPEAT CUSTOMERS" }
+  ],
+  "heroBadgeNum": "4,800+",
+  "heroBadgeLabel": "CUTS DELIVERED / YEAR",
+  "menuList": [
+    { "cat": "Cut", "name": "CUT", "desc": "シャンプー・ブロー込み。お客様の骨格・髪質に合わせたオーダーメイドカット。", "price": "¥5,500", "unit": "/ cut" },
+    { "cat": "Cut + Shave", "name": "CUT & SHAVE", "desc": "カット＋フェイスシェービング。熱巾タオルとアフターケア込みの贅沢な組合せ。", "price": "¥7,500", "unit": "/ set" },
+    { "cat": "Shave", "name": "SHAVE", "desc": "フェイスシェービング単品。肌に優しいストレート剃り。アフターケア付き。", "price": "¥3,800", "unit": "/ shave" },
+    { "cat": "Color", "name": "COLOR", "desc": "白髪染め・おしゃれ染め。髪と頭皮に配慮した薬剤を使用。", "price": "¥6,500", "unit": "/ color" },
+    { "cat": "Perm", "name": "PERM", "desc": "パーマ。髪のダメージを抑えながら、思い通りの質感を実現。", "price": "¥7,000", "unit": "/ perm" },
+    { "cat": "Set", "name": "SET", "desc": "ブロー・スタイリングのみ。パーティーや式典前の仕上げに。", "price": "¥2,500", "unit": "/ set" },
+    { "cat": "Student", "name": "STUDENT CUT", "desc": "学生限定カットメニュー。要学生証提示。", "price": "¥3,800", "unit": "/ cut" },
+    { "cat": "Hair Care", "name": "HEAD SPA", "desc": "頭皮ケア＆マッサージ。リラックス効果抜群の大人気メニュー。", "price": "¥4,500", "unit": "/ 40min" }
+  ],
+  "staffList": [
+    { "id": "01", "name": "KENSUKE TANAKA", "role": "Owner / Master Stylist", "roleBadge": "OWNER", "bio": "業界歴18年。銀座の名店で修行後独立。カットの正確さに定評がある。", "image": "/images/staff-1.jpg" },
+    { "id": "02", "name": "RYOHEI SUZUKI", "role": "Senior Stylist", "roleBadge": "STYLIST", "bio": "フェード・ショートスタイルを得意とする若手のホープ。バーバースタイルに精通。", "image": "/images/staff-2.jpg" },
+    { "id": "03", "name": "SHOTA YAMAMOTO", "role": "Barber", "roleBadge": "BARBER", "bio": "シェービング技術に特化。クラシックバーバースタイルを継承する職人。", "image": "/images/staff-3.jpg" }
+  ],
+  "voiceList": [
+    { "stars": "★★★★★", "text": "担当スタイリストに毎回お任せしていますが、いつも想像以上の仕上がりに。シェービングの気持ち良さは一度体験したらやめられません。", "name": "T.M. / 30代・会社員", "menu": "CUT & SHAVE / 月1回通院" },
+    { "stars": "★★★★★", "text": "フェードカットをお願いしました。周りから好評で、自分のスタイルに自信が持てるようになりました。店内のBGMセンスも最高です。", "name": "K.S. / 20代・学生", "menu": "FADE CUT / 初来店" },
+    { "stars": "★★★★★", "text": "白髪染めが自然で、周りに気づかれずに若々しく見えるようになりました。料金も明朗で、初めてでも安心して通えます。", "name": "Y.K. / 40代・自営業", "menu": "COLOR / 2年目リピート" },
+    { "stars": "★★★★★", "text": "ヘッドスパとカットのセットがお気に入り。仕事終わりに立ち寄るのが週末の楽しみです。これからも通い続けます。", "name": "S.Y. / 30代・IT企業", "menu": "HEAD SPA & CUT / 半年継続" }
+  ],
+  "faqList": [
+    { "q": "予約は必要ですか？", "a": "予約優先制です。お急ぎの方はご予約をおすすめします。当日の飛び込みも可能ですが、お待たせする場合がございます。" },
+    { "q": "クレジットカードは使えますか？", "a": "各種クレジットカード、電子マネー、QRコード決済に対応しています。詳細は店舗までお問い合わせください。" },
+    { "q": "駐車場はありますか？", "a": "専用駐車場はございませんが、近隣にコインパーキングが複数あります。お車でお越しの際は近隣駐車場をご利用ください。" },
+    { "q": "子供のカットは対応していますか？", "a": "小学生以上のお子様からご利用いただけます。小学生以下のお子様はお電話でご相談ください。" },
+    { "q": "施術後のアフターケアはありますか？", "a": "スタイリングのコツやおすすめのスタイリング剤など、お客様に合わせたアフターケアアドバイスを無料で行っています。" }
+  ],
+  "galleryList": [
+    { "image": "/images/gallery-1.jpg", "tag": "SHORT STYLE", "wide": true },
+    { "image": "/images/gallery-2.jpg", "tag": "FADE CUT", "wide": false },
+    { "image": "/images/gallery-3.jpg", "tag": "BUSINESS STYLE", "wide": false },
+    { "image": "/images/gallery-4.jpg", "tag": "SHAVING", "wide": true },
+    { "image": "/images/gallery-5.jpg", "tag": "COLOR", "wide": false },
+    { "image": "/images/gallery-6.jpg", "tag": "PERM STYLE", "wide": false }
+  ],
+  "instagramList": [
+    { "image": "/images/gallery-1.jpg" },
+    { "image": "/images/gallery-2.jpg" },
+    { "image": "/images/gallery-3.jpg" },
+    { "image": "/images/gallery-4.jpg" },
+    { "image": "/images/gallery-5.jpg" },
+    { "image": "/images/gallery-6.jpg" }
+  ],
+  "reservaUrl": "https://reserva.be/dummy-id/reserve",
+  "instagramUrl": "https://www.instagram.com/blackedge_hair/",
+  "instagramId": "@blackedge_hair",
+  "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.747!2d139.701!3d35.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDM5JzMyLjQiTiAxMznCsDQyJzAzLjYiRQ!5e0!3m2!1sja!2sjp!4v1",
+  "footerCatch": "GET YOUR<br>EDGE.",
+  "copyright": "© 2026 BLACK EDGE — MEN'S HAIR SALON, SHIBUYA",
+  "footerInfo": "渋谷区○○ 1-2-3 / 10:00–20:00 / 月曜定休",
+  
+  "seo": {
+    "siteUrl": "https://blackedge-hair.example.com",
+    "description": "渋谷のメンズ専用ヘアサロン BLACK EDGE。インダストリアルな空間で、洗練されたフェードカット、シェービング、パーマを提供します。技術で決まる、男のスタイル。",
+    "ogImage": "https://blackedge-hair.example.com/images/ogp.jpg",
+    "keywords": "渋谷, メンズサロン, 美容室, 理容室, バーバー, フェードカット, メンズパーマ"
+  },
+  "contact": {
+    "formspreeEndpoint": "https://formspree.io/f/your-form-id-here"
+  }
+}

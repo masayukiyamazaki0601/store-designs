@@ -1,0 +1,61 @@
+---
+import siteData from '../data/site.json';
+---
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">07 — FAQ</span>
+        <h2>FAQ</h2>
+      </div>
+      <p class="head-note">よくある質問をまとめました。</p>
+    </div>
+    <div class="faq-list reveal">
+      {siteData.faqList.map((faq: any) => (
+        <div class="faq-item">
+          <div class="faq-q">{faq.q}<span class="icon">+</span></div>
+          <div class="faq-a">{faq.a}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    import('gsap').then(({ gsap }) => {
+      document.querySelectorAll('.faq-q').forEach(q => {
+        q.addEventListener('click', () => {
+          const a = q.nextElementSibling as HTMLElement;
+          if (!a) return;
+          const isOpen = q.classList.contains('open');
+          
+          if (isOpen) {
+            gsap.to(a, { height: 0, opacity: 0, paddingBottom: 0, duration: 0.4, ease: 'power2.out', onComplete: () => {
+              a.style.display = 'none';
+              q.classList.remove('open');
+            }});
+          } else {
+            a.style.display = 'block';
+            gsap.fromTo(a, 
+              { height: 0, opacity: 0, paddingBottom: 0 },
+              { height: 'auto', opacity: 1, paddingBottom: 20, duration: 0.4, ease: 'power2.out' }
+            );
+            q.classList.add('open');
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .faq-list { border-top: 1px solid var(--line); }
+  .faq-item { border-bottom: 1px solid var(--line); }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; cursor: pointer; font-weight: 500; font-size: 15px; transition: color .2s; }
+  .faq-q:hover { color: var(--brass); }
+  .faq-q .icon { font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--brass); transition: transform .3s; }
+  .faq-q.open .icon { transform: rotate(45deg); }
+  .faq-a { padding: 0 0 20px; display: none; color: var(--cream-dim); font-size: 13px; font-weight: 300; line-height: 1.8; overflow: hidden; }
+</style>

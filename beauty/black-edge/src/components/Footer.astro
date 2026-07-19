@@ -1,0 +1,37 @@
+---
+import siteData from '../data/site.json';
+---
+
+<footer>
+  <div class="footer-cta">
+    <h2 set:html={siteData.footerCatch}></h2>
+    <span class="mono">{siteData.copyright}</span>
+  </div>
+  <div class="footer-row">
+    <span>{siteData.footerInfo}</span>
+    <div class="to-top" id="toTop">↑</div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toTop = document.getElementById('toTop');
+    if (toTop) {
+      toTop.addEventListener('click', () => {
+        // lenisによるスクロールトップ処理はmain.tsで管理しているアンカーリンクで代替可能だが、
+        // 直接window.scrollToでもLenisがフックして動く場合がある
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  });
+</script>
+
+<style>
+  footer { padding: 0; }
+  .footer-cta { padding: 90px 0; text-align: center; border-bottom: 1px solid var(--line); }
+  .footer-cta h2 { font-size: clamp(36px, 7vw, 100px); color: var(--cream); margin-bottom: 16px; }
+  .footer-cta .mono { color: var(--ash); display: block; font-size: 12px; }
+  .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; padding: 28px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ash); letter-spacing: 0.05em; max-width: 1200px; margin: 0 auto; }
+  .to-top { border: 1px solid var(--line-strong); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s; font-size: 14px; }
+  .to-top:hover { border-color: var(--brass); }
+</style>

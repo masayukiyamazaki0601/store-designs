@@ -1,0 +1,65 @@
+---
+import siteData from '../data/site.json';
+---
+
+<section id="access">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">06 — ACCESS</span>
+        <h2>ACCESS</h2>
+      </div>
+    </div>
+    <div class="access-grid reveal">
+      <div>
+        <div class="status" id="statusBadge"><span class="status-dot" id="statusDot"></span><span id="statusText" class="mono">LOADING…</span></div>
+        <div class="info-list">
+          <div class="info-row"><span class="k">Address</span><span class="v" set:html={siteData.address}></span></div>
+          <div class="info-row"><span class="k">Hours</span><span class="v" set:html={siteData.hours + '<br>' + siteData.holiday}></span></div>
+          <div class="info-row"><span class="k">Access</span><span class="v">{siteData.access}</span></div>
+          <div class="info-row"><span class="k">Tel</span><span class="v">{siteData.tel}</span></div>
+          <div class="info-row"><span class="k">Parking</span><span class="v">{siteData.parking}</span></div>
+        </div>
+      </div>
+      <div class="map-box">
+        <iframe src={siteData.mapEmbed} allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 簡易的な営業中判定ロジック
+    const statusText = document.getElementById('statusText');
+    const statusDot = document.getElementById('statusDot');
+    if (statusText && statusDot) {
+      const now = new Date();
+      const hour = now.getHours();
+      // 固定で10:00〜20:00として判定 (より高度な実装は別途必要)
+      const open = hour >= 10 && hour < 20;
+      statusText.textContent = open ? 'OPEN NOW — CLOSES AT 20:00' : 'CLOSED — OPENS AT 10:00';
+      if (!open) statusDot.classList.add('closed');
+    }
+  });
+</script>
+
+<style>
+  .access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .status { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; padding: 6px 12px; border: 1px solid var(--line-strong); margin-bottom: 24px; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #5fa85f; animation: pulse 2s ease-in-out infinite; }
+  .status-dot.closed { background: #a85f5f; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  
+  .info-list { border-top: 1px solid var(--line); }
+  .info-row { display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .info-row .k { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ash); letter-spacing: 0.08em; text-transform: uppercase; }
+  .info-row .v { font-size: 13px; text-align: right; color: var(--cream-dim); }
+  
+  .map-box { background: var(--panel); border: 1px solid var(--line); min-height: 320px; position: relative; overflow: hidden; }
+  .map-box iframe { width: 100%; height: 100%; min-height: 320px; border: 0; filter: grayscale(0.3) invert(0.92); }
+
+  @media (max-width: 900px) {
+    .access-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import siteData from '../data/site.json';
+---
+
+<section id="voice">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">05 — VOICE</span>
+        <h2>VOICE</h2>
+      </div>
+      <p class="head-note">お客様のリアルな声。技術と空間が評価されています。</p>
+    </div>
+    <div class="voice-grid reveal">
+      {siteData.voiceList.map((voice: any) => (
+        <div class="voice-card">
+          <div class="voice-stars">{voice.stars}</div>
+          <p class="voice-text">「{voice.text}」</p>
+          <div class="voice-author">
+            <span class="voice-name">{voice.name}</span>
+            <span class="voice-menu">{voice.menu}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .voice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .voice-card { background: var(--black); padding: 32px 24px; display: flex; flex-direction: column; transition: background .3s; }
+  .voice-card:hover { background: var(--panel); }
+  .voice-stars { font-size: 14px; letter-spacing: 2px; color: var(--brass); margin-bottom: 14px; }
+  .voice-text { font-size: 14px; font-weight: 300; color: var(--cream-dim); line-height: 1.8; margin-bottom: 20px; font-style: italic; }
+  .voice-text::before { content: "\201C"; font-size: 28px; color: var(--brass); font-family: serif; margin-right: 4px; line-height: 0; vertical-align: -6px; }
+  .voice-author { border-top: 1px solid var(--line); padding-top: 14px; margin-top: auto; }
+  .voice-name { display: block; font-size: 12px; font-weight: 500; color: var(--cream); }
+  .voice-menu { display: block; font-size: 10px; color: var(--ash); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; margin-top: 3px; }
+
+  @media (max-width: 900px) {
+    .voice-grid { grid-template-columns: 1fr; }
+  }
+</style>
