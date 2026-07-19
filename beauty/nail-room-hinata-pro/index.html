@@ -4,33 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nail Room ひなた | 自宅ネイルサロン</title>
-  <meta name="description" content="【地域名】の自宅ネイルサロン Nail Room ひなた。初めての方も安心して通える、落ち着いた大人のネイルサロン。" />
+  <meta name="description" content="の自宅ネイルサロン Nail Room ひなた。初めての方も安心して通える、落ち着いた大人のネイルサロン。" />
   <meta property="og:title" content="Nail Room ひなた" />
   <meta property="og:description" content="初めての方も安心して通えるネイルサロン" />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#C67B5C" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=M+PLUS+Rounded+1c:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="modulepreload" href="/src/js/main.js" />
-  <link rel="stylesheet" href="/src/scss/main.scss" />
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/css/style.css" />
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="src/js/main.js" defer></script>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><circle cx='18' cy='18' r='16' fill='none' stroke='%23C67B5C' stroke-width='2'/><path d='M10 22 Q18 10 26 22' stroke='%23C67B5C' fill='none' stroke-width='2' stroke-linecap='round'/></svg>" />
 </head>
 <body>
-
-  <!-- Cursor -->
-  <canvas class="cursor-canvas" id="js-cursor-canvas"></canvas>
 
   <!-- Loader -->
   <div class="loader" id="js-loader">
     <div class="loader__inner">
-      <div class="loader__logo">
-        <svg viewBox="0 0 60 60" width="60" height="60"><circle cx="30" cy="30" r="28" fill="none" stroke="#C67B5C" stroke-width="2"/><path d="M20 35 Q30 20 40 35" stroke="#C67B5C" fill="none" stroke-width="2" stroke-linecap="round"/></svg>
-      </div>
       <div class="loader__brand">Nail Room ひなた</div>
-      <div class="loader__progress">
-        <div class="loader__progress-bar" id="js-loader-bar"></div>
-      </div>
+      <div class="loader__progress"><div class="loader__progress-bar" id="js-loader-bar"></div></div>
     </div>
   </div>
 
@@ -38,32 +33,28 @@
   <header class="header" id="js-header">
     <div class="header__inner">
       <a href="#" class="header__logo">
-        <svg viewBox="0 0 36 36" width="28" height="28" class="header__logo-icon"><circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 22 Q18 10 26 22" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span class="header__logo-text">Nail Room ひなた</span>
+        <svg viewBox="0 0 36 36" width="24" height="24" class="header__logo-icon"><circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 22 Q18 10 26 22" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Nail Room ひなた</span>
       </a>
       <nav class="header__nav" id="js-nav">
         <ul class="header__nav-list">
-          <li><a href="#works" class="header__nav-link"><span>Works</span></a></li>
-          <li><a href="#about" class="header__nav-link"><span>About</span></a></li>
-          <li><a href="#menu" class="header__nav-link"><span>Price</span></a></li>
-          <li><a href="#access" class="header__nav-link"><span>Access</span></a></li>
-          <li><a href="#contact" class="header__nav-cta">Reserve</a></li>
+          <li><a href="#works">Works</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Price</a></li>
+          <li><a href="#access">Access</a></li>
+          <li><a href="#contact" class="header__cta">Reserve</a></li>
         </ul>
       </nav>
       <div class="header__actions">
-        <button class="theme-btn" id="js-theme-btn" aria-label="Toggle theme">
-          <span>☀️</span>
-        </button>
-        <button class="menu-btn" id="js-menu-btn" aria-label="Menu">
-          <span></span><span></span>
-        </button>
+        <button class="theme-btn" id="js-theme-btn">☀️</button>
+        <button class="menu-btn" id="js-menu-btn" aria-label="Menu"><span></span><span></span></button>
       </div>
     </div>
   </header>
 
   <main>
 
-    <!-- ===== HERO ===== -->
+    <!-- Hero -->
     <section class="hero" id="hero">
       <div class="hero__bg">
         <picture>
@@ -72,244 +63,98 @@
         </picture>
         <div class="hero__gradient"></div>
       </div>
-      <div class="hero__deco">
-        <span class="hero__deco-shape" id="js-deco-shape"></span>
-      </div>
       <div class="hero__inner">
         <div class="hero__content">
-          <div class="hero__overline" data-anim="reveal">
-            <span class="hero__overline-line"></span>
-            <span class="hero__overline-text">Since 2024</span>
-          </div>
-          <h1 class="hero__title" data-anim="hero-title">
+          <div class="hero__overline"><span class="hero__overline-line"></span><span class="hero__overline-text">Since 2024</span></div>
+          <h1 class="hero__title">
             <span class="hero__title-line"><span>初めての方も</span></span>
             <span class="hero__title-line"><span>安心して通える</span></span>
             <span class="hero__title-line hero__title-line--accent"><span>ネイルサロン</span></span>
           </h1>
-          <p class="hero__desc" data-anim="reveal">
-            お家サロンならではの落ち着いた空間で<br />
-            お客様おひとりおひとりに寄り添った施術を
-          </p>
-          <div class="hero__actions" data-anim="reveal">
-            <a href="#reserve" class="btn btn--primary">
-              <span>ご予約はこちら</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </a>
-            <a href="#works" class="btn btn--ghost">
-              <span>作品を見る</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </a>
+          <p class="hero__desc">お家サロンならではの落ち着いた空間で、お客様おひとりおひとりに寄り添った施術をご提供します。初めての方もお気軽にご相談ください。</p>
+          <div class="hero__actions">
+            <a href="#reserve" class="btn btn--primary">ご予約はこちら</a>
+            <a href="#works" class="btn btn--ghost">作品を見る</a>
           </div>
         </div>
-        <div class="hero__visual">
-          <div class="hero__visual-card hero__visual-card--1" data-anim="hero-visual">
-            <picture><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=500&h=700&fit=crop&auto=format&q=80" alt="Nail design" /></picture>
-          </div>
-          <div class="hero__visual-card hero__visual-card--2" data-anim="hero-visual">
-            <picture><img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=400&h=500&fit=crop&auto=format&q=80" alt="Nail design" /></picture>
-          </div>
-          <div class="hero__visual-card hero__visual-card--3" data-anim="hero-visual">
-            <picture><img src="https://images.unsplash.com/photo-1602293589930-45aad59ba5cb?w=400&h=500&fit=crop&auto=format&q=80" alt="Nail design" /></picture>
-          </div>
+        <div class="hero__visual" id="js-hero-visual">
+          <div class="hero__visual-card hero__visual-card--1"><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=500&h=700&fit=crop&auto=format&q=80" alt="Nail" /></div>
+          <div class="hero__visual-card hero__visual-card--2"><img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=400&h=500&fit=crop&auto=format&q=80" alt="Nail" /></div>
+          <div class="hero__visual-card hero__visual-card--3"><img src="https://images.unsplash.com/photo-1602293589930-45aad59ba5cb?w=400&h=500&fit=crop&auto=format&q=80" alt="Nail" /></div>
         </div>
       </div>
-      <div class="hero__scroll" data-anim="fade">
-        <span>SCROLL</span>
-        <div class="hero__scroll-indicator"><span></span></div>
-      </div>
+      <div class="hero__scroll"><span>SCROLL</span><div class="hero__scroll-indicator"><span></span></div></div>
     </section>
 
-    <!-- ===== WORKS ===== -->
+    <!-- Works -->
     <section class="works" id="works">
-      <div class="works__sticky">
-        <div class="works__header">
-          <span class="section-tag" data-anim="reveal">01 · Gallery</span>
-          <h2 class="section-title" data-anim="split">
-            <span>スタイル</span>
-            <span>ギャラリー</span>
-          </h2>
-          <p class="section-desc" data-anim="reveal">人気のデザインをカテゴリー別にご紹介</p>
-        </div>
+      <div class="works__inner">
+        <span class="section-tag">01 · Gallery</span>
+        <h2 class="section-title"><span>スタイル</span><span>ギャラリー</span></h2>
+        <p class="section-desc">人気のデザインをカテゴリー別にご紹介します</p>
 
-        <div class="works__filter" data-anim="reveal">
+        <div class="works__filter">
           <button class="works__filter-btn is-active" data-filter="*">All <span>10</span></button>
           <button class="works__filter-btn" data-filter="simple">Simple <span>4</span></button>
           <button class="works__filter-btn" data-filter="french">French <span>3</span></button>
           <button class="works__filter-btn" data-filter="art">Art <span>3</span></button>
         </div>
 
-        <div class="works__masonry" id="js-works-masonry">
-          <div class="works__card" data-category="simple" style="--row: 1;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=800&fit=crop&auto=format&q=80" alt="Nail 01" loading="lazy" />
-              <figcaption>
-                <h3>ナチュラルグラデーション</h3>
-                <span>Simple</span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="works__card" data-category="simple" style="--row: 2;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&h=700&fit=crop&auto=format&q=80" alt="Nail 02" loading="lazy" />
-              <figcaption>
-                <h3>クリアベージュ</h3>
-                <span>Simple</span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="works__card" data-category="simple" style="--row: 1;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=600&h=800&fit=crop&auto=format&q=80" alt="Nail 03" loading="lazy" />
-              <figcaption>
-                <h3>ピンクオパール</h3>
-                <span>Simple</span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="works__card" data-category="simple" style="--row: 2;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1602293589930-45aad59ba5cb?w=600&h=700&fit=crop&auto=format&q=80" alt="Nail 04" loading="lazy" />
-              <figcaption>
-                <h3>マットベージュ</h3>
-                <span>Simple</span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="works__card" data-category="french" style="--row: 2;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=700&fit=crop&auto=format&q=80" alt="Nail 05" loading="lazy" />
-              <figcaption>
-                <h3>ホワイトフレンチ</h3>
-                <span>French</span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="works__card" data-category="french" style="--row: 1;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&h=800&fit=crop&auto=format&q=80" alt="Nail 06" loading="lazy" />
-              <figcaption>
-                <h3>ピンクフレンチ</h3>
-                <span>French</span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="works__card" data-category="french" style="--row: 1;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=600&h=800&fit=crop&auto=format&q=80" alt="Nail 07" loading="lazy" />
-              <figcaption>
-                <h3>ゴールドフレンチ</h3>
-                <span>French</span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="works__card" data-category="art" style="--row: 1;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1602293589930-45aad59ba5cb?w=600&h=800&fit=crop&auto=format&q=80" alt="Nail 08" loading="lazy" />
-              <figcaption>
-                <h3>フラワーアート</h3>
-                <span>Art</span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="works__card" data-category="art" style="--row: 2;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=700&fit=crop&auto=format&q=80" alt="Nail 09" loading="lazy" />
-              <figcaption>
-                <h3>マーブルアート</h3>
-                <span>Art</span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="works__card" data-category="art" style="--row: 1;">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&h=800&fit=crop&auto=format&q=80" alt="Nail 10" loading="lazy" />
-              <figcaption>
-                <h3>ホログラムアート</h3>
-                <span>Art</span>
-              </figcaption>
-            </figure>
-          </div>
+        <div class="works__grid" id="js-works-grid">
+          <div class="works__card" data-category="simple"><figure><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=800&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>ナチュラルグラデーション</h3><span>Simple</span></figcaption></figure></div>
+          <div class="works__card" data-category="simple"><figure><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&h=700&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>クリアベージュ</h3><span>Simple</span></figcaption></figure></div>
+          <div class="works__card" data-category="simple"><figure><img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=600&h=800&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>ピンクオパール</h3><span>Simple</span></figcaption></figure></div>
+          <div class="works__card" data-category="simple"><figure><img src="https://images.unsplash.com/photo-1602293589930-45aad59ba5cb?w=600&h=700&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>マットベージュ</h3><span>Simple</span></figcaption></figure></div>
+          <div class="works__card" data-category="french"><figure><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=700&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>ホワイトフレンチ</h3><span>French</span></figcaption></figure></div>
+          <div class="works__card" data-category="french"><figure><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&h=800&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>ピンクフレンチ</h3><span>French</span></figcaption></figure></div>
+          <div class="works__card" data-category="french"><figure><img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=600&h=800&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>ゴールドフレンチ</h3><span>French</span></figcaption></figure></div>
+          <div class="works__card" data-category="art"><figure><img src="https://images.unsplash.com/photo-1602293589930-45aad59ba5cb?w=600&h=800&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>フラワーアート</h3><span>Art</span></figcaption></figure></div>
+          <div class="works__card" data-category="art"><figure><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=700&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>マーブルアート</h3><span>Art</span></figcaption></figure></div>
+          <div class="works__card" data-category="art"><figure><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&h=800&fit=crop&auto=format&q=80" alt="" loading="lazy" /><figcaption><h3>ホログラムアート</h3><span>Art</span></figcaption></figure></div>
         </div>
       </div>
     </section>
 
-    <!-- ===== ABOUT / STAFF ===== -->
+    <!-- About -->
     <section class="about" id="about">
-      <div class="about__pin" id="js-about-pin">
-        <div class="about__grid">
-          <div class="about__media">
-            <div class="about__media-main" data-anim="reveal">
-              <picture><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=900&h=1100&fit=crop&auto=format&q=80" alt="Salon" loading="lazy" /></picture>
-              <div class="about__media-deco"></div>
-            </div>
-            <div class="about__media-badge" data-anim="reveal">
-              <span class="about__media-badge-num">10+</span>
-              <span class="about__media-badge-label">Years Experience</span>
-            </div>
-          </div>
-          <div class="about__content">
-            <span class="section-tag" data-anim="reveal">02 · About</span>
-            <h2 class="section-title" data-anim="split">
-              <span>スタッフ</span>
-              <span>紹介</span>
-            </h2>
-            <p class="section-desc" data-anim="reveal">経験豊富なネイリストが丁寧に施術いたします</p>
-
-            <div class="staff__slider" id="js-staff-slider">
-              <div class="staff__track">
-                <div class="staff__card" data-index="0">
-                  <div class="staff__card-img">
-                    <picture><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=500&fit=crop&crop=face&auto=format&q=80" alt="Miki Sato" loading="lazy" /></picture>
-                  </div>
-                  <div class="staff__card-body">
-                    <div class="staff__card-badge">代表</div>
-                    <h3 class="staff__card-name">佐藤 美咲</h3>
-                    <span class="staff__card-ruby">さとう みさき</span>
-                    <p class="staff__card-role">上級ネイリスト</p>
-                    <div class="staff__card-detail">
-                      <span>JNAジェルネイル技能検定 1級</span>
-                      <span>得意: フレンチ / グラデーション</span>
-                    </div>
-                    <p class="staff__card-message">お客様お一人お一人のライフスタイルに寄り添ったデザインをご提案いたします。初めての方も安心してお越しください。</p>
-                  </div>
-                </div>
-                <div class="staff__card" data-index="1">
-                  <div class="staff__card-img">
-                    <picture><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&crop=face&auto=format&q=80" alt="Yuka Yamada" loading="lazy" /></picture>
-                  </div>
-                  <div class="staff__card-body">
-                    <div class="staff__card-badge">ネイリスト</div>
-                    <h3 class="staff__card-name">山田 優花</h3>
-                    <span class="staff__card-ruby">やまだ ゆうか</span>
-                    <p class="staff__card-role">アートスペシャリスト</p>
-                    <div class="staff__card-detail">
-                      <span>JNAジェルネイル技能検定 2級</span>
-                      <span>得意: アート / ストーンデザイン</span>
-                    </div>
-                    <p class="staff__card-message">華やかなアートデザインが得意です。お手持ちの画像をもとに世界に一つだけのネイルを一緒に作り上げましょう。</p>
-                  </div>
-                </div>
-                <div class="staff__card" data-index="2">
-                  <div class="staff__card-img">
-                    <picture><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop&crop=face&auto=format&q=80" alt="Akari Tanaka" loading="lazy" /></picture>
-                  </div>
-                  <div class="staff__card-body">
-                    <div class="staff__card-badge">ネイリスト</div>
-                    <h3 class="staff__card-name">田中 あかり</h3>
-                    <span class="staff__card-ruby">たなか あかり</span>
-                    <p class="staff__card-role">ケアスペシャリスト</p>
-                    <div class="staff__card-detail">
-                      <span>JNAジェルネイル技能検定 2級</span>
-                      <span>ハンドケア資格 / 得意: シンプル</span>
-                    </div>
-                    <p class="staff__card-message">爪の健康を第一に考えた施術を心がけています。シンプルでありながら上品なデザインで日常をちょっと特別に。</p>
-                  </div>
-                </div>
+      <div class="about__inner">
+        <div class="about__media">
+          <div class="about__media-main"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=900&h=1100&fit=crop&auto=format&q=80" alt="" loading="lazy" /><div class="about__media-deco"></div></div>
+          <div class="about__media-badge"><span class="about__media-badge-num">10+</span><span class="about__media-badge-label">Years Experience</span></div>
+        </div>
+        <div class="about__content">
+          <span class="section-tag">02 · About</span>
+          <h2 class="section-title"><span>スタッフ</span><span>紹介</span></h2>
+          <p class="section-desc">経験豊富なネイリストが丁寧に施術いたします。お客様お一人お一人に寄り添ったデザインをご提案いたします。</p>
+          <div class="staff__list">
+            <div class="staff__card" data-anim="staff">
+              <div class="staff__card-img"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=500&fit=crop&crop=face&auto=format&q=80" alt="" loading="lazy" /></div>
+              <div class="staff__card-body">
+                <span class="staff__card-badge">代表</span>
+                <h3>佐藤 美咲</h3>
+                <span class="staff__card-ruby">さとう みさき</span>
+                <p class="staff__card-role">上級ネイリスト</p>
+                <p>JNAジェルネイル技能検定 1級<br />得意: フレンチ / グラデーション</p>
               </div>
-              <div class="staff__nav">
-                <button class="staff__nav-btn is-active" data-index="0"></button>
-                <button class="staff__nav-btn" data-index="1"></button>
-                <button class="staff__nav-btn" data-index="2"></button>
+            </div>
+            <div class="staff__card" data-anim="staff">
+              <div class="staff__card-img"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&crop=face&auto=format&q=80" alt="" loading="lazy" /></div>
+              <div class="staff__card-body">
+                <span class="staff__card-badge">ネイリスト</span>
+                <h3>山田 優花</h3>
+                <span class="staff__card-ruby">やまだ ゆうか</span>
+                <p class="staff__card-role">アートスペシャリスト</p>
+                <p>JNAジェルネイル技能検定 2級<br />得意: アート / ストーンデザイン</p>
+              </div>
+            </div>
+            <div class="staff__card" data-anim="staff">
+              <div class="staff__card-img"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop&crop=face&auto=format&q=80" alt="" loading="lazy" /></div>
+              <div class="staff__card-body">
+                <span class="staff__card-badge">ネイリスト</span>
+                <h3>田中 あかり</h3>
+                <span class="staff__card-ruby">たなか あかり</span>
+                <p class="staff__card-role">ケアスペシャリスト</p>
+                <p>JNAジェルネイル技能検定 2級 / ハンドケア資格<br />得意: シンプル / ケア</p>
               </div>
             </div>
           </div>
@@ -317,62 +162,24 @@
       </div>
     </section>
 
-    <!-- ===== MENU / PRICE ===== -->
+    <!-- Menu -->
     <section class="pricing" id="menu">
-      <div class="pricing__bg">
-        <picture>
-          <source srcset="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=1920&h=600&fit=crop&auto=format&q=80" media="(min-width: 769px)" />
-          <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=800&h=400&fit=crop&auto=format&q=80" alt="" loading="lazy" />
-        </picture>
-      </div>
+      <div class="pricing__bg"><picture><source srcset="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=1920&h=600&fit=crop&auto=format&q=80" media="(min-width: 769px)" /><img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=800&h=400&fit=crop&auto=format&q=80" alt="" loading="lazy" /></picture></div>
       <div class="pricing__overlay"></div>
       <div class="pricing__inner">
-        <span class="section-tag" data-anim="reveal">03 · Price</span>
-        <h2 class="section-title" data-anim="split">
-          <span>メニュー</span>
-          <span>料金</span>
-        </h2>
-        <p class="section-desc" data-anim="reveal">すべて税込表示です</p>
-
-        <div class="pricing__table" data-anim="reveal">
-          <div class="pricing__row pricing__row--header">
-            <span>Course</span>
-            <span>Time</span>
-            <span>Price</span>
-          </div>
-          <div class="pricing__row">
-            <span>ジェルネイル（シンプル）<span class="badge">人気</span></span>
-            <span>60分</span>
-            <span class="pricing__price">¥5,500</span>
-          </div>
-          <div class="pricing__row">
-            <span>ジェルネイル（フレンチ）</span>
-            <span>75分</span>
-            <span class="pricing__price">¥6,600</span>
-          </div>
-          <div class="pricing__row">
-            <span>ジェルネイル（アート）<span class="badge">人気</span></span>
-            <span>90分</span>
-            <span class="pricing__price">¥7,700</span>
-          </div>
-          <div class="pricing__row">
-            <span>オフのみ</span>
-            <span>30分</span>
-            <span class="pricing__price">¥2,200</span>
-          </div>
-          <div class="pricing__row">
-            <span>ハンドケア</span>
-            <span>40分</span>
-            <span class="pricing__price">¥3,300</span>
-          </div>
-          <div class="pricing__row">
-            <span>セットコース<span class="badge badge--gold">⭐おすすめ</span></span>
-            <span>100分</span>
-            <span class="pricing__price">¥8,800</span>
-          </div>
+        <span class="section-tag">03 · Price</span>
+        <h2 class="section-title"><span>メニュー</span><span>料金</span></h2>
+        <p class="section-desc">すべて税込表示です</p>
+        <div class="pricing__table">
+          <div class="pricing__row pricing__row--header"><span>Course</span><span>Time</span><span>Price</span></div>
+          <div class="pricing__row"><span>ジェルネイル（シンプル）<span class="badge">人気</span></span><span>60分</span><span class="pricing__price">¥5,500</span></div>
+          <div class="pricing__row"><span>ジェルネイル（フレンチ）</span><span>75分</span><span class="pricing__price">¥6,600</span></div>
+          <div class="pricing__row"><span>ジェルネイル（アート）<span class="badge">人気</span></span><span>90分</span><span class="pricing__price">¥7,700</span></div>
+          <div class="pricing__row"><span>オフのみ</span><span>30分</span><span class="pricing__price">¥2,200</span></div>
+          <div class="pricing__row"><span>ハンドケア</span><span>40分</span><span class="pricing__price">¥3,300</span></div>
+          <div class="pricing__row"><span>セットコース<span class="badge badge--gold">⭐おすすめ</span></span><span>100分</span><span class="pricing__price">¥8,800</span></div>
         </div>
-
-        <div class="pricing__options" data-anim="reveal">
+        <div class="pricing__options">
           <h3>Options</h3>
           <div class="pricing__options-grid">
             <div class="pricing__option"><span>片指アート追加（1本）</span><strong>+¥550</strong></div>
@@ -384,249 +191,99 @@
       </div>
     </section>
 
-    <!-- ===== RESERVE CTA ===== -->
+    <!-- Reserve -->
     <section class="reserve" id="reserve">
-      <div class="reserve__bg">
-        <picture>
-          <source srcset="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1920&h=1000&fit=crop&auto=format&q=80" media="(min-width: 769px)" />
-          <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&h=600&fit=crop&auto=format&q=80" alt="" loading="lazy" />
-        </picture>
-        <div class="reserve__overlay"></div>
-      </div>
+      <div class="reserve__bg"><picture><source srcset="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1920&h=1000&fit=crop&auto=format&q=80" media="(min-width: 769px)" /><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&h=600&fit=crop&auto=format&q=80" alt="" loading="lazy" /></picture><div class="reserve__overlay"></div></div>
       <div class="reserve__inner">
-        <span class="section-tag" data-anim="reveal">04 · Booking</span>
-        <h2 class="section-title" data-anim="split">
-          <span>ご予約</span>
-        </h2>
-        <p class="section-desc" data-anim="reveal">お好きな方法でお気軽にご予約ください</p>
-        <div class="reserve__channels" data-anim="reveal">
-          <a href="#" class="reserve__channel reserve__channel--hp">
-            <span class="reserve__channel-icon">🔥</span>
-            <span class="reserve__channel-name">Hot Pepper</span>
-            <span class="reserve__channel-desc">24時間ネット予約</span>
-          </a>
-          <a href="#" class="reserve__channel reserve__channel--line">
-            <span class="reserve__channel-icon">💬</span>
-            <span class="reserve__channel-name">LINE</span>
-            <span class="reserve__channel-desc">デザイン相談もこちら</span>
-          </a>
-          <a href="tel:000-000-0000" class="reserve__channel reserve__channel--tel">
-            <span class="reserve__channel-icon">📞</span>
-            <span class="reserve__channel-name">Phone</span>
-            <span class="reserve__channel-desc">000-000-0000</span>
-          </a>
+        <span class="section-tag">04 · Booking</span>
+        <h2 class="section-title"><span>ご予約</span></h2>
+        <div class="reserve__channels">
+          <a href="#" class="reserve__channel reserve__channel--hp"><span class="reserve__channel-icon">🔥</span><span class="reserve__channel-name">Hot Pepper</span><span class="reserve__channel-desc">24時間ネット予約</span></a>
+          <a href="#" class="reserve__channel reserve__channel--line"><span class="reserve__channel-icon">💬</span><span class="reserve__channel-name">LINE</span><span class="reserve__channel-desc">デザイン相談もこちら</span></a>
+          <a href="tel:000-000-0000" class="reserve__channel reserve__channel--tel"><span class="reserve__channel-icon">📞</span><span class="reserve__channel-name">Phone</span><span class="reserve__channel-desc">000-000-0000</span></a>
         </div>
       </div>
     </section>
 
-    <!-- ===== REVIEWS ===== -->
+    <!-- Reviews -->
     <section class="reviews" id="reviews">
       <div class="reviews__inner">
-        <span class="section-tag" data-anim="reveal">05 · Testimonials</span>
-        <h2 class="section-title" data-anim="split">
-          <span>お客様の声</span>
-        </h2>
-        <div class="reviews__marquee" id="js-reviews-marquee">
-          <div class="reviews__track">
-            <div class="reviews__card">
-              <div class="reviews__stars">★★★★★</div>
-              <blockquote>初めてのネイルサロンで緊張していましたが、スタッフの方がとても丁寧にカウンセリングしてくださり、理想通りのデザインに仕上がりました。お部屋も清潔でリラックスできました。</blockquote>
-              <cite>30代・女性 Aさん</cite>
-            </div>
-            <div class="reviews__card">
-              <div class="reviews__stars">★★★★★</div>
-              <blockquote>子育て中でなかなか自分の時間が取れませんでしたが、予約から施術までスムーズで、また伺います！</blockquote>
-              <cite>40代・女性 Bさん</cite>
-            </div>
-            <div class="reviews__card">
-              <div class="reviews__stars">★★★★★</div>
-              <blockquote>持ち込みデザインをお願いしましたが、細かいニュアンスまで再現していただけて大満足です。料金も明朗で相談しやすいです。</blockquote>
-              <cite>20代・女性 Cさん</cite>
-            </div>
-            <div class="reviews__card">
-              <div class="reviews__stars">★★★★★</div>
-              <blockquote>初めてのネイルサロンで緊張していましたが、スタッフの方がとても丁寧にカウンセリングしてくださり、理想通りのデザインに仕上がりました。お部屋も清潔でリラックスできました。</blockquote>
-              <cite>30代・女性 Aさん</cite>
-            </div>
-            <div class="reviews__card">
-              <div class="reviews__stars">★★★★★</div>
-              <blockquote>子育て中でなかなか自分の時間が取れませんでしたが、予約から施術までスムーズで、また伺います！</blockquote>
-              <cite>40代・女性 Bさん</cite>
-            </div>
-            <div class="reviews__card">
-              <div class="reviews__stars">★★★★★</div>
-              <blockquote>持ち込みデザインをお願いしましたが、細かいニュアンスまで再現していただけて大満足です。料金も明朗で相談しやすいです。</blockquote>
-              <cite>20代・女性 Cさん</cite>
-            </div>
-          </div>
+        <span class="section-tag">05 · Testimonials</span>
+        <h2 class="section-title"><span>お客様の声</span></h2>
+        <div class="reviews__grid">
+          <div class="reviews__card"><div class="reviews__stars">★★★★★</div><blockquote>初めてのネイルサロンで緊張していましたが、スタッフの方がとても丁寧にカウンセリングしてくださり、理想通りのデザインに仕上がりました。</blockquote><cite>30代・女性 Aさん</cite></div>
+          <div class="reviews__card"><div class="reviews__stars">★★★★★</div><blockquote>子育て中でなかなか自分の時間が取れませんでしたが、予約から施術までスムーズで、また伺います！</blockquote><cite>40代・女性 Bさん</cite></div>
+          <div class="reviews__card"><div class="reviews__stars">★★★★★</div><blockquote>持ち込みデザインをお願いしましたが、細かいニュアンスまで再現していただけて大満足です。料金も明朗で相談しやすいです。</blockquote><cite>20代・女性 Cさん</cite></div>
         </div>
       </div>
     </section>
 
-    <!-- ===== HYGIENE ===== -->
+    <!-- Hygiene -->
     <section class="hygiene" id="hygiene">
       <div class="hygiene__inner">
-        <span class="section-tag" data-anim="reveal">06 · Safety</span>
-        <h2 class="section-title" data-anim="split">
-          <span>衛生管理</span>
-        </h2>
+        <span class="section-tag">06 · Safety</span>
+        <h2 class="section-title"><span>衛生管理</span></h2>
         <div class="hygiene__grid">
-          <div class="hygiene__card" data-anim="reveal">
-            <div class="hygiene__icon">
-              <svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 38 L32 28 L42 38" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="32" cy="22" r="3" fill="currentColor"/></svg>
-            </div>
-            <h3>オートクレーブ滅菌</h3>
-            <p>すべての器具を高圧蒸気滅菌器で完全滅菌。お客様ごとに新しい器具に交換しています。</p>
-          </div>
-          <div class="hygiene__card" data-anim="reveal">
-            <div class="hygiene__icon">
-              <svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 32 L30 40 L42 26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-            </div>
-            <h3>ディスポーザブル</h3>
-            <p>ファイル・バッファー・手袋・マスクは全て使い捨て。交差感染リスクを徹底排除。</p>
-          </div>
-          <div class="hygiene__card" data-anim="reveal">
-            <div class="hygiene__icon">
-              <svg viewBox="0 0 64 64" width="48" height="48"><path d="M12 20 L32 8 L52 20 L52 44 L32 56 L12 44 Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 32 L30 40 L42 26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-            </div>
-            <h3>空間除菌・換気</h3>
-            <p>施術台や床は毎回消毒。定期的な換気で常に新鮮な空気を保っています。</p>
-          </div>
+          <div class="hygiene__card"><div class="hygiene__icon"><svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 38 L32 28 L42 38" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="32" cy="22" r="3" fill="currentColor"/></svg></div><h3>オートクレーブ滅菌</h3><p>すべての器具を高圧蒸気滅菌器で完全滅菌。お客様ごとに新しい器具に交換しています。</p></div>
+          <div class="hygiene__card"><div class="hygiene__icon"><svg viewBox="0 0 64 64" width="48" height="48"><circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 32 L30 40 L42 26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><h3>ディスポーザブル</h3><p>ファイル・バッファー・手袋・マスクは全て使い捨て。交差感染リスクを徹底排除。</p></div>
+          <div class="hygiene__card"><div class="hygiene__icon"><svg viewBox="0 0 64 64" width="48" height="48"><path d="M12 20 L32 8 L52 20 L52 44 L32 56 L12 44 Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M22 32 L30 40 L42 26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><h3>空間除菌・換気</h3><p>施術台や床は毎回消毒。定期的な換気で常に新鮮な空気を保っています。</p></div>
         </div>
       </div>
     </section>
 
-    <!-- ===== ACCESS ===== -->
+    <!-- Access -->
     <section class="access" id="access">
       <div class="access__inner">
-        <span class="section-tag" data-anim="reveal">07 · Access</span>
-        <h2 class="section-title" data-anim="split">
-          <span>アクセス</span>
-        </h2>
+        <span class="section-tag">07 · Access</span>
+        <h2 class="section-title"><span>アクセス</span></h2>
         <div class="access__grid">
-          <div class="access__map" data-anim="reveal">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.8278533066154!2d139.764936!3d35.681236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bfbd89f700b%3A0x277c49ba1ed43e2f!2z5p2x5Lqs6aeF!5e0!3m2!1sja!2sjp!4v1720000000000" allowfullscreen loading="lazy" title="Map"></iframe>
-          </div>
-          <div class="access__info" data-anim="reveal">
+          <div class="access__map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.8278533066154!2d139.764936!3d35.681236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bfbd89f700b%3A0x277c49ba1ed43e2f!2z5p2x5Lqs6aeF!5e0!3m2!1sja!2sjp!4v1720000000000" allowfullscreen loading="lazy" title="Map"></iframe></div>
+          <div class="access__info">
             <h3>Nail Room ひなた</h3>
-            <address>
-              <span>📍</span>
-              〒000-0000 【地域名】××町1-2-3 ○○マンション 201号室
-            </address>
-            <div class="access__timeline">
-              <div class="access__step">
-                <span class="access__num">01</span>
-                <div class="access__step-content">
-                  <h4>○○駅 東口</h4>
-                  <p>改札を出て東口へ。駅前通りを直進します。</p>
-                </div>
-              </div>
-              <div class="access__step">
-                <span class="access__num">02</span>
-                <div class="access__step-content">
-                  <h4>コンビニを右折</h4>
-                  <p>徒歩3分。ファミリーマートを右に曲がります。</p>
-                </div>
-              </div>
-              <div class="access__step">
-                <span class="access__num">03</span>
-                <div class="access__step-content">
-                  <h4>○○マンション 201号室</h4>
-                  <p>白色のマンション1階、インターホン「201」を押してください。</p>
-                </div>
-              </div>
+            <address>📍 〒000-0000 【地域名】××町1-2-3 ○○マンション 201号室</address>
+            <div class="access__steps">
+              <div class="access__step"><span class="access__step-num">01</span><div><h4>○○駅 東口</h4><p>改札を出て東口へ。駅前通りを直進します。</p></div></div>
+              <div class="access__step"><span class="access__step-num">02</span><div><h4>コンビニを右折</h4><p>徒歩3分。ファミリーマートを右に曲がります。</p></div></div>
+              <div class="access__step"><span class="access__step-num">03</span><div><h4>○○マンション 201号室</h4><p>白色のマンション1階、インターホン「201」を押してください。</p></div></div>
             </div>
-            <div class="access__note">
-              <strong>お願い</strong>
-              <p>自宅サロンのため、ご到着の際はお電話またはLINEにてお知らせください。駐車場はございませんので公共交通機関をご利用ください。</p>
-            </div>
+            <div class="access__note"><strong>お願い</strong><p>自宅サロンのため、ご到着の際はお電話またはLINEにてお知らせください。駐車場はございませんので公共交通機関をご利用ください。</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== CONTACT ===== -->
+    <!-- Contact -->
     <section class="contact" id="contact">
       <div class="contact__inner">
-        <span class="section-tag" data-anim="reveal">08 · Contact</span>
-        <h2 class="section-title" data-anim="split">
-          <span>お問い合わせ</span>
-        </h2>
-        <p class="section-desc" data-anim="reveal">持ち込みデザインのご相談はこちらから</p>
-        <form class="contact__form" data-anim="reveal" action="mail.php" method="POST">
+        <span class="section-tag">08 · Contact</span>
+        <h2 class="section-title"><span>お問い合わせ</span></h2>
+        <p class="section-desc">持ち込みデザインのご相談はこちらから</p>
+        <form class="contact__form" action="mail.php" method="POST">
           <div class="contact__row">
-            <div class="contact__field">
-              <label for="name">Name <span>*</span></label>
-              <input type="text" id="name" name="name" required placeholder="山田 花子" />
-              <span class="contact__focus"></span>
-            </div>
-            <div class="contact__field">
-              <label for="email">Email <span>*</span></label>
-              <input type="email" id="email" name="email" required placeholder="example@mail.com" />
-              <span class="contact__focus"></span>
-            </div>
+            <div class="contact__field"><label for="name">Name <span>*</span></label><input type="text" id="name" name="name" required placeholder="山田 花子" /><span class="contact__focus"></span></div>
+            <div class="contact__field"><label for="email">Email <span>*</span></label><input type="email" id="email" name="email" required placeholder="example@mail.com" /><span class="contact__focus"></span></div>
           </div>
-          <div class="contact__field">
-            <label for="tel">Phone</label>
-            <input type="tel" id="tel" name="tel" placeholder="000-000-0000" />
-            <span class="contact__focus"></span>
-          </div>
-          <div class="contact__field">
-            <label for="message">Message <span>*</span></label>
-            <textarea id="message" name="message" required placeholder="ご希望のデザインやイメージをお書きください"></textarea>
-            <span class="contact__focus"></span>
-          </div>
-          <button class="btn btn--primary btn--full" type="submit">
-            <span>送信する</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
+          <div class="contact__field"><label for="tel">Phone</label><input type="tel" id="tel" name="tel" placeholder="000-000-0000" /><span class="contact__focus"></span></div>
+          <div class="contact__field"><label for="message">Message <span>*</span></label><textarea id="message" name="message" required placeholder="ご希望のデザインやイメージをお書きください"></textarea><span class="contact__focus"></span></div>
+          <button class="btn btn--primary btn--full" type="submit">送信する</button>
         </form>
       </div>
     </section>
 
   </main>
 
-  <!-- ===== FOOTER ===== -->
+  <!-- Footer -->
   <footer class="footer">
-    <div class="footer__waves">
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,40 C360,120 720,0 1440,40 L1440,120 L0,120 Z" fill="var(--c-bg)"/></svg>
-    </div>
     <div class="footer__inner">
       <div class="footer__brand">
-        <div class="footer__logo">
-          <svg viewBox="0 0 36 36" width="24" height="24"><circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 22 Q18 10 26 22" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg>
-          Nail Room ひなた
-        </div>
-        <p>【地域名】の自宅ネイルサロン。<br />初めての方も安心してお越しください。</p>
-        <div class="footer__sns">
-          <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
-          <a href="#" aria-label="LINE"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10z"/><path d="M8 9h8M8 13h6" stroke-linecap="round"/></svg></a>
-        </div>
+        <div class="footer__logo"><svg viewBox="0 0 36 36" width="24" height="24"><circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 22 Q18 10 26 22" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg> Nail Room ひなた</div>
+        <p>【地域名】の自宅ネイルサロン。初めての方も安心してお越しください。</p>
       </div>
-      <div class="footer__nav">
-        <h3>Menu</h3>
-        <ul>
-          <li><a href="#works">Gallery</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#menu">Price</a></li>
-          <li><a href="#access">Access</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer__info">
-        <h3>Contact</h3>
-        <ul>
-          <li><span>📍</span> 〒000-0000 【地域名】××町1-2-3<br />○○マンション 201号室</li>
-          <li><span>📞</span> 000-000-0000</li>
-          <li><span>🕐</span> 10:00〜19:00（最終受付18:00）<br />定休日：月曜日・第3日曜日</li>
-        </ul>
-      </div>
+      <div class="footer__nav"><h3>Menu</h3><ul><li><a href="#works">Gallery</a></li><li><a href="#about">About</a></li><li><a href="#menu">Price</a></li><li><a href="#access">Access</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div class="footer__info"><h3>Contact</h3><ul><li>📍 〒000-0000 【地域名】××町1-2-3 ○○マンション 201号室</li><li>📞 000-000-0000</li><li>🕐 10:00〜19:00（最終受付18:00）<br />定休日：月曜日・第3日曜日</li></ul></div>
     </div>
-    <div class="footer__bottom">
-      <small>&copy; 2026 Nail Room ひなた</small>
-    </div>
+    <div class="footer__bottom"><small>&copy; 2026 Nail Room ひなた</small></div>
   </footer>
 
-  <script type="module" src="/src/js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLACK EDGE | Men's Hair Salon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0908;
+    --charcoal:#151311;
+    --panel:#1d1916;
+    --panel2:#242019;
+    --brass:#C5A55A;
+    --brass-bright:#d4b96a;
+    --gold:#b8952e;
+    --gunmetal:#4a4642;
+    --steel:#6b6358;
+    --ash:#8d8579;
+    --cream:#ece4d6;
+    --cream-dim:#b8ae9d;
+    --line: rgba(236,228,214,0.10);
+    --line-strong: rgba(236,228,214,0.20);
+    --accent-red:#8a2e2e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--cream);
+    font-family:'Noto Sans JP',sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Oswald',sans-serif;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    line-height:0.95;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;letter-spacing:0.08em;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px;}
+  ::selection{background:var(--brass);color:var(--black);}
+
+  /* custom cursor */
+  .cursor{
+    position:fixed;top:0;left:0;width:24px;height:24px;
+    border:1px solid var(--brass);border-radius:50%;
+    pointer-events:none;z-index:10000;
+    transform:translate(-50%,-50%);
+    transition:width .25s,height .25s,background .25s;
+    mix-blend-mode:difference;
+  }
+  .cursor-dot{
+    position:fixed;top:0;left:0;width:3px;height:3px;background:var(--brass);
+    border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);
+    mix-blend-mode:difference;
+  }
+  .cursor.big{width:60px;height:60px;background:rgba(197,165,90,0.12);}
+  @media (max-width:900px){.cursor,.cursor-dot{display:none;}body{cursor:auto;}}
+
+  .noise{
+    position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.03;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+
+  /* preloader */
+  #preloader{
+    position:fixed;inset:0;background:var(--black);z-index:20000;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #preloader.hide{opacity:0;visibility:hidden;}
+  .pre-title{font-family:'Oswald',sans-serif;font-size:14vw;color:transparent;-webkit-text-stroke:1px var(--cream);letter-spacing:0.03em;}
+  .pre-bar{width:200px;height:2px;background:var(--panel);position:relative;overflow:hidden;}
+  .pre-fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:var(--brass);animation:preload 1.6s ease forwards;}
+  @keyframes preload{to{width:100%;}}
+  .pre-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ash);letter-spacing:0.2em;}
+
+  /* progress bar */
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--brass);z-index:1001;width:0%;}
+
+  /* header */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:rgba(10,9,8,0.9);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1200px;margin:0 auto;}
+  .logo{font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:0.06em;display:flex;align-items:center;gap:10px;}
+  .logo .mark{width:7px;height:7px;background:var(--brass);display:inline-block;transform:rotate(45deg);}
+  .nav-links{display:flex;gap:28px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
+  .nav-links a{color:var(--cream-dim);padding-bottom:3px;transition:color .25s;position:relative;}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--brass);transition:width .25s;}
+  .nav-links a.active,.nav-links a:hover{color:var(--cream);}
+  .nav-links a.active::after,.nav-links a:hover::after{width:100%;}
+  .nav-cta{background:var(--brass);color:var(--black)!important;padding:8px 18px!important;font-weight:700;}
+  .nav-cta::after{display:none!important;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;}
+  .burger span{width:22px;height:2px;background:var(--cream);transition:transform .3s;}
+
+  /* side dot nav */
+  .side-nav{
+    position:fixed;right:24px;top:50%;transform:translateY(-50%);
+    z-index:900;display:flex;flex-direction:column;gap:12px;
+  }
+  .side-nav a{width:7px;height:7px;border-radius:50%;border:1px solid var(--line-strong);display:block;transition:all .3s;}
+  .side-nav a.active{background:var(--brass);border-color:var(--brass);transform:scale(1.4);box-shadow:0 0 8px rgba(197,165,90,0.4);}
+  @media (max-width:900px){.side-nav{display:none;}}
+
+  /* hero */
+  .hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;}
+  .hero-bg{
+    position:absolute;inset:-10%;
+    background:url('images/hero.jpg') center 35%/cover no-repeat;
+    will-change:transform;
+  }
+  .hero-bg::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(135deg, rgba(10,9,8,0.7) 0%, rgba(10,9,8,0.95) 100%);
+  }
+  .hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;padding:0 28px;padding-top:80px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.3em;color:var(--brass);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--brass);}
+  .hero h1{font-size:clamp(48px,10vw,150px);color:var(--cream);margin-bottom:4px;}
+  .hero h1 .outline{color:transparent;-webkit-text-stroke:1.5px var(--cream);}
+  .hero-sub{max-width:500px;color:var(--cream-dim);font-size:15px;margin:22px 0 32px;font-weight:300;}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{display:inline-block;padding:14px 30px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--cream);transition:all .3s;position:relative;overflow:hidden;}
+  .btn.solid{background:var(--brass);border-color:var(--brass);color:var(--black);font-weight:700;}
+  .btn.solid:hover{background:var(--brass-bright);border-color:var(--brass-bright);}
+  .btn.outline{background:transparent;}
+  .btn.outline:hover{background:var(--cream);color:var(--black);}
+
+  .hero-badge{
+    position:absolute;right:5%;bottom:12%;z-index:3;
+    background:rgba(10,9,8,0.75);backdrop-filter:blur(8px);
+    border:1px solid var(--line-strong);padding:20px 24px;max-width:200px;
+    animation:float 5s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  .hero-badge .num{font-family:'Oswald',sans-serif;font-size:34px;color:var(--brass);line-height:1;}
+  .hero-badge .label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ash);letter-spacing:0.1em;margin-top:4px;}
+  @media (max-width:900px){.hero-badge{display:none;}}
+
+  .scroll-cue{position:absolute;bottom:28px;left:28px;z-index:3;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ash);letter-spacing:0.15em;}
+  .scroll-line{width:1px;height:32px;background:var(--ash);position:relative;overflow:hidden;}
+  .scroll-line::after{content:"";position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--brass);animation:scrolldrop 1.8s ease-in-out infinite;}
+  @keyframes scrolldrop{to{top:100%;}}
+
+  section{position:relative;padding:110px 0;border-bottom:1px solid var(--line);}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--brass);letter-spacing:0.25em;margin-bottom:12px;display:block;}
+  .section-head h2{font-size:clamp(32px,4.8vw,52px);}
+  .head-note{max-width:320px;color:var(--ash);font-size:13px;font-weight:300;}
+
+  /* concept */
+  .concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+  .concept-img{position:relative;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line);}
+  .concept-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;}
+  .concept-img:hover img{transform:scale(1.05);}
+  .concept-img .badge{position:absolute;top:14px;left:14px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;color:var(--black);background:var(--brass);padding:4px 10px;font-weight:700;}
+  .concept-text p{color:var(--cream-dim);margin-bottom:18px;font-size:15px;max-width:460px;font-weight:300;}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:44px;border-top:1px solid var(--line);}
+  .stat{padding:24px 20px 0;}
+  .stat .num{font-family:'Oswald',sans-serif;font-size:38px;color:var(--brass);line-height:1;}
+  .stat .label{font-size:10px;color:var(--ash);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;margin-top:4px;}
+
+  /* menu */
+  .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .menu-card{background:var(--black);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between;transition:background .3s;}
+  .menu-card:hover{background:var(--panel);}
+  .menu-card .cat{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--brass);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;}
+  .menu-card h3{font-size:20px;margin-bottom:4px;}
+  .menu-card .desc{color:var(--ash);font-size:12px;font-weight:300;margin-bottom:14px;}
+  .menu-card .price{font-family:'Oswald',sans-serif;font-size:22px;color:var(--cream-dim);}
+  .menu-card .price span{font-size:12px;color:var(--ash);}
+
+  /* gallery before/after */
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .g-item{position:relative;overflow:hidden;aspect-ratio:3/4;border:1px solid var(--line);}
+  .g-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease,filter .4s ease;filter:grayscale(50%) contrast(1.1);}
+  .g-item:hover img{transform:scale(1.08);filter:grayscale(0%) contrast(1.05);}
+  .g-item .tag{position:absolute;bottom:10px;left:10px;z-index:2;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.08em;color:var(--cream);background:rgba(10,9,8,0.7);padding:4px 8px;margin:0;}
+  .g-item::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg, rgba(10,9,8,0.8) 0%, transparent 50%);z-index:1;}
+  .g-wide{grid-column:span 2;grid-row:span 2;}
+
+  /* instagram */
+  .insta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .insta-item{position:relative;overflow:hidden;aspect-ratio:1/1;border:1px solid var(--line);cursor:pointer;}
+  .insta-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,filter .4s ease;}
+  .insta-item:hover img{transform:scale(1.1);filter:grayscale(60%);}
+  .insta-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,9,8,0.7);opacity:0;transition:opacity .3s;color:var(--cream);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;}
+  .insta-item:hover .insta-overlay{opacity:1;}
+  .insta-cta{text-align:center;margin-top:36px;}
+  @media (max-width:900px){.insta-grid{grid-template-columns:repeat(2,1fr);}}
+
+  /* staff */
+  /* voice */
+  .voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .voice-card{background:var(--black);padding:32px 24px;display:flex;flex-direction:column;transition:background .3s;}
+  .voice-card:hover{background:var(--panel);}
+  .voice-stars{font-size:14px;letter-spacing:2px;color:var(--brass);margin-bottom:14px;}
+  .voice-text{font-size:14px;font-weight:300;color:var(--cream-dim);line-height:1.8;margin-bottom:20px;font-style:italic;}
+  .voice-text::before{content:"\201C";font-size:28px;color:var(--brass);font-family:serif;margin-right:4px;line-height:0;vertical-align:-6px;}
+  .voice-author{border-top:1px solid var(--line);padding-top:14px;margin-top:auto;}
+  .voice-name{display:block;font-size:12px;font-weight:500;color:var(--cream);}
+  .voice-menu{display:block;font-size:10px;color:var(--ash);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;margin-top:3px;}
+
+  .staff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .staff-card{background:var(--black);overflow:hidden;}
+  .staff-inner{padding:28px 22px;}
+  .staff-photo{width:100%;aspect-ratio:1/1;background:linear-gradient(145deg,#1f1c18,#0a0908);border:1px solid var(--line);margin-bottom:16px;position:relative;overflow:hidden;}
+  .staff-photo .role-badge{position:absolute;top:10px;right:10px;background:var(--brass);color:var(--black);font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.1em;padding:3px 8px;font-weight:700;}
+  .staff-photo .id{position:absolute;bottom:10px;left:10px;font-family:'Oswald',sans-serif;font-size:28px;color:rgba(236,228,214,0.1);}
+  .staff-role{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--brass);letter-spacing:0.1em;text-transform:uppercase;}
+  .staff-name{font-family:'Oswald',sans-serif;font-size:22px;margin:6px 0 10px;}
+  .staff-bio{color:var(--ash);font-size:12px;font-weight:300;}
+
+  /* access */
+  .access-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+  .status{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;padding:6px 12px;border:1px solid var(--line-strong);margin-bottom:24px;}
+  .status-dot{width:6px;height:6px;border-radius:50%;background:#5fa85f;animation:pulse 2s ease-in-out infinite;}
+  .status-dot.closed{background:#a85f5f;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  .info-list{border-top:1px solid var(--line);}
+  .info-row{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line);}
+  .info-row .k{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ash);letter-spacing:0.08em;text-transform:uppercase;}
+  .info-row .v{font-size:13px;text-align:right;color:var(--cream-dim);}
+  .map-box{background:var(--panel);border:1px solid var(--line);min-height:320px;position:relative;overflow:hidden;}
+  .map-box iframe{width:100%;height:100%;min-height:320px;border:0;filter:grayscale(0.3) invert(0.92);}
+
+  /* FAQ */
+  .faq-list{border-top:1px solid var(--line);}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;padding:20px 0;cursor:pointer;font-weight:500;font-size:15px;transition:color .2s;}
+  .faq-q:hover{color:var(--brass);}
+  .faq-q .icon{font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--brass);transition:transform .3s;}
+  .faq-q.open .icon{transform:rotate(45deg);}
+  .faq-a{padding:0 0 20px;display:none;color:var(--cream-dim);font-size:13px;font-weight:300;line-height:1.8;}
+  .faq-a.open{display:block;}
+
+  /* reserva */
+  .reserva-section{background:var(--charcoal);}
+  .reserva-frame{width:100%;min-height:500px;border:1px solid var(--line);background:var(--panel);}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+  .field{margin-bottom:22px;}
+  .field label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);margin-bottom:6px;}
+  .field input,.field textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--cream);font-family:'Noto Sans JP',sans-serif;font-size:14px;padding:8px 2px;outline:none;transition:border-color .2s;}
+  .field input:focus,.field textarea:focus{border-color:var(--brass);}
+  .field textarea{resize:vertical;min-height:90px;}
+  .contact-side{color:var(--cream-dim);}
+  .contact-side p{margin-bottom:16px;font-size:14px;max-width:380px;font-weight:300;}
+  .contact-side .mono{color:var(--brass);}
+
+  /* footer */
+  footer{padding:0;}
+  .footer-cta{padding:90px 0;text-align:center;border-bottom:1px solid var(--line);}
+  .footer-cta h2{font-size:clamp(36px,7vw,100px);color:var(--cream);}
+  .footer-cta .mono{color:var(--ash);margin-top:16px;display:block;font-size:12px;}
+  .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding:28px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ash);letter-spacing:0.05em;max-width:1200px;margin:0 auto;}
+  .to-top{border:1px solid var(--line-strong);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s;font-size:14px;}
+  .to-top:hover{border-color:var(--brass);}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.16,.8,.3,1),transform .8s cubic-bezier(.16,.8,.3,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  a[href*="reserva"] { display: inline-block; }
+
+  @media (max-width:900px){
+    .nav-links{display:none;position:fixed;top:0;right:-100%;width:75%;height:100vh;background:var(--black);flex-direction:column;padding:80px 28px 28px;gap:20px;border-left:1px solid var(--line);transition:right .4s ease;z-index:999;}
+    .nav-links.open{right:0;display:flex;}
+    .burger{display:flex;z-index:1001;}
+    .concept-grid,.access-grid,.contact-grid{grid-template-columns:1fr;}
+    .staff-grid{grid-template-columns:1fr;}
+    .menu-grid{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .g-wide{grid-column:span 1;grid-row:span 1;}
+    .stat-row{grid-template-columns:1fr;}
+    .stat{border-bottom:1px solid var(--line);padding-bottom:16px;}
+    .hero h1{font-size:clamp(40px,16vw,80px);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div id="preloader">
+  <div class="pre-title">BLACK EDGE</div>
+  <div class="pre-bar"><div class="pre-fill"></div></div>
+  <span class="pre-label mono">LOADING EXPERIENCE — PLEASE WAIT</span>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="noise"></div>
+<div class="progress" id="progress"></div>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="logo"><span class="mark"></span>BLACK EDGE</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#top" data-sec="top" class="active">Top</a>
+      <a href="#concept" data-sec="concept">Concept</a>
+      <a href="#menu" data-sec="menu">Menu</a>
+      <a href="#gallery" data-sec="gallery">Works</a>
+      <a href="#staff" data-sec="staff">Staff</a>
+      <a href="#voice" data-sec="voice">Voice</a>
+      <a href="#access" data-sec="access">Access</a>
+      <a href="#faq" data-sec="faq">FAQ</a>
+      <a href="#instagram" data-sec="instagram">Instagram</a>
+      <a href="#reserva" data-sec="reserva" class="nav-cta">Reserve</a>
+    </nav>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<nav class="side-nav" id="sideNav">
+  <a href="#top" data-sec="top" class="active"></a>
+  <a href="#concept" data-sec="concept"></a>
+  <a href="#menu" data-sec="menu"></a>
+  <a href="#gallery" data-sec="gallery"></a>
+  <a href="#staff" data-sec="staff"></a>
+  <a href="#voice" data-sec="voice"></a>
+  <a href="#access" data-sec="access"></a>
+  <a href="#faq" data-sec="faq"></a>
+  <a href="#instagram" data-sec="instagram"></a>
+  <a href="#reserva" data-sec="reserva"></a>
+</nav>
+
+<section id="top" class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-inner">
+    <span class="eyebrow mono">MEN'S HAIR SALON / SINCE 2016</span>
+    <h1>SHARP.<br>EDGE.<br><span class="outline">STYLE.</span></h1>
+    <p class="hero-sub">技術で決まる、男のスタイル。一人ひとりの骨格・髪質・ライフスタイルに合わせたデザインを、熟練のスタイリストが提案する。</p>
+    <div class="btn-row">
+      <a href="#reserva" class="btn solid">Reserve</a>
+      <a href="#menu" class="btn outline">View Menu</a>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <div class="num">4,800+</div>
+    <div class="label">CUTS DELIVERED / YEAR</div>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div>SCROLL</div>
+</section>
+
+<section id="concept">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">01 — CONCEPT</span>
+        <h2>BLACK<br>EDGE.</h2>
+      </div>
+      <p class="head-note">無駄を削ぎ落とした空間で、技術と向き合う。それが俺たちの流儀だ。</p>
+    </div>
+    <div class="concept-grid">
+      <div class="concept-img reveal">
+        <img src="images/concept.jpg" alt="店内の様子" loading="lazy">
+        <span class="badge mono">EST. 2016</span>
+      </div>
+      <div class="reveal">
+        <div class="concept-text">
+          <p>余計な装飾を排したインダストリアルな空間。BGMにはジャズやロックが流れ、鏡に向かう時間は非日常への入り口だ。</p>
+          <p>カットの精度、シェービングの深さ、スタイリングの再現性。どれ一つ妥協しない。技術に裏打ちされたスタイルを、対話を通じて作り上げる。</p>
+          <p>メンズ美容のプロフェッショナルとして、一人ひとりの「なりたい」に応える。</p>
+        </div>
+        <div class="stat-row reveal">
+          <div class="stat"><div class="num">12</div><div class="label">YEARS OF CRAFT</div></div>
+          <div class="stat"><div class="num">98%</div><div class="label">SATISFACTION</div></div>
+          <div class="stat"><div class="num">3,000+</div><div class="label">REPEAT CUSTOMERS</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">02 — MENU & PRICE</span>
+        <h2>MENU</h2>
+      </div>
+      <p class="head-note">技術に対する対価。料金はすべて税込表示。</p>
+    </div>
+    <div class="menu-grid reveal">
+      <div class="menu-card"><div><span class="cat">Cut</span><h3>CUT</h3><p class="desc">シャンプー・ブロー込み。お客様の骨格・髪質に合わせたオーダーメイドカット。</p></div><div class="price">¥5,500<span> / cut</span></div></div>
+      <div class="menu-card"><div><span class="cat">Cut + Shave</span><h3>CUT & SHAVE</h3><p class="desc">カット＋フェイスシェービング。熱巾タオルとアフターケア込みの贅沢な組合せ。</p></div><div class="price">¥7,500<span> / set</span></div></div>
+      <div class="menu-card"><div><span class="cat">Shave</span><h3>SHAVE</h3><p class="desc">フェイスシェービング単品。肌に優しいストレート剃り。アフターケア付き。</p></div><div class="price">¥3,800<span> / shave</span></div></div>
+      <div class="menu-card"><div><span class="cat">Color</span><h3>COLOR</h3><p class="desc">白髪染め・おしゃれ染め。髪と頭皮に配慮した薬剤を使用。</p></div><div class="price">¥6,500<span> / color</span></div></div>
+      <div class="menu-card"><div><span class="cat">Perm</span><h3>PERM</h3><p class="desc">パーマ。髪のダメージを抑えながら、思い通りの質感を実現。</p></div><div class="price">¥7,000<span> / perm</span></div></div>
+      <div class="menu-card"><div><span class="cat">Set</span><h3>SET</h3><p class="desc">ブロー・スタイリングのみ。パーティーや式典前の仕上げに。</p></div><div class="price">¥2,500<span> / set</span></div></div>
+      <div class="menu-card"><div><span class="cat">Student</span><h3>STUDENT CUT</h3><p class="desc">学生限定カットメニュー。要学生証提示。</p></div><div class="price">¥3,800<span> / cut</span></div></div>
+      <div class="menu-card"><div><span class="cat">Hair Care</span><h3>HEAD SPA</h3><p class="desc">頭皮ケア＆マッサージ。リラックス効果抜群の大人気メニュー。</p></div><div class="price">¥4,500<span> / 40min</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">03 — WORKS</span>
+        <h2>GALLERY</h2>
+      </div>
+      <p class="head-note">技術の証明。実際の施術事例をご覧ください。</p>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="g-item g-wide"><img src="images/gallery-1.jpg" alt="スタイリッシュカット" loading="lazy"><span class="tag">SHORT STYLE</span></div>
+      <div class="g-item"><img src="images/gallery-2.jpg" alt="フェードカット" loading="lazy"><span class="tag">FADE CUT</span></div>
+      <div class="g-item"><img src="images/gallery-3.jpg" alt="ビジネススタイル" loading="lazy"><span class="tag">BUSINESS STYLE</span></div>
+      <div class="g-item g-wide"><img src="images/gallery-4.jpg" alt="シェービング" loading="lazy"><span class="tag">SHAVING</span></div>
+      <div class="g-item"><img src="images/gallery-5.jpg" alt="カラーリング" loading="lazy"><span class="tag">COLOR</span></div>
+      <div class="g-item"><img src="images/gallery-6.jpg" alt="パーマスタイル" loading="lazy"><span class="tag">PERM STYLE</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="staff">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">04 — TEAM</span>
+        <h2>STAFF</h2>
+      </div>
+      <p class="head-note">技術とホスピタリティ。それぞれのスタイリストがプロとして向き合う。</p>
+    </div>
+    <div class="staff-grid reveal">
+      <div class="staff-card"><div class="staff-inner">
+        <div class="staff-photo" style="background:url('images/staff-1.jpg') center/cover"><span class="id">01</span><span class="role-badge">OWNER</span></div>
+        <span class="staff-role">Owner / Master Stylist</span>
+        <h3 class="staff-name">KENSUKE TANAKA</h3>
+        <p class="staff-bio">業界歴18年。銀座の名店で修行後独立。カットの正確さに定評がある。</p>
+      </div></div>
+      <div class="staff-card"><div class="staff-inner">
+        <div class="staff-photo" style="background:url('images/staff-2.jpg') center/cover"><span class="id">02</span><span class="role-badge">STYLIST</span></div>
+        <span class="staff-role">Senior Stylist</span>
+        <h3 class="staff-name">RYOHEI SUZUKI</h3>
+        <p class="staff-bio">フェード・ショートスタイルを得意とする若手のホープ。バーバースタイルに精通。</p>
+      </div></div>
+      <div class="staff-card"><div class="staff-inner">
+        <div class="staff-photo" style="background:url('images/staff-3.jpg') center/cover"><span class="id">03</span><span class="role-badge">BARBER</span></div>
+        <span class="staff-role">Barber</span>
+        <h3 class="staff-name">SHOTA YAMAMOTO</h3>
+        <p class="staff-bio">シェービング技術に特化。クラシックバーバースタイルを継承する職人。</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section id="voice">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">05 — VOICE</span>
+        <h2>VOICE</h2>
+      </div>
+      <p class="head-note">お客様のリアルな声。技術と空間が評価されています。</p>
+    </div>
+    <div class="voice-grid reveal">
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">「担当スタイリストに毎回お任せしていますが、いつも想像以上の仕上がりに。シェービングの気持ち良さは一度体験したらやめられません。」</p>
+        <div class="voice-author">
+          <span class="voice-name">T.M. / 30代・会社員</span>
+          <span class="voice-menu">CUT & SHAVE / 月1回通院</span>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">「フェードカットをお願いしました。周りから好評で、自分のスタイルに自信が持てるようになりました。店内のBGMセンスも最高です。」</p>
+        <div class="voice-author">
+          <span class="voice-name">K.S. / 20代・学生</span>
+          <span class="voice-menu">FADE CUT / 初来店</span>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">「白髪染めが自然で、周りに気づかれずに若々しく見えるようになりました。料金も明朗で、初めてでも安心して通えます。」</p>
+        <div class="voice-author">
+          <span class="voice-name">Y.K. / 40代・自営業</span>
+          <span class="voice-menu">COLOR / 2年目リピート</span>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">「ヘッドスパとカットのセットがお気に入り。仕事終わりに立ち寄るのが週末の楽しみです。これからも通い続けます。」</p>
+        <div class="voice-author">
+          <span class="voice-name">S.Y. / 30代・IT企業</span>
+          <span class="voice-menu">HEAD SPA & CUT / 半年継続</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="access">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">06 — ACCESS</span>
+        <h2>ACCESS</h2>
+      </div>
+    </div>
+    <div class="access-grid reveal">
+      <div>
+        <div class="status" id="statusBadge"><span class="status-dot" id="statusDot"></span><span id="statusText" class="mono">LOADING…</span></div>
+        <div class="info-list">
+          <div class="info-row"><span class="k">Address</span><span class="v">東京都渋谷区○○ 1-2-3<br>Black Edge Building 1F</span></div>
+          <div class="info-row"><span class="k">Hours</span><span class="v">10:00 - 20:00<br>月曜定休</span></div>
+          <div class="info-row"><span class="k">Access</span><span class="v">○○駅 徒歩3分</span></div>
+          <div class="info-row"><span class="k">Tel</span><span class="v">03-0000-0000</span></div>
+          <div class="info-row"><span class="k">Parking</span><span class="v">近隣コインパーキング</span></div>
+        </div>
+      </div>
+      <div class="map-box">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.747!2d139.701!3d35.659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDM5JzMyLjQiTiAxMznCsDQyJzAzLjYiRQ!5e0!3m2!1sja!2sjp!4v1" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">07 — FAQ</span>
+        <h2>FAQ</h2>
+      </div>
+      <p class="head-note">よくある質問をまとめました。</p>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item"><div class="faq-q">予約は必要ですか？<span class="icon">+</span></div><div class="faq-a">予約優先制です。お急ぎの方はご予約をおすすめします。当日の飛び込みも可能ですが、お待たせする場合がございます。</div></div>
+      <div class="faq-item"><div class="faq-q">クレジットカードは使えますか？<span class="icon">+</span></div><div class="faq-a">各種クレジットカード、電子マネー、QRコード決済に対応しています。詳細は店舗までお問い合わせください。</div></div>
+      <div class="faq-item"><div class="faq-q">駐車場はありますか？<span class="icon">+</span></div><div class="faq-a">専用駐車場はございませんが、近隣にコインパーキングが複数あります。お車でお越しの際は近隣駐車場をご利用ください。</div></div>
+      <div class="faq-item"><div class="faq-q">子供のカットは対応していますか？<span class="icon">+</span></div><div class="faq-a">小学生以上のお子様からご利用いただけます。小学生以下のお子様はお電話でご相談ください。</div></div>
+      <div class="faq-item"><div class="faq-q">施術後のアフターケアはありますか？<span class="icon">+</span></div><div class="faq-a">スタイリングのコツやおすすめのスタイリング剤など、お客様に合わせたアフターケアアドバイスを無料で行っています。</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="instagram">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">08 — INSTAGRAM</span>
+        <h2>INSTAGRAM</h2>
+      </div>
+      <p class="head-note">サロンの日常、スタイル写真、スタッフのリアルな姿を発信中。</p>
+    </div>
+    <div class="insta-grid reveal">
+      <div class="insta-item"><img src="images/gallery-1.jpg" alt="Instagram post" loading="lazy"><a href="https://instagram.com" target="_blank" class="insta-overlay"><span>@blackedge_hair</span></a></div>
+      <div class="insta-item"><img src="images/gallery-2.jpg" alt="Instagram post" loading="lazy"><a href="https://instagram.com" target="_blank" class="insta-overlay"><span>@blackedge_hair</span></a></div>
+      <div class="insta-item"><img src="images/gallery-3.jpg" alt="Instagram post" loading="lazy"><a href="https://instagram.com" target="_blank" class="insta-overlay"><span>@blackedge_hair</span></a></div>
+      <div class="insta-item"><img src="images/gallery-4.jpg" alt="Instagram post" loading="lazy"><a href="https://instagram.com" target="_blank" class="insta-overlay"><span>@blackedge_hair</span></a></div>
+      <div class="insta-item"><img src="images/gallery-5.jpg" alt="Instagram post" loading="lazy"><a href="https://instagram.com" target="_blank" class="insta-overlay"><span>@blackedge_hair</span></a></div>
+      <div class="insta-item"><img src="images/gallery-6.jpg" alt="Instagram post" loading="lazy"><a href="https://instagram.com" target="_blank" class="insta-overlay"><span>@blackedge_hair</span></a></div>
+    </div>
+    <div class="insta-cta reveal">
+      <a href="https://www.instagram.com/blackedge_hair/" target="_blank" class="btn outline">Follow @blackedge_hair</a>
+    </div>
+  </div>
+</section>
+
+<section id="reserva" class="reserva-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">09 — RESERVE</span>
+        <h2>RESERVE</h2>
+      </div>
+      <p class="head-note">24時間受付。お気軽にご予約ください。</p>
+    </div>
+    <div class="reveal" style="text-align:center;margin-bottom:40px;">
+      <p style="color:var(--cream-dim);font-size:14px;margin-bottom:20px;">下記フォームからご予約いただけます。初めての方もお気軽にどうぞ。</p>
+      <a href="https://reserva.be/サロンID/reserve" target="_blank" class="btn solid" style="display:inline-block;">予約ページへ</a>
+    </div>
+    <div class="reserva-frame reveal">
+      <iframe src="about:blank" width="100%" height="500" style="border:none;display:block;" title="予約フォーム"></iframe>
+    </div>
+    <p style="text-align:center;color:var(--ash);font-size:11px;margin-top:16px;font-family:'JetBrains Mono',monospace;">※ RESERVAの埋め込みURLを設定してください</p>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">10 — CONTACT</span>
+        <h2>CONTACT</h2>
+      </div>
+    </div>
+    <div class="contact-grid reveal">
+      <form id="contactForm">
+        <div class="field"><label>Name</label><input type="text" required></div>
+        <div class="field"><label>Email</label><input type="email" required></div>
+        <div class="field"><label>Message</label><textarea required></textarea></div>
+        <button type="submit" class="btn solid" style="border:none;cursor:pointer;">Send</button>
+      </form>
+      <div class="contact-side">
+        <p>お問い合わせはフォームまたはお電話で承っております。</p>
+        <p>出張カットや撮影スタイリングのご依頼もお気軽にご相談ください。</p>
+        <p>返信までに2〜3営業日いただく場合がございます。</p>
+        <p class="mono" style="color:var(--brass);letter-spacing:0.05em;margin-top:20px;">info@blackedge-hair.com</p>
+        <p class="mono" style="color:var(--cream-dim);letter-spacing:0.05em;">TEL: 03-0000-0000</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-cta">
+    <h2>GET YOUR<br>EDGE.</h2>
+    <span class="mono">© 2026 BLACK EDGE — MEN'S HAIR SALON, SHIBUYA</span>
+  </div>
+  <div class="footer-row">
+    <span>渋谷区○○ 1-2-3 / 10:00–20:00 / 月曜定休</span>
+    <div class="to-top" id="toTop">↑</div>
+  </div>
+</footer>
+
+<script>
+  // preloader
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('hide'), 800);
+  });
+
+  // custom cursor
+  const cursor = document.getElementById('cursor');
+  const cursorDot = document.getElementById('cursorDot');
+  let mx=0,my=0,cx=0,cy=0;
+  window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursorDot.style.left=mx+'px'; cursorDot.style.top=my+'px'; });
+  function loop(){ cx += (mx-cx)*0.15; cy += (my-cy)*0.15; cursor.style.left=cx+'px'; cursor.style.top=cy+'px'; requestAnimationFrame(loop); }
+  loop();
+  document.querySelectorAll('a,button,.menu-card,.g-item,.staff-card,.faq-q').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('big'));
+  });
+
+  // progress bar + parallax
+  const progress = document.getElementById('progress');
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = pct + '%';
+    if (heroBg) heroBg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+  });
+
+  // burger menu
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // FAQ
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      q.classList.toggle('open');
+      q.nextElementSibling.classList.toggle('open');
+    });
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // side nav active state
+  const sideLinks = document.querySelectorAll('.side-nav a');
+  const navA = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
+  const secIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sideLinks.forEach(l => l.classList.toggle('active', l.dataset.sec === id));
+        navA.forEach(l => l.classList.toggle('active', l.dataset.sec === id));
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => secIo.observe(s));
+
+  // open/closed status
+  const statusText = document.getElementById('statusText');
+  const statusDot = document.getElementById('statusDot');
+  const now = new Date();
+  const hour = now.getHours();
+  const day = now.getDay();
+  const open = hour >= 10 && hour < 20 && day !== 1;
+  statusText.textContent = open ? 'OPEN NOW — CLOSES AT 20:00' : 'CLOSED — OPENS AT 10:00';
+  if (!open) statusDot.classList.add('closed');
+
+  // contact form
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const btn = this.querySelector('button');
+    const original = btn.textContent;
+    btn.textContent = 'Sent.';
+    this.reset();
+    setTimeout(() => { btn.textContent = original; }, 2500);
+  });
+
+  // back to top
+  document.getElementById('toTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>

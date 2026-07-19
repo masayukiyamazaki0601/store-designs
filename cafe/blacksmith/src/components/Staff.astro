@@ -1,0 +1,88 @@
+---
+---
+<section id="staff">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">04 — TEAM</span>
+        <h2>スタッフ紹介</h2>
+      </div>
+      <p class="head-note">豆にも人にも、余計な演出はいらない。</p>
+    </div>
+    <div class="staff-grid reveal">
+      <div class="staff-card"><div class="staff-inner">
+        <div class="staff-photo" style="background:url('/images/staff-1.jpg') center/cover"><span class="id-num">01</span><span class="badge">ROASTER</span></div>
+        <span class="staff-role">Head Roaster</span>
+        <h3 class="staff-name">TAKUMI ITO</h3>
+        <p class="staff-bio">10年間シアトルの焙煎所で修業後、独立。豆の声を聞く男。</p>
+      </div></div>
+      <div class="staff-card"><div class="staff-inner">
+        <div class="staff-photo" style="background:url('/images/staff-2.jpg') center/cover"><span class="id-num">02</span><span class="badge">BARISTA</span></div>
+        <span class="staff-role">Head Barista</span>
+        <h3 class="staff-name">MIA SATO</h3>
+        <p class="staff-bio">抽出理論に精通。ラテアートの大会で入賞経験あり。</p>
+      </div></div>
+      <div class="staff-card"><div class="staff-inner">
+        <div class="staff-photo" style="background:url('/images/staff-3.jpg') center/cover"><span class="id-num">03</span><span class="badge">MANAGER</span></div>
+        <span class="staff-role">Store Manager</span>
+        <h3 class="staff-name">KENTA MORI</h3>
+        <p class="staff-bio">お客との会話を大切にする、お店の顔。</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  document.addEventListener('astro:page-load', () => {
+    // 3D Tilt effect
+    if(window.innerWidth > 900) {
+      document.querySelectorAll('.staff-card').forEach(card => {
+        const inner = card.querySelector('.staff-inner');
+        if(inner) {
+          card.addEventListener('mousemove', (e: Event) => {
+            const mouseEvent = e as MouseEvent;
+            const r = card.getBoundingClientRect();
+            const px = (mouseEvent.clientX - r.left) / r.width - 0.5;
+            const py = (mouseEvent.clientY - r.top) / r.height - 0.5;
+            gsap.to(inner, {
+              rotationY: px * 12,
+              rotationX: -py * 12,
+              duration: 0.4,
+              ease: 'power2.out',
+              transformPerspective: 800
+            });
+          });
+          card.addEventListener('mouseleave', () => {
+            gsap.to(inner, { rotationY: 0, rotationX: 0, duration: 0.6, ease: 'power2.out' });
+          });
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  section { position: relative; padding: 130px 0; border-bottom: 1px solid var(--line); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; flex-wrap: wrap; gap: 24px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--copper); letter-spacing: 0.2em; margin-bottom: 14px; display: block; }
+  .section-head h2 { font-size: clamp(36px, 5.4vw, 60px); }
+  .head-note { max-width: 340px; color: var(--ash); font-size: 14px; }
+
+  /* staff tilt cards */
+  .staff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .staff-card { background: var(--black); padding: 0; perspective: 800px; }
+  .staff-inner { padding: 32px 26px; transform-style: preserve-3d; }
+  .staff-photo { width: 100%; aspect-ratio: 4/5; background: linear-gradient(150deg, #2a221c, #0d0b0a); border: 1px solid var(--line); margin-bottom: 20px; position: relative; overflow: hidden; }
+  .staff-photo .badge { position: absolute; top: 10px; right: 10px; background: var(--copper); color: var(--black); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; padding: 4px 8px; font-weight: 700; }
+  .staff-photo::after { content: ""; position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, rgba(236,228,214,0.035) 0 1px, transparent 1px 8px); }
+  .staff-photo .id-num { position: absolute; bottom: 12px; left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 34px; color: rgba(236,228,214,0.12); }
+  .staff-role { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--copper); letter-spacing: 0.1em; text-transform: uppercase; }
+  .staff-name { font-family: 'Anton', sans-serif; font-size: 26px; margin: 8px 0 12px; }
+  .staff-bio { color: var(--ash); font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .staff-grid { grid-template-columns: 1fr; }
+  }
+</style>

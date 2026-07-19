@@ -1,0 +1,69 @@
+---
+---
+<section id="contact" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">07 — CONTACT</span>
+        <h2>お問い合わせ</h2>
+      </div>
+    </div>
+    <div class="contact-grid reveal">
+      <form id="contactForm">
+        <div class="field"><label>Name</label><input type="text" required></div>
+        <div class="field"><label>Email</label><input type="email" required></div>
+        <div class="field"><label>Message</label><textarea required></textarea></div>
+        <button type="submit" class="btn solid" style="border:none;cursor:pointer;">Send Message</button>
+      </form>
+      <div class="contact-side">
+        <p>ケータリング、卸売、店舗貸切に関するお問い合わせもこちらから承っております。</p>
+        <p>返信までに2〜3営業日いただく場合がございます。</p>
+        <p class="mono" style="color:var(--copper);letter-spacing:0.05em;">info@blacksmith-roastery.jp</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById('contactForm');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('button');
+        if (btn) {
+          const original = btn.textContent;
+          btn.textContent = 'Sent.';
+          (this as HTMLFormElement).reset();
+          setTimeout(() => { btn.textContent = original; }, 2500);
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  section { position: relative; padding: 130px 0; border-bottom: 1px solid var(--line); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; flex-wrap: wrap; gap: 24px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--copper); letter-spacing: 0.2em; margin-bottom: 14px; display: block; }
+  .section-head h2 { font-size: clamp(36px, 5.4vw, 60px); }
+
+  /* contact */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  .field { margin-bottom: 26px; position: relative; }
+  .field label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ash); margin-bottom: 8px; }
+  .field input, .field textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--line); color: var(--cream); font-family: 'Archivo', sans-serif; font-size: 15px; padding: 10px 2px; outline: none; transition: border-color .2s; }
+  .field input:focus, .field textarea:focus { border-color: var(--copper); }
+  .field textarea { resize: vertical; min-height: 100px; }
+  
+  .contact-side { color: var(--cream-dim); }
+  .contact-side p { margin-bottom: 18px; font-size: 15px; max-width: 400px; }
+
+  .btn { display: inline-block; padding: 16px 32px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--cream); transition: all .3s; position: relative; overflow: hidden; }
+  .btn.solid { background: var(--brick-bright); border-color: var(--brick-bright); color: var(--black); font-weight: 700; }
+  .btn.solid:hover { background: var(--cream); border-color: var(--cream); }
+
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

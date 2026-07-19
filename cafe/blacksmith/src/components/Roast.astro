@@ -1,0 +1,110 @@
+---
+---
+<section id="roast">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">01 — CRAFT</span>
+        <h2>焙煎への<br>こだわり</h2>
+      </div>
+      <p class="head-note">火入れの一秒が味を変える。うちの焙煎士は温度計より、豆の弾ける音と匂いを信じている。</p>
+    </div>
+    <div class="roast-grid">
+      <div class="roast-img-wrap reveal">
+        <img src="/images/gallery-1.jpg" alt="生豆を確認する様子" loading="lazy">
+        <div class="frame-tag mono">FIG. 01 / GREEN BEAN CHECK</div>
+      </div>
+      <div class="reveal">
+        <div class="roast-copy">
+          <p>店内奥の焙煎機は1957年製のドイツ製ドラムを改造したもの。毎朝5時、生豆の状態を見ながらその日の火力を決める。マニュアル通りには焼かない。</p>
+          <p>焙煎後は必ず24時間以上のガス抜きを経てから店頭へ。豆の持つ酸味と甘みのバランスが、無骨な見た目とは裏腹に驚くほど繊細だ。</p>
+        </div>
+        <div class="curve-box">
+          <span class="mono">ROAST CURVE / TYPICAL PROFILE</span>
+          <svg class="curve" viewBox="0 0 400 220">
+            <line x1="0" y1="200" x2="400" y2="200" stroke="rgba(236,228,214,0.15)" stroke-width="1"/>
+            <line x1="0" y1="140" x2="400" y2="140" stroke="rgba(236,228,214,0.08)" stroke-width="1"/>
+            <line x1="0" y1="80" x2="400" y2="80" stroke="rgba(236,228,214,0.08)" stroke-width="1"/>
+            <path class="line" d="M0,190 C60,160 100,120 150,90 C220,50 280,30 400,10" fill="none" stroke="#c98a4b" stroke-width="2.5"/>
+            <circle cx="150" cy="90" r="4" fill="#ece4d6"/>
+            <circle cx="280" cy="30" r="4" fill="#ece4d6"/>
+            <text x="150" y="78" fill="#b8ae9d" font-size="10" font-family="JetBrains Mono">FIRST CRACK</text>
+            <text x="255" y="20" fill="#b8ae9d" font-size="10" font-family="JetBrains Mono">DROP</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="stat-strip reveal">
+      <div class="stat"><div class="num">180°C</div><div class="label">DROP TEMPERATURE</div></div>
+      <div class="stat"><div class="num">12min</div><div class="label">AVG ROAST TIME</div></div>
+      <div class="stat"><div class="num">7カ国</div><div class="label">直接契約農園</div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  // Astroコンポーネント内のスクリプトはビルド時にバンドルされます
+  document.addEventListener('astro:page-load', () => {
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Roast Curve Animation
+    const curve = document.querySelector('.curve');
+    if(curve) {
+      ScrollTrigger.create({
+        trigger: curve,
+        start: 'top 80%',
+        onEnter: () => curve.classList.add('in'),
+      });
+    }
+
+    // Image Parallax Effect
+    const roastImg = document.querySelector('.roast-img-wrap img');
+    if(roastImg) {
+      gsap.to(roastImg, {
+        scale: 1.15,
+        yPercent: 10,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.roast-img-wrap',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  section { position: relative; padding: 130px 0; border-bottom: 1px solid var(--line); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; flex-wrap: wrap; gap: 24px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--copper); letter-spacing: 0.2em; margin-bottom: 14px; display: block; }
+  .section-head h2 { font-size: clamp(36px, 5.4vw, 60px); }
+  .head-note { max-width: 340px; color: var(--ash); font-size: 14px; }
+
+  /* roasting */
+  .roast-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 64px; align-items: center; }
+  .roast-img-wrap { position: relative; aspect-ratio: 4/5; overflow: hidden; border: 1px solid var(--line); }
+  .roast-img-wrap img { width: 100%; height: 100%; object-fit: cover; transform-origin: top center; }
+  .roast-img-wrap .frame-tag { position: absolute; bottom: 14px; left: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--cream); background: rgba(10,9,8,0.7); padding: 6px 10px; z-index: 2; }
+  .roast-copy p { color: var(--cream-dim); margin-bottom: 20px; font-size: 16px; max-width: 480px; }
+  .curve-box { background: var(--panel); border: 1px solid var(--line); padding: 28px; margin-top: 36px; }
+  .curve-box .mono { font-size: 11px; color: var(--ash); margin-bottom: 14px; display: block; }
+  svg.curve { width: 100%; height: auto; }
+  .curve path.line { stroke-dasharray: 600; stroke-dashoffset: 600; transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1); }
+  .curve.in path.line { stroke-dashoffset: 0; }
+  .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 56px; border-top: 1px solid var(--line); }
+  .stat { padding: 28px 24px 0; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: none; }
+  .stat .num { font-family: 'Anton', sans-serif; font-size: 42px; color: var(--copper); }
+  .stat .label { font-size: 11px; color: var(--ash); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; margin-top: 6px; }
+
+  @media (max-width: 900px) {
+    .roast-grid { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--line); padding-bottom: 20px; }
+  }
+</style>

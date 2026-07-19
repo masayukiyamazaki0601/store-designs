@@ -1,0 +1,69 @@
+---
+---
+<section id="access">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">05 — ACCESS</span>
+        <h2>アクセス</h2>
+      </div>
+    </div>
+    <div class="access-grid reveal">
+      <div>
+        <div class="status-badge" id="statusBadge"><span class="status-dot" id="statusDot"></span><span id="statusText">LOADING…</span></div>
+        <div class="info-list">
+          <div class="info-row"><span class="k">Address</span><span class="v">東京都渋谷区○○ 1-2-3<br>Brick Building 1F</span></div>
+          <div class="info-row"><span class="k">Hours</span><span class="v">08:00 - 20:00<br>年中無休</span></div>
+          <div class="info-row"><span class="k">Access</span><span class="v">○○駅 徒歩5分</span></div>
+          <div class="info-row"><span class="k">Tel</span><span class="v">03-0000-0000</span></div>
+        </div>
+      </div>
+      <div class="map-box"><div class="map-ring"></div><div class="map-pin"></div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    // Open/Closed status logic
+    const statusText = document.getElementById('statusText');
+    const statusDot = document.getElementById('statusDot');
+    if(statusText && statusDot) {
+      const now = new Date();
+      const hour = now.getHours();
+      const open = hour >= 8 && hour < 20;
+      statusText.textContent = open ? 'OPEN NOW — CLOSES AT 20:00' : 'CLOSED — OPENS AT 08:00';
+      if (!open) statusDot.classList.add('closed');
+    }
+  });
+</script>
+
+<style>
+  section { position: relative; padding: 130px 0; border-bottom: 1px solid var(--line); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; flex-wrap: wrap; gap: 24px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--copper); letter-spacing: 0.2em; margin-bottom: 14px; display: block; }
+  .section-head h2 { font-size: clamp(36px, 5.4vw, 60px); }
+
+  /* access */
+  .access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  .status-badge { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border: 1px solid var(--line-strong); margin-bottom: 28px; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #5fa85f; animation: pulse 2s ease-in-out infinite; }
+  .status-dot.closed { background: #a85f5f; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  
+  .info-list { border-top: 1px solid var(--line); margin-top: 16px; }
+  .info-row { display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .info-row .k { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ash); letter-spacing: 0.08em; text-transform: uppercase; }
+  .info-row .v { font-size: 14px; text-align: right; color: var(--cream-dim); }
+  
+  .map-box { background: var(--panel); border: 1px solid var(--line); min-height: 380px; position: relative; background-image: linear-gradient(rgba(236,228,214,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(236,228,214,0.05) 1px, transparent 1px); background-size: 32px 32px; overflow: hidden; }
+  .map-pin { position: absolute; top: 48%; left: 52%; width: 14px; height: 14px; background: var(--brick-bright); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); animation: pinbounce 2s ease-in-out infinite; }
+  @keyframes pinbounce { 0%, 100% { margin-top: 0; } 50% { margin-top: -8px; } }
+  .map-pin::after { content: ""; position: absolute; inset: 0; margin: auto; width: 6px; height: 6px; background: var(--black); border-radius: 50%; }
+  .map-ring { position: absolute; top: 48%; left: 52%; width: 14px; height: 14px; border: 1px solid var(--brick-bright); border-radius: 50%; transform: translate(-50%, -40%); animation: ring 2s ease-out infinite; }
+  @keyframes ring { 0% { width: 14px; height: 14px; opacity: 0.8; } 100% { width: 90px; height: 90px; opacity: 0; } }
+
+  @media (max-width: 900px) {
+    .access-grid { grid-template-columns: 1fr; }
+  }
+</style>

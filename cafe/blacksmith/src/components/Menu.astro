@@ -1,0 +1,123 @@
+---
+---
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">02 — MENU</span>
+        <h2>メニュー</h2>
+      </div>
+      <p class="head-note">豆の個性を邪魔しない抽出方法だけを揃えている。項目にカーソルを合わせると写真が浮かびます。</p>
+    </div>
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" data-tab="coffee">Coffee</button>
+      <button class="menu-tab" data-tab="brew">Brew Bar</button>
+      <button class="menu-tab" data-tab="food">Food</button>
+    </div>
+
+    <div class="menu-panel active" id="coffee">
+      <div class="menu-list">
+        <div class="menu-item" data-img="/images/gallery-4.jpg"><div><div class="menu-name">House Blend</div><div class="menu-desc">3種のシングルオリジンをブレンド。ナッツとキャラメルの余韻。</div></div><div class="menu-price">¥550</div></div>
+        <div class="menu-item" data-img="/images/gallery-2.jpg"><div><div class="menu-name">Espresso</div><div class="menu-desc">深煎り豆を使用した濃厚な一杯。</div></div><div class="menu-price">¥450</div></div>
+        <div class="menu-item" data-img="/images/gallery-6.jpg"><div><div class="menu-name">Cold Brew</div><div class="menu-desc">18時間水出し。すっきりとした甘み。</div></div><div class="menu-price">¥600</div></div>
+        <div class="menu-item" data-img="/images/insta-2.jpg"><div><div class="menu-name">Flat White</div><div class="menu-desc">濃厚なエスプレッソとミルクのバランス。</div></div><div class="menu-price">¥650</div></div>
+      </div>
+    </div>
+    <div class="menu-panel" id="brew">
+      <div class="menu-list">
+        <div class="menu-item" data-img="/images/insta-1.jpg"><div><div class="menu-name">Ethiopia Yirgacheffe</div><div class="menu-desc">ハンドドリップ。ベリー系の華やかな酸味。</div></div><div class="menu-price">¥750</div></div>
+        <div class="menu-item" data-img="/images/insta-3.jpg"><div><div class="menu-name">Guatemala Huehuetenango</div><div class="menu-desc">チョコレートのような重厚なコク。</div></div><div class="menu-price">¥750</div></div>
+        <div class="menu-item" data-img="/images/insta-5.jpg"><div><div class="menu-name">Kenya AA</div><div class="menu-desc">トマトのような複雑な酸とジューシーさ。</div></div><div class="menu-price">¥800</div></div>
+      </div>
+    </div>
+    <div class="menu-panel" id="food">
+      <div class="menu-list">
+        <div class="menu-item" data-img="/images/gallery-5.jpg"><div><div class="menu-name">Cast Iron Toast</div><div class="menu-desc">鋳鉄フライパンで焼いた厚切りトースト。</div></div><div class="menu-price">¥650</div></div>
+        <div class="menu-item" data-img="/images/insta-4.jpg"><div><div class="menu-name">Brooklyn Bagel</div><div class="menu-desc">自家製クリームチーズ添え。</div></div><div class="menu-price">¥700</div></div>
+        <div class="menu-item" data-img="/images/gallery-3.jpg"><div><div class="menu-name">Banana Bread</div><div class="menu-desc">胡桃とダークチョコ入り。</div></div><div class="menu-price">¥500</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  document.addEventListener('astro:page-load', () => {
+    // Menu Tabs
+    const tabs = document.querySelectorAll('.menu-tab');
+    const panels = document.querySelectorAll('.menu-panel');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        const targetId = tab.getAttribute('data-tab');
+        if(targetId) {
+          const panel = document.getElementById(targetId);
+          if(panel) {
+            panel.classList.add('active');
+            gsap.fromTo(panel.querySelectorAll('.menu-item'), 
+              { opacity: 0, x: -20 },
+              { opacity: 1, x: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out' }
+            );
+          }
+        }
+      });
+    });
+
+    // Menu Preview GSAP version
+    const preview = document.getElementById('menuPreview');
+    if(preview && window.innerWidth > 900) {
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('mouseenter', () => {
+          const img = item.getAttribute('data-img');
+          if(img) preview.style.backgroundImage = `url(${img})`;
+          preview.classList.add('show');
+        });
+        item.addEventListener('mousemove', (e: Event) => {
+          const mouseEvent = e as MouseEvent;
+          gsap.to(preview, {
+            x: mouseEvent.clientX + 24,
+            y: mouseEvent.clientY - 90,
+            duration: 0.4,
+            ease: 'power2.out'
+          });
+        });
+        item.addEventListener('mouseleave', () => preview.classList.remove('show'));
+      });
+    }
+  });
+</script>
+
+<style>
+  section { position: relative; padding: 130px 0; border-bottom: 1px solid var(--line); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; flex-wrap: wrap; gap: 24px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--copper); letter-spacing: 0.2em; margin-bottom: 14px; display: block; }
+  .section-head h2 { font-size: clamp(36px, 5.4vw, 60px); }
+  .head-note { max-width: 340px; color: var(--ash); font-size: 14px; }
+
+  /* menu */
+  .menu-tabs { display: flex; gap: 8px; margin-bottom: 48px; flex-wrap: wrap; }
+  .menu-tab { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 20px; border: 1px solid var(--line); color: var(--ash); cursor: pointer; transition: all .2s; background: transparent; }
+  .menu-tab.active, .menu-tab:hover { border-color: var(--copper); color: var(--cream); }
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+  .menu-list { border-top: 1px solid var(--line); position: relative; }
+  .menu-item { display: flex; justify-content: space-between; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line); align-items: baseline; cursor: pointer; transition: padding-left .25s; }
+  .menu-item:hover { padding-left: 14px; }
+  .menu-item:hover .menu-name { color: var(--copper); }
+  .menu-name { font-family: 'Anton', sans-serif; font-size: 23px; text-transform: uppercase; transition: color .2s; }
+  .menu-desc { color: var(--ash); font-size: 13px; margin-top: 6px; max-width: 420px; }
+  .menu-price { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--cream-dim); white-space: nowrap; }
+  
+  /* preview container is in global CSS now, but managed by GSAP */
+  .menu-preview {
+    position: fixed; top: 0; left: 0; width: 150px; height: 150px; pointer-events: none; z-index: 500;
+    background-size: cover; background-position: center; border: 1px solid var(--line-strong);
+    opacity: 0; transform: scale(0.92); transition: opacity .2s, transform .2s;
+  }
+  .menu-preview.show { opacity: 1; transform: scale(1); }
+  @media (max-width: 900px) { .menu-preview { display: none; } }
+</style>

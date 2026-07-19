@@ -3,6 +3,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   root: './',
+  base: './',
   publicDir: 'public',
   build: {
     outDir: 'dist',
