@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Monitor Dashboard</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  .pane {
+    border: 1px solid #0f0;
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+  }
+  .pane h2 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    border-bottom: 1px dashed #0f0;
+    padding-bottom: 5px;
+    background: #000;
+  }
+  .content {
+    height: calc(100% - 30px);
+    overflow-y: hidden;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: pre-wrap;
+    word-break: break-all;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+</style>
+</head>
+<body>
+
+<div class="pane">
+  <h2>SYSTEM LOGS</h2>
+  <div class="content" id="logs"></div>
+</div>
+
+<div class="pane">
+  <h2>SOURCE COMPILER</h2>
+  <div class="content" id="code"></div>
+</div>
+
+<div class="pane" style="grid-column: span 2;">
+  <h2>NETWORK TRAFFIC & RESOURCE ALLOCATION</h2>
+  <div class="content" id="network"></div>
+</div>
+
+<script>
+  const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  const randomHex = () => Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+  
+  const logPane = document.getElementById('logs');
+  const logMessages = [
+    "Kernel starting...", "Loading modules...", "Mounting filesystems...",
+    "Starting network interface...", "Establishing secure connection...",
+    "Bypassing firewall...", "Access granted.", "Decrypting payload...",
+    "Buffer overflow detected in sector 7G.", "Rerouting power to main thrusters...",
+    "Compiling matrix...", "Synchronizing databases...", "Executing core protocol..."
+  ];
+
+  function addLog() {
+    const p = document.createElement('div');
+    const time = new Date().toISOString().split('T')[1].slice(0, -1);
+    const msg = logMessages[randomInt(0, logMessages.length - 1)];
+    const ip = `${randomInt(10, 255)}.${randomInt(10, 255)}.${randomInt(10, 255)}.${randomInt(10, 255)}`;
+    p.textContent = `[${time}] [${ip}] ${msg}`;
+    logPane.appendChild(p);
+    if (logPane.childNodes.length > 40) logPane.removeChild(logPane.firstChild);
+    setTimeout(addLog, randomInt(50, 300));
+  }
+  addLog();
+
+  const codePane = document.getElementById('code');
+  const codeSnippet = `
+function initializeQuantumCore(params) {
+  let qState = new QuantumState(params);
+  for (let i = 0; i < params.dimensions; i++) {
+    qState.entangle(new Qubit(Math.random()));
+    if (qState.stability < 0.99) {
+      console.warn("Stability dropping, engaging countermeasures.");
+      engageCountermeasures(qState);
+    }
+  }
+  return qState.collapse();
+}
+
+class Qubit {
+  constructor(probability) {
+    this.alpha = Math.sqrt(probability);
+    this.beta = Math.sqrt(1 - probability);
+  }
+  measure() {
+    return Math.random() < Math.pow(this.alpha, 2) ? 0 : 1;
+  }
+}
+`.split('\n');
+
+  let codeLineIdx = 0;
+  function addCode() {
+    if (codeLineIdx >= codeSnippet.length) codeLineIdx = 0;
+    const p = document.createElement('div');
+    p.textContent = codeSnippet[codeLineIdx] || ' ';
+    codePane.appendChild(p);
+    if (codePane.childNodes.length > 30) codePane.removeChild(codePane.firstChild);
+    codeLineIdx++;
+    setTimeout(addCode, randomInt(20, 150));
+  }
+  addCode();
+
+  const networkPane = document.getElementById('network');
+  function addNetworkActivity() {
+    const p = document.createElement('div');
+    let bar = '[';
+    const fill = randomInt(10, 80);
+    for(let i=0; i<80; i++) bar += i < fill ? '=' : ' ';
+    bar += ']';
+    const percent = Math.floor((fill / 80) * 100).toString().padStart(3, ' ');
+    p.textContent = `THREAD 0x${randomHex().toUpperCase()} ${bar} ${percent}% | MEM: 0x${randomHex().toUpperCase()} | STATUS: OK`;
+    networkPane.appendChild(p);
+    if (networkPane.childNodes.length > 20) networkPane.removeChild(networkPane.firstChild);
+    setTimeout(addNetworkActivity, 80);
+  }
+  addNetworkActivity();
+</script>
+</body>
+</html>

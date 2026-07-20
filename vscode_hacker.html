@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Studio Code - Workspace</title>
+<style>
+  body {
+    margin: 0;
+    background-color: #1e1e1e;
+    color: #cccccc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .title-bar {
+    height: 30px;
+    background-color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #cccccc;
+  }
+  .main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+  .activity-bar {
+    width: 50px;
+    background-color: #333333;
+    border-right: 1px solid #252526;
+  }
+  .sidebar {
+    width: 250px;
+    background-color: #252526;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-header {
+    padding: 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #cccccc;
+  }
+  .file-tree {
+    padding: 0 10px;
+    font-size: 13px;
+    color: #cccccc;
+  }
+  .file-item {
+    padding: 4px 10px;
+    cursor: default;
+  }
+  .file-item.active {
+    color: #ffffff;
+    background-color: #37373d;
+  }
+  .editor-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1e1e;
+  }
+  .tabs {
+    display: flex;
+    background-color: #252526;
+    height: 35px;
+  }
+  .tab {
+    padding: 0 15px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #252526;
+    border-top: 2px solid #007acc;
+  }
+  .editor-content {
+    flex: 1;
+    padding: 10px 15px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-y: hidden;
+    white-space: pre-wrap;
+    word-break: break-all;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .status-bar {
+    height: 22px;
+    background-color: #007acc;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 12px;
+    justify-content: space-between;
+  }
+  .keyword { color: #569cd6; }
+  .string { color: #ce9178; }
+  .comment { color: #6a9955; }
+  .function { color: #dcdcaa; }
+  .number { color: #b5cea8; }
+</style>
+</head>
+<body>
+
+<div class="title-bar">core.c - Visual Studio Code</div>
+<div class="main">
+  <div class="activity-bar"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">Explorer</div>
+    <div class="file-tree">
+      <div class="file-item">▼ src</div>
+      <div class="file-item active">&nbsp;&nbsp;core.c</div>
+      <div class="file-item">&nbsp;&nbsp;v8.cc</div>
+    </div>
+  </div>
+  <div class="editor-group">
+    <div class="tabs">
+      <div class="tab" id="active-tab">core.c</div>
+    </div>
+    <div class="editor-content" id="editor"></div>
+  </div>
+</div>
+<div class="status-bar">
+  <div>C++  UTF-8</div>
+  <div>Running...</div>
+</div>
+
+<script>
+  const c_code = `/* 
+ * linux/kernel/sched/core.c
+ *
+ * Core kernel scheduler code and related syscalls
+ */
+#include <linux/sched.h>
+#include <linux/sched/clock.h>
+#include <linux/sched/stat.h>
+#include <linux/sched/autogroup.h>
+#include <linux/sched/sysctl.h>
+#include <linux/sched/cputime.h>
+#include <linux/sched/init.h>
+#include <linux/sched/signal.h>
+#include <linux/sched/smt.h>
+#include <linux/context_tracking.h>
+#include <linux/compat.h>
+#include <linux/blkdev.h>
+#include <linux/delay.h>
+#include <linux/freezer.h>
+
+DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
+EXPORT_SYMBOL_GPL(runqueues);
+
+void __init sched_init(void)
+{
+    unsigned long ptr = 0;
+    int i;
+
+    wait_bit_init();
+
+    for_each_possible_cpu(i) {
+        struct rq *rq;
+        rq = cpu_rq(i);
+        raw_spin_lock_init(&rq->lock);
+        rq->nr_running = 0;
+        rq->calc_load_active = 0;
+        rq->calc_load_update = jiffies + LOAD_FREQ;
+        init_cfs_rq(&rq->cfs);
+        init_rt_rq(&rq->rt);
+        init_dl_rq(&rq->dl);
+        atomic_set(&rq->nr_iowait, 0);
+    }
+    set_load_weight(&init_task);
+    
+    // Memory allocation
+    void *buffer = kmalloc(4096, GFP_KERNEL);
+    if (!buffer) {
+        panic("Failed to allocate init buffer");
+    }
+    memset(buffer, 0, 4096);
+    kfree(buffer);
+}
+
+int schedule_timeout(signed long timeout)
+{
+    struct timer_list timer;
+    unsigned long expire;
+
+    switch (timeout)
+    {
+    case MAX_SCHEDULE_TIMEOUT:
+        schedule();
+        goto out;
+    default:
+        if (timeout < 0) {
+            printk(KERN_ERR "schedule_timeout: wrong timeout value");
+            dump_stack();
+            current->state = TASK_RUNNING;
+            goto out;
+        }
+    }
+
+    expire = timeout + jiffies;
+    timer.expires = expire;
+    timer.data = (unsigned long) current;
+    timer.function = process_timeout;
+
+    add_timer_on(&timer, smp_processor_id());
+    schedule();
+    del_singleshot_timer_sync(&timer);
+    
+    timeout = expire - jiffies;
+
+ out:
+    return timeout < 0 ? 0 : timeout;
+}
+`;
+
+  const cpp_code = `// v8 engine source snippet
+#include "src/init/v8.h"
+#include "src/api/api.h"
+#include "src/base/platform/platform.h"
+#include "src/execution/isolate.h"
+#include "src/heap/heap.h"
+
+namespace v8 {
+namespace internal {
+
+void V8::Initialize() {
+    if (HasBeenSetUp()) return;
+    base::OS::Initialize(true);
+    V8::InitializePlatform(DefaultPlatform::Get());
+    Sampler::SetUp();
+    CpuFeatures::Probe();
+    ElementsAccessor::InitializeOncePerProcess();
+    Bootstrapper::InitializeOncePerProcess();
+    CallDescriptors::InitializeOncePerProcess();
+}
+
+void V8::TearDown() {
+    if (!HasBeenSetUp()) return;
+    Isolate::GlobalTearDown();
+    ElementsAccessor::TearDown();
+    RegisteredExtension::UnregisterAll();
+    Sampler::TearDown();
+    base::OS::TearDown();
+}
+
+} // namespace internal
+} // namespace v8
+`;
+
+  const allCode = [
+    { name: 'core.c', lines: c_code.split('\\n') },
+    { name: 'v8.cc', lines: cpp_code.split('\\n') }
+  ];
+
+  let currentFileIndex = 0;
+  let codeIndex = 0;
+  const editor = document.getElementById('editor');
+  const activeTab = document.getElementById('active-tab');
+
+  function typeCode() {
+    if (allCode.length === 0) return;
+
+    let fileObj = allCode[currentFileIndex];
+    activeTab.textContent = fileObj.name;
+    
+    if (codeIndex >= fileObj.lines.length) {
+      codeIndex = 0;
+      currentFileIndex = (currentFileIndex + 1) % allCode.length;
+      editor.innerHTML = '';
+      fileObj = allCode[currentFileIndex];
+      activeTab.textContent = fileObj.name;
+    }
+
+    const p = document.createElement('div');
+    let line = fileObj.lines[codeIndex] || ' ';
+    
+    line = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    
+    if (line.trim().startsWith('//') || line.trim().startsWith('/*') || line.trim().startsWith('*')) {
+      line = '<span class="comment">' + line + '</span>';
+    } else {
+      line = line.replace(/\\b(int|void|char|struct|return|if|else|for|while|static|const|unsigned|namespace)\\b/g, '<span class="keyword">$1</span>');
+      line = line.replace(/("[^"]*")/g, '<span class="string">$1</span>');
+      line = line.replace(/\\b([A-Za-z_][A-Za-z0-9_]*)\\s*\\(/g, '<span class="function">$1</span>(');
+      line = line.replace(/\\b([0-9]+)\\b/g, '<span class="number">$1</span>');
+    }
+
+    p.innerHTML = line || '&nbsp;';
+    editor.appendChild(p);
+
+    codeIndex++;
+
+    while (editor.childNodes.length > 40) {
+      editor.removeChild(editor.firstChild);
+    }
+
+    const speed = Math.random() * 400 + 200;
+    setTimeout(typeCode, speed);
+  }
+
+  typeCode();
+
+</script>
+</body>
+</html>

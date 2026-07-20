@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Source Code Auto-Typer</title>
+<style>
+  body {
+    margin: 0;
+    background-color: #0d0d0d;
+    color: #00ff00;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+  }
+  .editor-pane {
+    flex: 1;
+    border-right: 1px solid #333;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    position: relative;
+  }
+  .editor-pane:last-child {
+    border-right: none;
+  }
+  .header {
+    font-size: 11px;
+    color: #888;
+    background: #111;
+    padding: 2px 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+  }
+  .code-container {
+    flex-grow: 1;
+    overflow-y: hidden;
+    white-space: pre-wrap;
+    word-break: break-all;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .kw { color: #569cd6; font-weight: bold; }
+  .str { color: #ce9178; }
+  .num { color: #b5cea8; }
+  .fn { color: #dcdcaa; }
+  .cm { color: #6a9955; font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="editor-pane" id="pane1">
+  <div class="header"><span>/src/core/memory_manager.c</span><span>UTF-8</span></div>
+  <div class="code-container" id="code1"></div>
+</div>
+
+<div class="editor-pane" id="pane2">
+  <div class="header"><span>/src/neural/activation.py</span><span>UTF-8</span></div>
+  <div class="code-container" id="code2"></div>
+</div>
+
+<div class="editor-pane" id="pane3">
+  <div class="header"><span>/src/crypto/hash_func.rs</span><span>UTF-8</span></div>
+  <div class="code-container" id="code3"></div>
+</div>
+
+<script>
+const snippets = {
+  c: `/* Core Memory Management Module */
+#include <linux/mm.h>
+#include <linux/mman.h>
+#include <linux/swap.h>
+#include <linux/init.h>
+#include <linux/hash.h>
+#include <linux/vmalloc.h>
+
+void * __vmalloc_node_range(unsigned long size, unsigned long align,
+            unsigned long start, unsigned long end, gfp_t gfp_mask,
+            pgprot_t prot, unsigned long vm_flags, int node,
+            const void *caller)
+{
+    struct vm_struct *area;
+    void *addr;
+    unsigned long real_size = size;
+
+    size = PAGE_ALIGN(size);
+    if (!size || (size >> PAGE_SHIFT) > totalram_pages())
+        goto fail;
+
+    area = __get_vm_area_node(size, align, vm_flags, start, end, node,
+                  gfp_mask, caller);
+    if (!area)
+        goto fail;
+
+    addr = __vmalloc_area_node(area, gfp_mask, prot, node);
+    if (!addr)
+        return NULL;
+
+    clear_vm_uninitialized_flag(area);
+    kmemleak_vmalloc(area, size, gfp_mask);
+    return addr;
+
+fail:
+    return NULL;
+}
+
+void vfree(const void *addr)
+{
+    BUG_ON(in_nmi());
+
+    kmemleak_free(addr);
+
+    if (!addr)
+        return;
+    if (unlikely(in_interrupt()))
+        __vfree_deferred(addr);
+    else
+        __vunmap(addr, 1);
+}
+
+int remap_vmalloc_range(struct vm_area_struct *vma, void *addr,
+            unsigned long pgoff)
+{
+    struct vm_struct *area;
+    unsigned long uaddr = vma->vm_start;
+    unsigned long usize = vma->vm_end - vma->vm_start;
+
+    if ((PAGE_SIZE-1) & (unsigned long)addr)
+        return -EINVAL;
+
+    area = find_vm_area(addr);
+    if (!area)
+        return -EINVAL;
+
+    if (!(area->flags & VM_USERMAP))
+        return -EINVAL;
+
+    if (usize + (pgoff << PAGE_SHIFT) > area->size - PAGE_SIZE)
+        return -EINVAL;
+
+    addr += pgoff << PAGE_SHIFT;
+    do {
+        struct page *page = vmalloc_to_page(addr);
+        int ret;
+
+        ret = vm_insert_page(vma, uaddr, page);
+        if (ret)
+            return ret;
+
+        uaddr += PAGE_SIZE;
+        addr += PAGE_SIZE;
+        usize -= PAGE_SIZE;
+    } while (usize > 0);
+
+    return 0;
+}
+
+struct vm_struct *alloc_vm_area(size_t size, pte_t **ptes)
+{
+    struct vm_struct *area;
+
+    area = get_vm_area_caller(size, VM_IOREMAP,
+                __builtin_return_address(0));
+    if (area == NULL)
+        return NULL;
+
+    if (map_vm_area(area, PAGE_KERNEL, ptes)) {
+        free_vm_area(area);
+        return NULL;
+    }
+
+    return area;
+}
+`,
+  py: `import asyncio
+import logging
+import ssl
+from typing import Optional, List, Dict, Any, Tuple
+from asyncio import DatagramTransport, DatagramProtocol
+
+logger = logging.getLogger(__name__)
+
+class QuantumStateSimulator:
+    """Simulates quantum state vectors using high-performance numpy arrays."""
+    
+    def __init__(self, num_qubits: int):
+        self.num_qubits = num_qubits
+        self.dimension = 2 ** num_qubits
+        # Initialize to |0...0> state
+        self.state_vector = [0.0 + 0.0j] * self.dimension
+        self.state_vector[0] = 1.0 + 0.0j
+
+    async def apply_hadamard(self, target: int) -> None:
+        logger.debug(f"Applying Hadamard gate to qubit {target}")
+        await asyncio.sleep(0.01)  # Simulate computation time
+        # Mathematical application of H gate
+        factor = 0.70710678118
+        new_state = [0.0 + 0.0j] * self.dimension
+        for i in range(self.dimension):
+            bit = (i >> target) & 1
+            pair_index = i ^ (1 << target)
+            if bit == 0:
+                new_state[i] = factor * (self.state_vector[i] + self.state_vector[pair_index])
+            else:
+                new_state[i] = factor * (self.state_vector[pair_index] - self.state_vector[i])
+        self.state_vector = new_state
+
+    async def apply_cnot(self, control: int, target: int) -> None:
+        logger.debug(f"Applying CNOT gate (c={control}, t={target})")
+        await asyncio.sleep(0.02)
+        new_state = list(self.state_vector)
+        for i in range(self.dimension):
+            if (i >> control) & 1:
+                pair_index = i ^ (1 << target)
+                if i < pair_index:
+                    # Swap amplitudes
+                    new_state[i], new_state[pair_index] = new_state[pair_index], new_state[i]
+        self.state_vector = new_state
+
+    def measure(self) -> List[int]:
+        import random
+        r = random.random()
+        cumulative = 0.0
+        for i, amp in enumerate(self.state_vector):
+            prob = abs(amp) ** 2
+            cumulative += prob
+            if r <= cumulative:
+                # Collapse state
+                return [(i >> j) & 1 for j in range(self.num_qubits)]
+        return [0] * self.num_qubits
+
+async def execute_grovers_algorithm(sim: QuantumStateSimulator):
+    logger.info("Starting Grover's Search Algorithm")
+    # Initialization step
+    tasks = []
+    for q in range(sim.num_qubits):
+        tasks.append(sim.apply_hadamard(q))
+    await asyncio.gather(*tasks)
+    logger.info("Superposition state created. Engaging oracle...")
+    
+    # Oracle and Diffusion operator would run here in multiple iterations
+    await asyncio.sleep(0.5)
+    
+    logger.info("Algorithm complete. Extracting results.")
+    result = sim.measure()
+    return result
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    simulator = QuantumStateSimulator(num_qubits=10)
+    result = asyncio.run(execute_grovers_algorithm(simulator))
+    print(f"Measured quantum state: {result}")
+`,
+  rs: `use std::collections::HashMap;
+use std::sync::{Arc, Mutex};
+use std::thread;
+use std::time::Duration;
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Transaction {
+    pub id: String,
+    pub sender: String,
+    pub receiver: String,
+    pub amount: u64,
+    pub signature: String,
+}
+
+pub struct Block {
+    pub index: u64,
+    pub timestamp: u64,
+    pub transactions: Vec<Transaction>,
+    pub previous_hash: String,
+    pub hash: String,
+    pub nonce: u64,
+}
+
+pub struct Blockchain {
+    pub chain: Vec<Block>,
+    pub pending_transactions: Vec<Transaction>,
+    pub difficulty: usize,
+}
+
+impl Blockchain {
+    pub fn new() -> Self {
+        let mut blockchain = Blockchain {
+            chain: Vec::new(),
+            pending_transactions: Vec::new(),
+            difficulty: 4,
+        };
+        blockchain.create_genesis_block();
+        blockchain
+    }
+
+    fn create_genesis_block(&mut self) {
+        let genesis_block = Block {
+            index: 0,
+            timestamp: 1622547200, // Hardcoded timestamp
+            transactions: Vec::new(),
+            previous_hash: String::from("0"),
+            hash: String::from("0000genesis_hash_placeholder"),
+            nonce: 0,
+        };
+        self.chain.push(genesis_block);
+    }
+
+    pub fn get_latest_block(&self) -> &Block {
+        self.chain.last().expect("Blockchain is empty")
+    }
+
+    pub fn mine_pending_transactions(&mut self, miner_address: &str) {
+        // Create reward transaction
+        let reward_tx = Transaction {
+            id: uuid::Uuid::new_v4().to_string(),
+            sender: String::from("SYSTEM"),
+            receiver: miner_address.to_string(),
+            amount: 50,
+            signature: String::from("system_signature"),
+        };
+        self.pending_transactions.push(reward_tx);
+
+        let previous_block = self.get_latest_block();
+        let mut new_block = Block {
+            index: previous_block.index + 1,
+            timestamp: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_secs(),
+            transactions: self.pending_transactions.clone(),
+            previous_hash: previous_block.hash.clone(),
+            hash: String::new(),
+            nonce: 0,
+        };
+
+        // Proof of Work
+        self.proof_of_work(&mut new_block);
+
+        println!("Block successfully mined! Hash: {}", new_block.hash);
+        self.chain.push(new_block);
+        self.pending_transactions.clear();
+    }
+
+    fn proof_of_work(&self, block: &mut Block) {
+        let target = vec!['0' as u8; self.difficulty];
+        let target_str = String::from_utf8(target).unwrap();
+
+        loop {
+            let data = format!(
+                "{}{}{:?}{}{}",
+                block.index, block.timestamp, block.transactions, block.previous_hash, block.nonce
+            );
+            
+            // Simplified hashing logic for demonstration
+            let hash = format!("{:x}", md5::compute(data));
+            
+            if hash.starts_with(&target_str) {
+                block.hash = hash;
+                break;
+            }
+            block.nonce += 1;
+        }
+    }
+}
+`
+};
+
+function setupTyper(elementId, snippetKey, speedMin, speedMax) {
+  const container = document.getElementById(elementId);
+  const lines = snippets[snippetKey].trim().split('\n');
+  let lineIdx = 0;
+  
+  function typeNextLine() {
+    if (lineIdx >= lines.length) {
+      lineIdx = 0;
+      container.insertAdjacentHTML('beforeend', '<br>');
+    }
+
+    const p = document.createElement('div');
+    let line = lines[lineIdx] || ' ';
+    
+    // HTMLエスケープ
+    line = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    // 簡易シンタックスハイライト
+    if (line.trim().startsWith('//') || line.trim().startsWith('/*') || line.trim().startsWith('*') || line.trim().startsWith('#')) {
+      line = '<span class="cm">' + line + '</span>';
+    } else {
+      line = line.replace(/\b(int|void|char|struct|return|if|else|for|while|static|const|unsigned|import|from|class|def|async|await|pub|fn|use|impl|let|mut|loop|match)\b/g, '<span class="kw">$1</span>');
+      line = line.replace(/("[^"]*")/g, '<span class="str">$1</span>');
+      line = line.replace(/\b([A-Za-z_][A-Za-z0-9_]*)\s*\(/g, '<span class="fn">$1</span>(');
+      line = line.replace(/\b([0-9]+)\b/g, '<span class="num">$1</span>');
+    }
+
+    p.innerHTML = line || '&nbsp;';
+    container.appendChild(p);
+    
+    lineIdx++;
+
+    while (container.childNodes.length > 35) {
+      container.removeChild(container.firstChild);
+    }
+
+    setTimeout(typeNextLine, Math.random() * (speedMax - speedMin) + speedMin);
+  }
+  
+  typeNextLine();
+}
+
+setupTyper('code1', 'c', 200, 500);
+setupTyper('code2', 'py', 150, 400);
+setupTyper('code3', 'rs', 250, 600);
+
+</script>
+</body>
+</html>

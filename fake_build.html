@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoreEngine Compiler Output</title>
+<style>
+  body {
+    margin: 0;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #log {
+    flex-grow: 1;
+    overflow-y: hidden;
+    padding: 10px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .info { color: #569cd6; }
+  .success { color: #4ec9b0; }
+  .warn { color: #ce9178; }
+  .error { color: #f44747; }
+  #status-bar {
+    background-color: #007acc;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<div id="log"></div>
+<div id="status-bar">
+  <span>Building Project "CoreEngine_v9.2" - Analyzing dependencies...</span>
+  <span id="progress">[                    ] 0%</span>
+</div>
+
+<script>
+  const logDiv = document.getElementById('log');
+  const progressSpan = document.getElementById('progress');
+  
+  const modules = ['AuthService', 'PaymentGateway', 'NeuralNetCore', 'WebGLRenderer', 'PhysicsEngine', 'DatabaseConnector', 'QuantumResolver', 'UI_Components'];
+  const logTypes = [
+    { class: 'info', text: 'INFO', chance: 65 },
+    { class: 'success', text: 'SUCCESS', chance: 20 },
+    { class: 'warn', text: 'WARN', chance: 12 },
+    { class: 'error', text: 'ERROR', chance: 3 }
+  ];
+
+  let currentProgress = 0;
+
+  function getRandom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function getLogType() {
+    let rand = Math.random() * 100;
+    let sum = 0;
+    for (let type of logTypes) {
+      sum += type.chance;
+      if (rand <= sum) return type;
+    }
+    return logTypes[0];
+  }
+
+  function addLog() {
+    const p = document.createElement('div');
+    const type = getLogType();
+    const mod = getRandom(modules);
+    const ms = Math.floor(Math.random() * 500) + 10;
+    const file = `src/${mod.toLowerCase()}/${Math.random().toString(36).substring(2, 8)}.ts`;
+    
+    let msg = '';
+    if (type.text === 'INFO') msg = `Compiling ${file}...`;
+    else if (type.text === 'SUCCESS') msg = `Successfully built ${mod} module in ${ms}ms.`;
+    else if (type.text === 'WARN') msg = `Deprecated API usage in ${file}. Consider upgrading.`;
+    else if (type.text === 'ERROR') msg = `Minor syntax anomaly in ${file} (bypassed via --force).`;
+
+    p.innerHTML = `[<span class="${type.class}">${type.text}</span>] ${msg}`;
+    logDiv.appendChild(p);
+
+    if (logDiv.childNodes.length > 50) logDiv.removeChild(logDiv.firstChild);
+
+    currentProgress += Math.random() * 0.8;
+    if (currentProgress > 100) currentProgress = 0;
+
+    let bars = Math.floor(currentProgress / 5);
+    let barStr = '[' + '#'.repeat(bars) + ' '.repeat(20 - bars) + ']';
+    progressSpan.textContent = `${barStr} ${currentProgress.toFixed(1)}%`;
+
+    setTimeout(addLog, Math.random() * 50 + 10);
+  }
+
+  addLog();
+</script>
+</body>
+</html>
