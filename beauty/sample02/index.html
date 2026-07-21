@@ -7,6 +7,8 @@
   <meta name="description" content="美容室ZOROYAは、なりたい雰囲気を骨格・髪質・肌色から似合う色に翻訳する、ハイライトとブリーチのデザインカラーが得意なヘアサロンです。伸びてもきれいに見える色設計と、押し売りのないカウンセリング。">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Zen+Kaku+Gothic:wght@400;500;700;900&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -253,7 +255,27 @@
     .cfaq__a div{padding:0 6px 26px 62px; color:var(--muted); font-size:14.5px;}
     .cfaq__item.is-open .cfaq__a{max-height:340px;}
 
-    /* FINAL CTA（cta-01：ダーク全幅＋動く光） */
+    /* MENU (cprice) */
+    .cprice { padding: 120px 0; overflow: hidden; }
+    .cprice__head { text-align: center; margin-bottom: 50px; }
+    .cprice__head h2 { font-size: clamp(28px, 4vw, 46px); font-weight: 800; margin-top: 14px; }
+    .cprice__head .lead { color: var(--muted); font-size: 15px; margin-top: 16px; }
+    .cprice__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .cprice__card { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 36px 28px; text-align: center; box-shadow: 0 24px 50px -34px rgba(143,92,113,.4); }
+    .cprice__card h3 { font-family: "Shippori Mincho", serif; font-weight: 700; font-size: 19px; color: var(--accent-deep); margin: 0 0 18px; line-height: 1.5; }
+    .cprice__card .hr { height: 1px; background: var(--line); margin: 0 0 18px; }
+    .cprice__card .pn { font-size: 13px; color: var(--muted); }
+    .cprice__card .lbl { font-size: 12px; color: var(--muted); margin-top: 14px; }
+    .cprice__card .price { font-family: "Shippori Mincho", serif; font-weight: 800; font-size: clamp(40px, 6vw, 72px); color: var(--ink); line-height: 1.1; display: inline-flex; align-items: flex-start; margin-top: 6px; }
+    .cprice__card .price .y { font-size: .34em; margin-top: .5em; margin-right: .04em; color: var(--accent); }
+    .cprice__card .price .u { font-size: .26em; margin-top: 2em; margin-left: .1em; color: var(--muted); }
+    .cprice__card .tax { font-family: "Space Grotesk", monospace; font-size: 11px; color: var(--muted); margin-top: 10px; }
+    
+    /* BADGE STYLES */
+    .badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-family: "Zen Kaku Gothic", sans-serif; font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 99px; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 10; }
+    .badge-pop { background: var(--ink); color: #fff; }
+    .badge-hot { background: var(--accent); color: #fff; }
+    .zg-item .badge { top: 12px; left: 12px; transform: none; font-size: 11px; padding: 3px 10px; background: rgba(176,117,139,0.9); backdrop-filter: blur(4px); box-shadow: none; }
     .finalcta{width:100vw; position:relative; left:50%; margin-left:-50vw; min-height:82vh; display:flex; align-items:center; justify-content:center; overflow:hidden; text-align:center; background:#100E0F;}
     .finalcta .bg{position:absolute; inset:0;}
     .finalcta .bg img{width:100%; height:100%; object-fit:cover; filter:grayscale(1) brightness(.6);}
@@ -267,6 +289,62 @@
     .finalcta p.lead{color:rgba(255,255,255,.86); font-size:17px; margin:22px auto 0; max-width:32em;}
     .finalcta .btns{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:40px;}
     .finalcta .sub{margin-top:24px; font-family:"Space Grotesk",monospace; font-size:12px; letter-spacing:.1em; color:rgba(255,255,255,.55);}
+    /* BEFORE / AFTER (cbeforeafter) */
+    .cbeforeafter { padding: 120px 0; }
+    .cba__comparison { position: relative; max-width: 800px; margin: 0 auto; border-radius: 12px; overflow: hidden; box-shadow: 0 40px 80px -40px rgba(0,0,0,0.5); }
+    .cba__imgwrap { position: relative; width: 100%; aspect-ratio: 1/1; }
+    .cba__after, .cba__before { position: absolute; inset: 0; }
+    .cba__after img, .cba__before img { width: 100%; height: 100%; object-fit: cover; }
+    .cba__before { clip-path: inset(0 50% 0 0); }
+    .cba__handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; transform: translateX(-50%); pointer-events: none; z-index: 10; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
+    .cba__knob { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; }
+    .cba__knob::before, .cba__knob::after { content: ""; width: 0; height: 0; border-top: 4px solid transparent; border-bottom: 4px solid transparent; position: absolute; }
+    .cba__knob::before { border-right: 5px solid var(--accent); left: 6px; }
+    .cba__knob::after { border-left: 5px solid var(--accent); right: 6px; }
+    .cba__range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; z-index: 20; margin: 0; }
+    .cba__tabs { display: flex; justify-content: center; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .cba__tab { background: transparent; border: 1px solid var(--line); color: var(--muted); font-family: "Zen Kaku Gothic", sans-serif; font-weight: 700; font-size: 14px; padding: 10px 24px; border-radius: 99px; cursor: pointer; transition: 0.3s; }
+    .cba__tab:hover { border-color: var(--ink); color: var(--ink); }
+    .cba__tab.is-active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    /* GALLERY FILTER (zgal) */
+    .zg-filter { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+    .zg-filter-btn { background: transparent; border: 1px solid var(--line); color: var(--muted); font-family: "Zen Kaku Gothic", sans-serif; font-size: 13px; font-weight: 700; padding: 8px 20px; border-radius: 99px; cursor: pointer; transition: 0.3s; }
+    .zg-filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+    .zg-filter-btn.is-active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    /* SWIPER VOICE (cvoice) */
+    .cvoice .swiper { width: 100%; padding-bottom: 50px; overflow: visible; }
+    .cvoice .swiper-slide { width: 280px; height: auto; display: flex; }
+    .cvoice__card { background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 16px 40px -20px rgba(0,0,0,0.15); display: flex; flex-direction: column; width: 100%; }
+    .cvoice__media { position: relative; aspect-ratio: 9/16; background: #ddd; overflow: hidden; }
+    .cvoice__media img, .cvoice__media video { width: 100%; height: 100%; object-fit: cover; }
+    .cvoice__text { padding: 24px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
+    .cvoice .swiper-pagination { bottom: 0 !important; }
+    .cvoice .swiper-pagination-bullet { background: var(--muted); }
+    .cvoice .swiper-pagination-bullet-active { background: var(--accent); }
+    
+    /* ACCESS (caccess) */
+    .caccess { padding: 120px 0; background: var(--paper); }
+    .caccess__grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: center; margin-top: 24px; }
+    .caccess__table { width: 100%; border-collapse: collapse; }
+    .caccess__table th, .caccess__table td { padding: 16px 8px; border-bottom: 1px solid var(--line); text-align: left; font-size: 15px; }
+    .caccess__table th { width: 100px; font-weight: 700; color: var(--accent-deep); font-family: "Space Grotesk", monospace; font-size: 12px; letter-spacing: .1em; }
+    .caccess__table td { color: var(--body); }
+    .map-wrap iframe { filter: grayscale(0.3) invert(0.92); }
+    
+    /* RESERVA (creserve) */
+    .creserve { padding: 100px 0; background: var(--paper); }
+
+    /* LINE BANNER */
+    .line-banner { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 16px; background: linear-gradient(135deg, #00B900, #00D900); color: #fff !important; font-family: "Zen Kaku Gothic", sans-serif; text-decoration: none; box-shadow: 0 -4px 20px rgba(0,185,0,.35); transition: transform .3s ease; }
+    .line-banner:hover { transform: translateY(-2px); }
+    .line-icon { font-size: 24px; }
+    .line-text { text-align: center; }
+    .line-text strong { font-size: 15px; display: block; line-height: 1.3; }
+    .line-text small { font-size: 11px; opacity: .8; display: block; margin-top: 2px; }
+    .line-arrow { font-size: 18px; }
+
     /* /ZOROYA:MAIN */
 
     /* ZOROYA:FOOTER（footer-02：ミニマル中央・白） */
@@ -298,8 +376,44 @@
       .hero-frame{inset:14px;}
       .btn{width:100%;}
       .cprice__cards{grid-template-columns:1fr;}
+      .caccess__grid { grid-template-columns: 1fr; gap: 32px; }
+      .caccess__map iframe { height: 280px; }
     }
+    body { padding-bottom: 60px; }
+    @media (min-width: 768px) { body { padding-bottom: 70px; } .line-banner { padding: 14px 24px; gap: 16px; } }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HairSalon",
+    "name": "美容室ZOROYA",
+    "image": "https://zoroya.example.com/src/fv.jpg",
+    "url": "https://zoroya.example.com",
+    "telephone": "03-0000-0000",
+    "priceRange": "¥3,000〜¥20,000",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "東京都渋谷区○○ 1-2-3",
+      "addressLocality": "渋谷区",
+      "addressRegion": "東京都",
+      "postalCode": "150-0000",
+      "addressCountry": "JP"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "10:00",
+        "closes": "20:00"
+      }
+    ],
+    "makesOffer": [
+      {"@type":"Offer","name":"ハイライト","price":"6600","priceCurrency":"JPY"},
+      {"@type":"Offer","name":"ブリーチカラー","price":"13200","priceCurrency":"JPY"},
+      {"@type":"Offer","name":"カット","price":"7700","priceCurrency":"JPY"}
+    ]
+  }
+  </script>
   <script>document.documentElement.className+=" j";</script>
 </head>
 <body>
@@ -412,17 +526,47 @@
       </div>
     </section>
 
+    <!-- BEFORE / AFTER -->
+    <section class="cbeforeafter" id="beforeafter">
+      <div class="wrap">
+        <span class="eyebrow">Before / After</span>
+        <h2 style="font-family:'Shippori Mincho',serif;font-weight:700;font-size:clamp(28px,4vw,46px);margin:12px 0 40px;">施術で、ここまで<span class="mk">変わる</span>。</h2>
+        <div class="cba__comparison" id="cbaComparison">
+          <div class="cba__imgwrap">
+            <div class="cba__after"><img src="src/case-1.jpg" alt="施術後" id="cbaAfter"></div>
+            <div class="cba__before" id="cbaBeforeLayer"><img src="src/style-1.jpg" alt="施術前" id="cbaBefore"></div>
+            <div class="cba__handle" id="cbaHandle">
+              <div class="cba__knob"></div>
+            </div>
+            <input type="range" class="cba__range" id="cbaRange" min="0" max="100" value="50" aria-label="比較スライダー">
+          </div>
+        </div>
+        <div class="cba__tabs" id="cbaTabs">
+          <button class="cba__tab is-active" data-idx="0">ハイライト</button>
+          <button class="cba__tab" data-idx="1">ブリーチ</button>
+          <button class="cba__tab" data-idx="2">髪質改善</button>
+        </div>
+      </div>
+    </section>
+
     <!-- ZOROYA:GALLERY（維持） -->
     <section class="zgal" id="gallery">
       <div class="zg-wrap">
         <div class="zg-head"><span class="zg-eyebrow">Style gallery</span><h2 class="zg-title">作品の、<span class="zg-mk">記録</span>。</h2></div>
-        <div class="zg-grid">
-          <a class="zg-item" href="#"><img src="src/case-1.jpg" alt="スタイル作品"></a>
-          <a class="zg-item" href="#"><img src="src/style-2.jpg" alt="スタイル作品"></a>
-          <a class="zg-item" href="#"><img src="src/case-2.jpg" alt="スタイル作品"></a>
-          <a class="zg-item" href="#"><img src="src/style-1.jpg" alt="スタイル作品"></a>
-          <a class="zg-item" href="#"><img src="src/case-3.jpg" alt="スタイル作品"></a>
-          <a class="zg-item" href="#"><img src="src/style-3.jpg" alt="スタイル作品"></a>
+        <div class="zg-filter" id="zgFilter">
+          <button class="zg-filter-btn is-active" data-cat="all">すべて</button>
+          <button class="zg-filter-btn" data-cat="cut">カット</button>
+          <button class="zg-filter-btn" data-cat="color">カラー</button>
+          <button class="zg-filter-btn" data-cat="perm">パーマ</button>
+          <button class="zg-filter-btn" data-cat="treatment">トリートメント</button>
+        </div>
+        <div class="zg-grid" id="zgGrid">
+          <a class="zg-item" href="#" data-category="color"><span class="badge">人気</span><img src="src/case-1.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#" data-category="cut"><img src="src/style-2.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#" data-category="treatment"><span class="badge">おすすめ</span><img src="src/case-2.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#" data-category="color"><img src="src/style-1.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#" data-category="perm"><img src="src/case-3.jpg" alt="スタイル作品"></a>
+          <a class="zg-item" href="#" data-category="cut"><img src="src/style-3.jpg" alt="スタイル作品"></a>
         </div>
       </div>
     </section>
@@ -433,28 +577,43 @@
           <span class="eyebrow">Customer voice</span>
           <h2>作例で、明るさと<span class="mk">雰囲気</span>を確認できます。</h2>
         </div>
-        <div class="cvoice__grid" id="cvoiceGrid">
-          <div class="cvoice__item">
-            <div class="cvoice__portrait"><img src="src/voice-1.jpg" alt=""></div>
-            <div>
-              <p class="cvoice__bigq"><span class="qm">“</span>暗くても、重く見えない色に。<small>仕事で明るくしすぎられないけれど、やわらかく見える色にしてもらえました。</small></p>
-              <div class="cvoice__by"><span class="ln"></span><span class="nm">30代</span><span class="rl">／ 事務職の方</span></div>
+        <div class="swiper" id="voiceSwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="cvoice__card">
+                <div class="cvoice__media">
+                  <img src="src/voice-1.jpg" alt="">
+                </div>
+                <div class="cvoice__text">
+                  <p class="cvoice__bigq"><span class="qm">“</span>暗くても、重く見えない色に。<small>仕事で明るくしすぎられないけれど、やわらかく見える色にしてもらえました。</small></p>
+                  <div class="cvoice__by"><span class="ln"></span><span class="nm">30代</span><span class="rl">／ 事務職の方</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="cvoice__card">
+                <div class="cvoice__media">
+                  <img src="src/voice-2.jpg" alt="">
+                </div>
+                <div class="cvoice__text">
+                  <p class="cvoice__bigq"><span class="qm">“</span>初めてのブリーチも相談できた。<small>傷みが不安でしたが、できる範囲を説明してもらえて安心して任せられました。</small></p>
+                  <div class="cvoice__by"><span class="ln"></span><span class="nm">20代</span><span class="rl">／ 学生の方</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="cvoice__card">
+                <div class="cvoice__media">
+                  <img src="src/voice-3.jpg" alt="">
+                </div>
+                <div class="cvoice__text">
+                  <p class="cvoice__bigq"><span class="qm">“</span>伸びても気になりにくい。<small>根元が伸びても自然に見えるので、次回まで気分よく過ごせました。</small></p>
+                  <div class="cvoice__by"><span class="ln"></span><span class="nm">40代</span><span class="rl">／ 会社員の方</span></div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="cvoice__item">
-            <div class="cvoice__portrait"><img src="src/voice-2.jpg" alt=""></div>
-            <div>
-              <p class="cvoice__bigq"><span class="qm">“</span>初めてのブリーチも相談できた。<small>傷みが不安でしたが、できる範囲を説明してもらえて安心して任せられました。</small></p>
-              <div class="cvoice__by"><span class="ln"></span><span class="nm">20代</span><span class="rl">／ 学生の方</span></div>
-            </div>
-          </div>
-          <div class="cvoice__item">
-            <div class="cvoice__portrait"><img src="src/voice-3.jpg" alt=""></div>
-            <div>
-              <p class="cvoice__bigq"><span class="qm">“</span>伸びても気になりにくい。<small>根元が伸びても自然に見えるので、次回まで気分よく過ごせました。</small></p>
-              <div class="cvoice__by"><span class="ln"></span><span class="nm">40代</span><span class="rl">／ 会社員の方</span></div>
-            </div>
-          </div>
+          <div class="swiper-pagination"></div>
         </div>
       </div>
     </section>
@@ -467,8 +626,8 @@
           <p class="lead">カウンセリング・カラー設計・仕上げまで。まずは、なりたい雰囲気から。</p>
         </div>
         <div class="cprice__cards" id="cpriceCards">
-          <div class="cprice__card"><h3>透明感を<br>足したい方へ</h3><div class="hr"></div><div class="pn">ハイライト</div><div class="lbl">FROM</div><div class="price"><span class="y">¥</span><span class="c" data-to="9900">0</span><span class="u">〜</span></div><div class="tax">（税込・公開前に正式料金へ差し替え）</div></div>
-          <div class="cprice__card"><h3>明るく抜けを<br>つくりたい方へ</h3><div class="hr"></div><div class="pn">ブリーチカラー</div><div class="lbl">FROM</div><div class="price"><span class="y">¥</span><span class="c" data-to="14300">0</span><span class="u">〜</span></div><div class="tax">（税込・公開前に正式料金へ差し替え）</div></div>
+          <div class="cprice__card"><span class="badge badge-pop">👍 人気No.1</span><h3>透明感を<br>足したい方へ</h3><div class="hr"></div><div class="pn">ハイライト</div><div class="lbl">FROM</div><div class="price"><span class="y">¥</span><span class="c" data-to="9900">0</span><span class="u">〜</span></div><div class="tax">（税込・公開前に正式料金へ差し替え）</div></div>
+          <div class="cprice__card"><span class="badge badge-hot">🔥 注目メニュー</span><h3>明るく抜けを<br>つくりたい方へ</h3><div class="hr"></div><div class="pn">ブリーチカラー</div><div class="lbl">FROM</div><div class="price"><span class="y">¥</span><span class="c" data-to="14300">0</span><span class="u">〜</span></div><div class="tax">（税込・公開前に正式料金へ差し替え）</div></div>
           <div class="cprice__card"><h3>カラーが映える<br>髪に整えたい方へ</h3><div class="hr"></div><div class="pn">カット＋ケア</div><div class="lbl">FROM</div><div class="price"><span class="y">¥</span><span class="c" data-to="6600">0</span><span class="u">〜</span></div><div class="tax">（税込・公開前に正式料金へ差し替え）</div></div>
         </div>
         <div class="cprice__grid">
@@ -523,9 +682,9 @@
             <div class="cnews__eb">お知らせ・キャンペーン</div>
           </div>
           <div class="cnews__list" id="cnewsList">
-            <a class="cnews__row" href="#"><span class="thumb"><img src="src/case-1.jpg" alt="夏の透明感ハイライトの作例"></span><div><div class="meta"><span class="date">2026.06.20</span><span class="cat">キャンペーン</span></div><h3>夏の透明感ハイライト｜初回カウンセリング特典のお知らせ</h3></div><span class="arr">→</span></a>
-            <a class="cnews__row" href="#"><span class="thumb"><img src="src/case-2.jpg" alt="髪質改善トリートメントの作例"></span><div><div class="meta"><span class="date">2026.06.05</span><span class="cat info">新メニュー</span></div><h3>髪質改善トリートメントのメニューを追加しました</h3></div><span class="arr">→</span></a>
-            <a class="cnews__row" href="#"><span class="thumb"><img src="src/case-3.jpg" alt="明るめカラーの作例"></span><div><div class="meta"><span class="date">2026.05.18</span><span class="cat info">お知らせ</span></div><h3>6月の定休日と、ご予約状況についてのご案内</h3></div><span class="arr">→</span></a>
+            <a class="cnews__row" href="blog.html"><span class="thumb"><img src="src/case-1.jpg" alt="夏の透明感ハイライトの作例"></span><div><div class="meta"><span class="date">2026.06.20</span><span class="cat">キャンペーン</span></div><h3>夏の透明感ハイライト｜初回カウンセリング特典のお知らせ</h3></div><span class="arr">→</span></a>
+            <a class="cnews__row" href="blog.html"><span class="thumb"><img src="src/case-2.jpg" alt="髪質改善トリートメントの作例"></span><div><div class="meta"><span class="date">2026.06.05</span><span class="cat info">新メニュー</span></div><h3>髪質改善トリートメントのメニューを追加しました</h3></div><span class="arr">→</span></a>
+            <a class="cnews__row" href="blog.html"><span class="thumb"><img src="src/case-3.jpg" alt="明るめカラーの作例"></span><div><div class="meta"><span class="date">2026.05.18</span><span class="cat info">お知らせ</span></div><h3>6月の定休日と、ご予約状況についてのご案内</h3></div><span class="arr">→</span></a>
           </div>
         </div>
       </div>
@@ -549,6 +708,45 @@
       </div>
     </section>
 
+    <section class="caccess" id="access-section">
+      <div class="wrap">
+        <span class="eyebrow">Access</span>
+        <div class="caccess__grid">
+          <div class="caccess__info">
+            <h2 style="font-family:'Shippori Mincho',serif;font-weight:700;font-size:clamp(28px,4vw,46px);margin:12px 0 24px;">アクセス</h2>
+            <table class="caccess__table">
+              <tr><th>住所</th><td>東京都渋谷区○○ 1-2-3 ○○ビル2F</td></tr>
+              <tr><th>TEL</th><td><a href="tel:03-0000-0000" style="color:var(--accent);text-decoration:none;font-weight:700;">03-0000-0000</a></td></tr>
+              <tr><th>営業時間</th><td>10:00 – 20:00（最終受付 19:00）</td></tr>
+              <tr><th>定休日</th><td>火曜日（祝日の場合は翌平日）</td></tr>
+              <tr><th>アクセス</th><td>○○駅 徒歩5分 / △△駅 徒歩8分</td></tr>
+            </table>
+            <a class="btn primary" href="#contact" style="margin-top:24px;">LINEで予約する</a>
+          </div>
+          <div class="caccess__map">
+            <div class="map-wrap" style="border-radius:12px;overflow:hidden;box-shadow:0 20px 50px -30px rgba(0,0,0,.4);">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.74779893922!2d139.69974231139474!3d35.65858483103233!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b58a15cfcb1%3A0x6796c8021da3b2b8!2z5riL6LC36aeF!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" 
+                width="100%" height="400" style="border:0;" 
+                allowfullscreen="" loading="lazy">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="creserve" id="reserve">
+      <div class="wrap" style="text-align:center;">
+        <span class="eyebrow">Reservation</span>
+        <h2 style="font-family:'Shippori Mincho',serif;font-weight:700;font-size:clamp(28px,4vw,46px);margin:12px 0 40px;">ご予約はこちらから</h2>
+        <div class="reserve-frame" style="max-width:800px;margin:0 auto;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px -30px rgba(0,0,0,.3);">
+          <iframe src="https://reserva.be/dummy/reserve" width="100%" height="600" style="border:none;" loading="lazy"></iframe>
+        </div>
+        <p style="margin-top:24px;color:var(--muted);font-size:14px;">予約システム「RESERVA」を使用しています。初めての方も簡単に予約いただけます。</p>
+      </div>
+    </section>
+
     <section class="finalcta" id="contact">
       <div class="bg"><img src="src/case-2.jpg" alt=""></div>
       <div class="ov"></div>
@@ -559,7 +757,7 @@
         <p class="lead reveal">希望画像が1枚あるだけでも大丈夫です。今の髪の状態と、なりたい雰囲気をLINEで送ってください。カウンセリングだけのご相談でも、もちろん構いません。</p>
         <div class="btns reveal">
           <a class="btn light" href="#">LINEで相談・予約する</a>
-          <a class="btn light" href="#">予約サイトを見る</a>
+          <a class="btn light" href="#reserve">予約サイトを見る</a>
         </div>
         <div class="sub reveal">カウンセリング重視 ／ 物販の押し売りなし ／ 似合わせ設計</div>
       </div>
@@ -706,7 +904,75 @@
         gsap.to('#g1', { xPercent: 30, yPercent: 25, scale: 1.25, duration: 9, ease: 'sine.inOut', yoyo: true, repeat: -1 });
         gsap.to('#g2', { xPercent: -25, yPercent: -20, scale: 1.3, duration: 11, ease: 'sine.inOut', yoyo: true, repeat: -1 });
       }
+
+      // Before/After Logic
+      (function(){
+        var range = document.getElementById('cbaRange');
+        var before = document.getElementById('cbaBeforeLayer');
+        var handle = document.getElementById('cbaHandle');
+        if (!range || !before || !handle) return;
+        function update(pos) {
+          before.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
+          handle.style.left = pos + '%';
+        }
+        range.addEventListener('input', function(){ update(+this.value); });
+        update(50);
+        var tabs = document.querySelectorAll('.cba__tab');
+        var bImg = document.getElementById('cbaBefore');
+        var aImg = document.getElementById('cbaAfter');
+        tabs.forEach(function(t, i){
+          t.addEventListener('click', function(){
+            tabs.forEach(function(x){ x.classList.remove('is-active'); });
+            this.classList.add('is-active');
+            bImg.src = 'src/style-' + (i+1) + '.jpg';
+            aImg.src = 'src/case-' + (i+1) + '.jpg';
+            range.value = 50;
+            update(50);
+          });
+        });
+      })();
+
+      // Gallery Filter Logic
+      (function(){
+        var btns = document.querySelectorAll('.zg-filter-btn');
+        var items = document.querySelectorAll('.zg-item');
+        if (!btns.length) return;
+        btns.forEach(function(btn){
+          btn.addEventListener('click', function(){
+            btns.forEach(function(x){ x.classList.remove('is-active'); });
+            this.classList.add('is-active');
+            var cat = this.getAttribute('data-cat');
+            items.forEach(function(item){
+              if(cat === 'all' || item.getAttribute('data-category') === cat){
+                item.style.display = 'block';
+              } else {
+                item.style.display = 'none';
+              }
+            });
+            ScrollTrigger.refresh();
+          });
+        });
+      })();
+
+      // Swiper Voice
+      if(typeof Swiper !== 'undefined') {
+        new Swiper('#voiceSwiper', {
+          slidesPerView: 'auto',
+          spaceBetween: 24,
+          pagination: { el: '.swiper-pagination', clickable: true },
+          grabCursor: true
+        });
+      }
     });
   </script>
+
+  <a class="line-banner" href="https://lin.ee/dummy" target="_blank" rel="noopener">
+    <span class="line-icon">💬</span>
+    <span class="line-text">
+      <strong>LINEで相談・予約する</strong>
+      <small>画像を送るだけでもOK / 24時間受付</small>
+    </span>
+    <span class="line-arrow">→</span>
+  </a>
 </body>
 </html>

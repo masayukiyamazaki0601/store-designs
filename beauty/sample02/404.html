@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ページが見つかりません | 美容室ZOROYA</title>
+  <meta name="description" content="お探しのページは見つかりませんでした。美容室ZOROYA">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Zen+Kaku+Gothic:wght@400;500;700;900&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#171717; --ink-deep:#0C0C0C; --bg:#FFFFFF; --bg2:#F4F0EF; --paper:#FAFAF8;
+      --accent:#B0758B; --accent-deep:#8F5C71; --body:#3C373A; --muted:#857F83;
+      --line:rgba(23,23,23,.14); --line-soft:rgba(23,23,23,.07); --line-white:rgba(255,255,255,.16);
+    }
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{margin:0; color:var(--body); font-family:"Zen Kaku Gothic",sans-serif; line-height:1.9; -webkit-font-smoothing:antialiased; font-size:16px; overflow-x:hidden;
+      background-color:var(--bg);
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='340'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.016 0.13' numOctaves='3' seed='4' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.44 0 0 0 0 0.30 0 0 0 0 0.36 0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+      background-size:340px; background-attachment:fixed;}
+    img{max-width:100%; display:block;}
+    a{color:inherit; text-decoration:none;}
+    .mono{font-family:"Space Grotesk",monospace; letter-spacing:.04em;}
+    h1,h2,h3{margin:0; color:var(--ink); font-family:"Shippori Mincho",serif; line-height:1.5; word-break:auto-phrase; text-wrap:balance; font-weight:700;}
+    p{margin:0;}
+    .wrap{width:min(1160px,calc(100% - 56px)); margin:0 auto;}
+    .eyebrow{font-family:"Space Grotesk",monospace; font-size:12px; letter-spacing:.26em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; display:inline-flex; gap:12px; align-items:center;}
+    .eyebrow::before{content:""; width:30px; height:2px; background:var(--accent);}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:.5em; font-weight:700; font-size:15px; letter-spacing:.04em; padding:15px 30px; border:1.5px solid transparent; transition:transform .2s ease, background .2s ease, color .2s ease;}
+    .btn.primary{background:var(--ink); color:#fff;}
+    .btn.primary:hover{transform:translateY(-2px); background:var(--accent-deep);}
+    .btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+    .btn.ghost:hover{border-color:var(--ink);}
+
+    /* ZOROYA:HEADER */
+    .zhd{position:fixed; top:0; left:0; right:0; z-index:60; background:var(--ink);}
+    .zhd__inner{position:relative; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:20px 32px; color:#fff;}
+    .zhd__brand img{height:38px; width:auto; display:block; filter: brightness(100);}
+    .zhd__burger{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:none; border:0; cursor:pointer; padding:9px; border-radius:50%; transition:background .25s ease;}
+    .zhd__burger span{display:block; width:30px; height:2px; background:#fff; transition:transform .35s, opacity .25s, background .25s;}
+    body.is-locked .zhd__inner{mix-blend-mode:normal;}
+    body.is-locked .zhd__burger{background:rgba(20,20,20,.55); border:1px solid rgba(255,255,255,.5); width:46px; height:46px; padding:0;}
+    body.is-locked .zhd__burger span{background:#fff; width:22px;}
+    .zhd__menu{position:fixed; inset:0; z-index:55; background:var(--ink); color:#fff; display:grid; grid-template-columns:1.15fr .85fr; clip-path:circle(0% at 92% 6%); transition:clip-path .6s cubic-bezier(.7,0,.2,1); visibility:hidden;}
+    .zhd__menu.is-open{clip-path:circle(150% at 92% 6%); visibility:visible;}
+    .zhd__left{padding:13vh 6vw 6vh; display:flex; flex-direction:column;}
+    .zhd__lbl{font-family:"Space Grotesk",monospace; font-size:11px; letter-spacing:.3em; color:var(--accent); margin-bottom:18px;}
+    .zhd__nav a{font-family:"Shippori Mincho",serif; font-size:clamp(20px,2.6vw,34px); font-weight:700; color:#fff; padding:7px 0; display:flex; align-items:baseline; gap:14px; transition:color .2s, padding .2s;}
+    .zhd__nav a .no{font-family:"Space Grotesk",monospace; font-size:12px; color:var(--accent);}
+    .zhd__nav a:hover{color:var(--accent); padding-left:12px;}
+    .zhd__book{margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:16px; border:1px solid rgba(255,255,255,.25); border-radius:14px; padding:18px 22px; color:#fff; transition:background .2s; max-width:520px;}
+    .zhd__book:hover{background:rgba(255,255,255,.06);}
+    .zhd__book .rt{font-family:"Shippori Mincho",serif; font-size:18px; font-weight:700;}
+    .zhd__book .rs{font-size:12px; color:rgba(255,255,255,.6); margin-top:3px;}
+    .zhd__book .arr{color:var(--accent); font-size:20px;}
+    .zhd__right{position:relative; display:flex; flex-direction:column;}
+    .zhd__img{position:relative; flex:1; overflow:hidden; min-height:0;}
+    .zhd__img img{width:100%; height:100%; object-fit:cover; opacity:.5; filter:grayscale(1);}
+    .zhd__info{padding:30px 6vw 6vh; background:var(--ink-deep);}
+    .zhd__info .brand{font-family:"Shippori Mincho",serif; font-size:22px; font-weight:700; letter-spacing:.04em;}
+    .zhd__info .brand small{display:block; font-family:"Space Grotesk",monospace; font-size:10px; letter-spacing:.28em; color:rgba(255,255,255,.6); margin-top:3px;}
+    .zhd__info .row{margin-top:14px; font-size:13px; color:#fff; line-height:1.7;}
+    .zhd__info .row .lab{font-family:"Space Grotesk",monospace; font-size:10px; letter-spacing:.14em; color:var(--accent); margin-right:8px;}
+    .zhd__info .tel{font-family:"Space Grotesk",monospace; font-weight:700; font-size:18px; color:#fff;}
+    body.is-locked{overflow:hidden;}
+
+    /* ZOROYA:FOOTER */
+    .footer{border-top:1px solid var(--line); background:var(--paper);}
+    .footer .ft{width:min(880px,calc(100% - 56px)); margin:0 auto; padding:66px 0 40px; text-align:center;}
+    .footer .fmark{width:42px; height:42px; margin:0 auto 22px; border:2px solid var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:"Shippori Mincho",serif; font-weight:700; color:var(--accent);}
+    .footer .flogo img{height:42px; width:auto; margin:0 auto; display:block;}
+    .footer .fen{font-family:"Space Grotesk",monospace; font-size:10px; letter-spacing:.3em; color:var(--muted); margin-top:8px;}
+    .footer nav{display:flex; gap:28px; justify-content:center; flex-wrap:wrap; margin:30px 0 22px;}
+    .footer nav a{font-size:14px; color:var(--ink);}
+    .footer nav a:hover{color:var(--accent-deep);}
+    .footer .fnap{color:var(--muted); font-size:13px; line-height:1.9; margin-bottom:26px;}
+    .footer .cp{font-family:"Space Grotesk",monospace; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:24px;}
+    
+    /* LINE BANNER */
+    .line-banner { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 16px; background: linear-gradient(135deg, #00B900, #00D900); color: #fff !important; font-family: "Zen Kaku Gothic", sans-serif; text-decoration: none; box-shadow: 0 -4px 20px rgba(0,185,0,.35); transition: transform .3s ease; }
+    .line-banner:hover { transform: translateY(-2px); }
+    .line-icon { font-size: 24px; }
+    .line-text { text-align: center; }
+    .line-text strong { font-size: 15px; display: block; line-height: 1.3; }
+    .line-text small { font-size: 11px; opacity: .8; display: block; margin-top: 2px; }
+    .line-arrow { font-size: 18px; }
+    body { padding-bottom: 60px; }
+    @media (min-width: 768px) { body { padding-bottom: 70px; } .line-banner { padding: 14px 24px; gap: 16px; } }
+    @media (max-width:960px){
+      .btn{width:100%;}
+    }
+
+    /* 404 STYLES */
+    .page-404 { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 0; text-align: center; }
+    .page-404 .eyebrow { justify-content: center; }
+    .page-404 .eyebrow::before, .page-404 .eyebrow::after { content:""; width:30px; height:2px; background:var(--accent); }
+    .page-404 h1 { font-family: "Space Grotesk", monospace; font-size: clamp(60px, 12vw, 140px); line-height: 1; color: var(--ink); margin: 24px 0 16px; letter-spacing: -0.04em; }
+    .page-404 h2 { font-size: clamp(24px, 3vw, 32px); margin-bottom: 24px; }
+    .page-404 p { color: var(--muted); margin-bottom: 40px; max-width: 400px; margin-left: auto; margin-right: auto; }
+    .page-404 svg { width: 100%; max-width: 320px; height: auto; margin: 0 auto 40px; }
+    .page-404 .btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="zhd">
+    <div class="zhd__inner">
+      <a class="zhd__brand" href="index.html" aria-label="美容室ZOROYA トップへ"><img src="src/logo.png" alt="美容室ZOROYA"></a>
+      <button class="zhd__burger" id="zhdToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="zhdMenu"><span></span><span></span><span></span></button>
+    </div>
+    <nav class="zhd__menu" id="zhdMenu" aria-label="メインメニュー">
+      <div class="zhd__left">
+        <div class="zhd__lbl">MENU</div>
+        <div class="zhd__nav">
+          <a href="index.html"><span class="no">01</span>トップ</a>
+          <a href="index.html#concept"><span class="no">02</span>サービス</a>
+          <a href="index.html#gallery"><span class="no">03</span>ギャラリー</a>
+          <a href="index.html#menu"><span class="no">04</span>メニュー</a>
+          <a href="index.html#access-section"><span class="no">05</span>アクセス</a>
+        </div>
+        <a class="zhd__book" href="index.html#contact">
+          <div><div class="rt">LINEで相談・予約する</div><div class="rs">希望画像を送るだけでも大丈夫です</div></div>
+          <span class="arr">↗</span>
+        </a>
+      </div>
+      <div class="zhd__right">
+        <div class="zhd__img"><img src="src/case-1.jpg" alt="透明感ハイライトの作例"></div>
+        <div class="zhd__info">
+          <div class="brand">美容室ZOROYA<small>ZOROYA HAIR DESIGN</small></div>
+          <div class="row"><span class="lab">ADD</span>都内○○（プレースホルダ）／ 最寄駅徒歩5分</div>
+          <div class="row"><span class="lab">TEL</span><span class="tel">03-0000-0000</span>　<span style="color:rgba(255,255,255,.6)">10:00–20:00／火曜定休</span></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-404">
+      <div class="wrap">
+        <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 90 Q 60 40 100 40 T 160 90" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="70" cy="70" r="6" fill="var(--accent)"/>
+          <circle cx="130" cy="70" r="6" fill="var(--accent)"/>
+          <path d="M90 95 Q 100 105 110 95" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+          <path d="M50 30 C 70 10 130 10 150 30" stroke="var(--accent-deep)" stroke-width="8" stroke-linecap="round" stroke-dasharray="1 16"/>
+        </svg>
+        <span class="eyebrow">404 Error</span>
+        <h1>404</h1>
+        <h2>迷子でしょうか？</h2>
+        <p>お探しのページは見つかりませんでした。URLが間違っているか、ページが移動または削除された可能性があります。</p>
+        <div class="btns">
+          <a href="index.html" class="btn primary">トップへ戻る</a>
+          <a href="https://lin.ee/dummy" class="btn ghost">LINEで相談する</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="ft">
+      <a class="flogo" href="index.html"><img src="src/logo.png" alt="美容室ZOROYA"></a>
+      <div class="fen">ZOROYA HAIR DESIGN</div>
+      <nav><a href="index.html#concept">似合わせ</a><a href="index.html#voice">お客様の声</a><a href="index.html#menu">メニュー</a><a href="index.html#message">スタイリスト</a><a href="index.html#contact">ご予約</a></nav>
+      <div class="fnap">都内○○（プレースホルダ）／ 10:00–20:00 火曜定休 ／ 最寄駅徒歩5分 ／ Instagram・LINE</div>
+      <div class="cp">© 美容室ZOROYA ／ このサイトのデザイン意匠、コード構成は、ぞろ屋合同会社に帰属します。無断での複製コピーは禁止です。</div>
+    </div>
+  </footer>
+
+  <a class="line-banner" href="https://lin.ee/dummy" target="_blank" rel="noopener">
+    <span class="line-icon">💬</span>
+    <span class="line-text">
+      <strong>LINEで相談・予約する</strong>
+      <small>画像を送るだけでもOK / 24時間受付</small>
+    </span>
+    <span class="line-arrow">→</span>
+  </a>
+
+  <script>
+    (function(){
+      var tg = document.getElementById('zhdToggle'), mn = document.getElementById('zhdMenu');
+      if (!tg || !mn) return;
+      function toggle(){
+        var open = mn.classList.toggle('is-open');
+        document.body.classList.toggle('is-locked', open);
+        tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+        tg.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+        tg.querySelectorAll('span').forEach(function(s,i){
+          s.style.transform = open ? (i===0 ? 'translateY(8px) rotate(45deg)' : i===2 ? 'translateY(-8px) rotate(-45deg)' : 'scaleX(0)') : '';
+          s.style.opacity = (open && i===1) ? '0' : '1';
+        });
+      }
+      tg.addEventListener('click', toggle);
+      mn.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ if (mn.classList.contains('is-open')) toggle(); }); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && mn.classList.contains('is-open')) toggle(); });
+    })();
+  </script>
+</body>
+</html>

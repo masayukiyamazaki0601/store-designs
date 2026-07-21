@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="ja">
+<head>
+<meta charset="utf-8">
+<title>お問い合わせ | NANEA HAIR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400&family=Zen+Old+Mincho:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" media="screen,print">
+<link rel="shortcut icon" href="images/favicon.ico">
+</head>
+<body class="ready">
+<div id="wrapAll">
+<header class="l-header"><div class="l-header__wrap"><div class="l-header__inner"><div>
+<a href="index.html" class="l-header__logo"><span class="p-logo__text">
+<img src="images/logo_text.svg" alt="NANEA HAIR" class="is-color">
+<img src="images/logo_text_w.svg" alt="NANEA HAIR" class="is-white"></span></a></div>
+<div><nav class="l-header__nav"><ul class="l-header__nav__ul">
+<li class="l-header__nav__li"><a href="index.html" class="l-header__nav__link"><span class="l-header__nav__wrap"><span class="l-header__nav__title">ホーム</span><span class="l-header__nav__subtitle">Home<span class="l-header__nav__wave"></span></span></span></a></li>
+<li class="l-header__nav__li"><a href="about.html" class="l-header__nav__link"><span class="l-header__nav__wrap"><span class="l-header__nav__title">NANEAについて</span><span class="l-header__nav__subtitle">About<span class="l-header__nav__wave"></span></span></span></a></li>
+<li class="l-header__nav__li"><a href="menu.html" class="l-header__nav__link"><span class="l-header__nav__wrap"><span class="l-header__nav__title">メニュー・料金</span><span class="l-header__nav__subtitle">Menu<span class="l-header__nav__wave"></span></span></span></a></li>
+<li class="l-header__nav__li"><a href="about.html#Staff" class="l-header__nav__link"><span class="l-header__nav__wrap"><span class="l-header__nav__title">スタッフ</span><span class="l-header__nav__subtitle">Staff<span class="l-header__nav__wave"></span></span></span></a></li>
+<li class="l-header__nav__li"><a href="salon.html" class="l-header__nav__link"><span class="l-header__nav__wrap"><span class="l-header__nav__title">サロン情報</span><span class="l-header__nav__subtitle">Salon Info<span class="l-header__nav__wave"></span></span></span></a></li>
+<li class="l-header__nav__li"><a href="contact.html" class="l-header__nav__link"><span class="l-header__nav__wrap"><span class="l-header__nav__title">お問い合わせ</span><span class="l-header__nav__subtitle">Contact<span class="l-header__nav__wave"></span></span></span></a></li>
+<li class="l-header__nav__li is-reserve"><a href="javascript:void(0);" class="l-header__nav__link js-reserve-open"><span class="l-header__nav__wrap"><span class="l-header__nav__title">ご予約</span><span class="l-header__nav__subtitle">Reservation<span class="l-header__nav__wave"></span></span></span></a></li>
+</ul></nav></div></div></div></header>
+
+<main class="l-main">
+<section class="b-common__head b-common__section">
+<div class="b-common__wrap"><div class="b-common__inner">
+<h1 class="b-common__title"><span><span class="is-wave">C<span></span></span>ontact</span></h1>
+</div></div>
+</section>
+
+<section class="b-common__section">
+<div class="b-common__wrap"><div class="b-common__inner" style="max-width:700px;margin:0 auto;">
+<p class="b-common__text" style="text-align:center;margin-bottom:3rem;">ご予約・お問い合わせは、以下フォームまたはお電話にて承っております。<br>内容確認後、24時間以内にご連絡いたします。</p>
+
+<form action="https://formspree.io/f/your-form-id" method="POST" style="width:100%;">
+<div style="margin-bottom:1.5rem;">
+<label style="display:block;font-size:var(--pow0);font-weight:var(--fwb);font-family:var(--jp_min);margin-bottom:0.5rem;">お名前 <span style="color:#c00;font-size:12px;">*必須</span></label>
+<input type="text" name="name" required style="width:100%;padding:0.8rem 1rem;border:1px solid var(--Border);font-size:1rem;background:var(--White);">
+</div>
+<div style="margin-bottom:1.5rem;">
+<label style="display:block;font-size:var(--pow0);font-weight:var(--fwb);font-family:var(--jp_min);margin-bottom:0.5rem;">メールアドレス <span style="color:#c00;font-size:12px;">*必須</span></label>
+<input type="email" name="_replyto" required style="width:100%;padding:0.8rem 1rem;border:1px solid var(--Border);font-size:1rem;background:var(--White);">
+</div>
+<div style="margin-bottom:1.5rem;">
+<label style="display:block;font-size:var(--pow0);font-weight:var(--fwb);font-family:var(--jp_min);margin-bottom:0.5rem;">電話番号</label>
+<input type="tel" name="tel" style="width:100%;padding:0.8rem 1rem;border:1px solid var(--Border);font-size:1rem;background:var(--White);">
+</div>
+<div style="margin-bottom:1.5rem;">
+<label style="display:block;font-size:var(--pow0);font-weight:var(--fwb);font-family:var(--jp_min);margin-bottom:0.5rem;">お問い合わせ種別</label>
+<select name="type" style="width:100%;padding:0.8rem 1rem;border:1px solid var(--Border);font-size:1rem;background:var(--White);">
+<option value="予約">ご予約</option>
+<option value="料金">料金について</option>
+<option value="その他">その他</option>
+</select>
+</div>
+<div style="margin-bottom:2rem;">
+<label style="display:block;font-size:var(--pow0);font-weight:var(--fwb);font-family:var(--jp_min);margin-bottom:0.5rem;">お問い合わせ内容 <span style="color:#c00;font-size:12px;">*必須</span></label>
+<textarea name="message" rows="6" required style="width:100%;padding:0.8rem 1rem;border:1px solid var(--Border);font-size:1rem;background:var(--White);"></textarea>
+</div>
+<div style="text-align:center;">
+<button type="submit" style="background:var(--Key1);color:var(--White);border:none;padding:1rem 3rem;font-size:1rem;cursor:pointer;transition:opacity 0.3s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">送信する</button>
+</div>
+</form>
+</div></div>
+</section>
+</main>
+
+<footer class="l-footer"><div class="l-footer__wrap"><div class="l-footer__inner">
+<div><a href="https://instagram.com/nanea_hair" target="_blank" class="l-footer__instagram"><span>Instagram</span></a>
+<nav class="l-footer__subnav"><ul class="l-footer__subnav__ul">
+<li class="l-footer__subnav__li"><a href="privacy.html" class="l-footer__subnav__link"><span class="l-footer__subnav__wrap"><span class="l-footer__subnav__title">個人情報の取扱いについて</span><span class="l-footer__subnav__subtitle">Privacy Policy<span class="l-footer__subnav__wave"></span></span></span></a></li>
+</ul></nav></div>
+<div><div class="l-footer__copyright"><span>&copy; NANEA. all rights reserved</span></div></div>
+</div></div></footer>
+</div>
+<script src="js/index.js"></script>
+</body>
+</html>
